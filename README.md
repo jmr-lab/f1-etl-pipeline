@@ -29,7 +29,9 @@ Clone this repository and ensure Python 3.11+ is installed:
 git clone https://github.com/jmr-lab/f1-etl-pipeline.git
 cd f1-etl-pipeline
 pip install pandas
-Usage
+```
+
+## Usage
 
 Run:
 python run_pipeline.py
