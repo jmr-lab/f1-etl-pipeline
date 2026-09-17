@@ -1,6 +1,6 @@
 # F1 ETL Pipeline
 
-ETL pipeline that transforms raw Ergast F1 CSV data into an analytics-ready dataset for Formula 1 analytics and driver GOAT analysis.
+An ETL pipeline that transforms raw Ergast F1 CSV data into an analytics-ready dataset for Formula 1 analytics and driver GOAT analysis.
 
 ## Overview
 
@@ -8,11 +8,13 @@ This pipeline ingests raw CSV files from the [Ergast F1 API dataset](https://rel
 
 ## Pipeline Architecture
 
-┌────────────┐ ┌─────────────┐ ┌──────────────┐ ┌────────────┐
-│ Extract │→ │ Transform │→ │ Validate │→ │ Load │
-└────────────┘ └─────────────┘ └──────────────┘ └────────────┘
-↓ ↓ ↓ ↓
-10 CSVs Unified schema Quality checks CSV + SQL
+```
+┌──────────┐    ┌─────────────┐    ┌────────────┐    ┌──────────┐
+│ Extract  │ →  │  Transform  │ →  │  Validate  │ →  │   Load   │
+└──────────┘    └─────────────┘    └────────────┘    └──────────┘
+      ↓               ↓                 ↓                ↓
+   10 CSVs      Unified schema    Quality checks    CSV + SQL
+```
 
 ## Features
 
@@ -39,8 +41,9 @@ You only need to run:
 python run_pipeline.py
 ```
 
-## Directory Structure:
+## Directory Structure
 
+```
 f1-etl-pipeline/
 ├── src/
 │   ├── extract.py
@@ -51,42 +54,48 @@ f1-etl-pipeline/
 ├── output/            ← Generated formula1.csv and formula1.sql
 ├── run_pipeline.py
 └── README.md
+```
 
 ## Outputs
-File	Description
-output/formula1.csv	Analytics-ready dataset
-output/formula1.sql	MariaDB import script
+
+| File                     | Description                      |
+| ------------------------ | -------------------------------- |
+| `output/formula1.csv`    | Analytics-ready dataset          |
+| `output/formula1.sql`    | MariaDB import script            |
 
 ## Data Schema
 
-The formula1.csv file contains the following columns:
-Column	Type	Description
-resultId	INT	Unique result identifier
-grid	INT	Starting grid position
-positionOrder	INT	Finishing position order
-cumulPoints	DOUBLE	Cumulative driver points at race
-points	DOUBLE	Points awarded for the race
-year	INT	Season year
-round	INT	Round number within season
-circuit	VARCHAR(255)	Circuit name
-driverName	VARCHAR(255)	Full driver name
-driverAge	INT	Driver age in years at race date
-constructorName	VARCHAR(255)	Team name
-driverCountry	VARCHAR(100)	Driver's country of origin
-constructorCountry	VARCHAR(100)	Constructor's country of origin
-driverImage	VARCHAR(255)	Path to flag icon
-constructorImage	VARCHAR(255)	Path to flag icon
+The `formula1.csv` file contains the following columns:
+
+| Column                 | Type            | Description                                |
+| ---------------------- | --------------- | ------------------------------------------ |
+| `resultId`             | INT             | Unique result identifier                   |
+| `grid`                 | INT             | Starting grid position                     |
+| `positionOrder`        | INT             | Finishing position order                   |
+| `cumulPoints`          | DOUBLE          | Cumulative driver points at race           |
+| `points`               | DOUBLE          | Points awarded for the race                |
+| `year`                 | INT             | Season year                                |
+| `round`                | INT             | Round number within season                 |
+| `circuit`              | VARCHAR(255)    | Circuit name                               |
+| `driverName`           | VARCHAR(255)    | Full driver name                           |
+| `driverAge`            | INT             | Driver age in years at race date           |
+| `constructorName`      | VARCHAR(255)    | Team name                                  |
+| `driverCountry`        | VARCHAR(100)    | Driver's country of origin                 |
+| `constructorCountry`   | VARCHAR(100)    | Constructor's country of origin            |
+| `driverImage`          | VARCHAR(255)    | Path to flag icon                          |
+| `constructorImage`     | VARCHAR(255)    | Path to flag icon                          |
 
 ## Technologies
 
-    Python 3.11+
-    pandas (>= 2.0)
-    No external API calls (offline CSV processing)
+- Python 3.11+
+- pandas (>= 2.0)
+- No external API calls (offline CSV processing)
 
-# Related Projects
+## Related Projects
 
-Project	Language	Purpose
-Formula-1 Analytics	R (tidyverse)	EDA, visualisations, GOAT modelling
+| Project               | Language         | Purpose                              |
+| --------------------- | ---------------- | ------------------------------------ |
+| Formula-1 Analytics   | R (tidyverse)    | EDA, visualisations, GOAT modelling  |
 
 ## Why Two Languages?
 
@@ -96,8 +105,6 @@ This pipeline uses Python for production-grade ETL (data extraction, transformat
 
 The pipeline enforces these data quality rules:
 
-Year Range: All races must be between 1950 and the current year
-Race Winners: Every race (year, round combination) must have ≥1 winner
-Status-Points Consistency: Drivers marked "Not Qualified" or "Not Classified" must have 0 points
-    Race Winners: Every race (year, round combination) must have at least one winner
-    Status-Points Consistency: Drivers marked "Not Qualified" or "Not Classified" must have 0 points
+1. **Year Range**: All races must be between 1950 and the current year.
+2. **Race Winners**: Every race (year, round combination) must have at least one winner.
+3. **Status-Points Consistency**: Drivers marked "Not Qualified" or "Not Classified" must have 0 points.
