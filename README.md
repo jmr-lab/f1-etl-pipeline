@@ -33,10 +33,14 @@ pip install pandas
 
 ## Usage
 
-Run:
-python run_pipeline.py
+You only need to run:
 
-Directory Structure:
+```bash
+python run_pipeline.py
+```
+
+## Directory Structure:
+
 f1-etl-pipeline/
 ├── src/
 │   ├── extract.py
@@ -48,12 +52,12 @@ f1-etl-pipeline/
 ├── run_pipeline.py
 └── README.md
 
-Outputs
+## Outputs
 File	Description
 output/formula1.csv	Analytics-ready dataset
 output/formula1.sql	MariaDB import script
 
-Data Schema
+## Data Schema
 
 The formula1.csv file contains the following columns:
 Column	Type	Description
@@ -72,24 +76,28 @@ driverCountry	VARCHAR(100)	Driver's country of origin
 constructorCountry	VARCHAR(100)	Constructor's country of origin
 driverImage	VARCHAR(255)	Path to flag icon
 constructorImage	VARCHAR(255)	Path to flag icon
-Technologies
+
+## Technologies
 
     Python 3.11+
     pandas (>= 2.0)
     No external API calls (offline CSV processing)
 
-Related Projects
+# Related Projects
+
 Project	Language	Purpose
 Formula-1 Analytics	R (tidyverse)	EDA, visualisations, GOAT modelling
 
-Why Two Languages?
+## Why Two Languages?
 
 This pipeline uses Python for production-grade ETL (data extraction, transformation, validation, export), while the R project focuses on statistical analysis and visualisation. This demonstrates language-agnostic engineering patterns and lets analysts work in their preferred ecosystem.
 
-Validation Checks
+## Validation Checks
 
 The pipeline enforces these data quality rules:
 
-    Year Range: All races must be between 1950 and the current year
+Year Range: All races must be between 1950 and the current year
+Race Winners: Every race (year, round combination) must have ≥1 winner
+Status-Points Consistency: Drivers marked "Not Qualified" or "Not Classified" must have 0 points
     Race Winners: Every race (year, round combination) must have at least one winner
     Status-Points Consistency: Drivers marked "Not Qualified" or "Not Classified" must have 0 points
