@@ -9,6 +9,10 @@ on:
       - 'src/**/*.py'
       - 'run_pipeline.py'
 
+# Add permissions for the workflow to commit changes
+permissions:
+  contents: write
+
 jobs:
   run-pipeline:
     runs-on: ubuntu-latest
@@ -25,6 +29,9 @@ jobs:
       - name: Install dependencies
         run: pip install pandas
       
+      - name: Create output directory if needed
+        run: mkdir -p output
+      
       - name: Run ETL pipeline
         id: pipeline
         run: python run_pipeline.py
@@ -34,7 +41,9 @@ jobs:
         run: |
           if [ -f output/formula1.csv ]; then
             echo "has_output=true" >> $GITHUB_OUTPUT
-            echo "::notice::Pipeline completed successfully!"
+            FILE_SIZE=$(stat -c%s output/formula1.csv 2>/dev/null || stat -f%z output/formula1.csv)
+            echo "file_size=$FILE_SIZE" >> $GITHUB_OUTPUT
+            echo "::notice::Pipeline completed successfully! Output: $FILE_SIZE bytes"
           else
             echo "has_output=false" >> $GITHUB_OUTPUT
             echo "::error::Pipeline completed but no output file found!"
@@ -48,3 +57,5 @@ jobs:
           commit_message: 'Update formula1.csv via ETL pipeline'
           file_pattern: output/formula1.csv output/formula1.sql
           branch: ${{ github.ref_name }}
+          skip_dirty_check: false
+          add_options: '-A'
