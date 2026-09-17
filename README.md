@@ -1,5 +1,7 @@
 # F1 ETL Pipeline
 
+[![F1 ETL Pipeline](https://img.shields.io/github/actions/workflow/status/jmr-lab/f1-etl-pipeline/f1-pipeline.yml?label=F1%20ETL)](https://github.com/jmr-lab/f1-etl-pipeline/actions)
+
 An ETL pipeline that transforms raw Ergast F1 CSV data into an analytics-ready dataset for Formula 1 analytics and driver GOAT analysis.
 
 ## Overview
