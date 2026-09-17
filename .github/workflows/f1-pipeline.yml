@@ -8,7 +8,6 @@ on:
       - 'data/*.csv'
       - 'src/**/*.py'
       - 'run_pipeline.py'
-      - '.github/workflows/f1-pipeline.yml'
 
 jobs:
   run-pipeline:
@@ -26,114 +25,26 @@ jobs:
       - name: Install dependencies
         run: pip install pandas
       
-      - name: Calculate CSV checksums
-        id: checksum
-        run: |
-          # Combine all CSV files and calculate SHA256 hash
-          CHECKSUM=$(find data -name "*.csv" -exec sha256sum {} \; | sha256sum | awk '{print $1}')
-          echo "checksum=$CHECKSUM" >> $GITHUB_OUTPUT
-          
-          # Save checksum for comparison next run
-          echo "$CHECKSUM" > .github/.last_checksum
-      
-      - name: Load previous checksum from cache
-        id: cache-checksum
-        uses: actions/cache/restore@v4
-        with:
-          path: .github/.last_checksum
-          key: csv-data-${{ runner.os }}
-          restore-keys: |
-            csv-data-
-      
-      - name: Check if data changed
-        id: detect-changes
-        run: |
-          if [ ! -f ".github/.last_checksum" ]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "reason=First run - no previous checksum"
-            exit 0
-          fi
-          
-          PREVIOUS_CHECKSUM=$(cat .github/.last_checksum)
-          CURRENT_CHECKSUM="${{ steps.checksum.outputs.checksum }}"
-          
-          echo "Previous checksum: $PREVIOUS_CHECKSUM"
-          echo "Current checksum: $CURRENT_CHECKSUM"
-          
-          if [ "$PREVIOUS_CHECKSUM" != "$CURRENT_CHECKSUM" ]; then
-            echo "changed=true" >> $GITHUB_OUTPUT
-            echo "reason=CSV data changed"
-          else
-            echo "changed=false" >> $GITHUB_OUTPUT
-            echo "reason=No data changes detected - skipping pipeline"
-          fi
-      
-      - name: Report skip status
-        if: steps.detect-changes.outputs.changed == 'false'
-        run: |
-          echo "::group::Workflow Skipped"
-          echo "⏭️ Pipeline skipped: No CSV data changes detected"
-          echo "📊 Previous checksum: ${{ steps.checksum.outputs.previous_checksum }}"
-          echo "📊 Current checksum: ${{ steps.checksum.outputs.checksum }}"
-          echo "💡 Tip: Modify a file in data/*.csv to trigger the pipeline"
-          echo "::endgroup::"
-          
-          # Write workflow summary for visibility in Actions UI
-          cat >> $GITHUB_STEP_SUMMARY << EOF
-          ## ⏭️ Pipeline Skipped
-
-          | Metric | Value |
-          |--------|-------|
-          | Reason | No CSV data changes detected |
-          | Checksum | \`${{ steps.checksum.outputs.checksum }}\` |
-          
-          ### 💡 Next Steps
-          - Modify a file in `data/*.csv` to trigger the pipeline
-          - Click "Run workflow" manually to force execution
-          - Modify code in `src/` or `run_pipeline.py` if needed
-          EOF
-          
-          exit 78  # Exit code 78 = meaningful "skip" status
-      
-      - name: Update cache with new checksum
-        if: steps.detect-changes.outputs.changed == 'true'
-        uses: actions/cache/save@v4
-        with:
-          path: .github/.last_checksum
-          key: csv-data-${{ runner.os }}-${{ steps.checksum.outputs.checksum }}
-      
       - name: Run ETL pipeline
-        if: steps.detect-changes.outputs.changed == 'true'
+        id: pipeline
         run: python run_pipeline.py
-      
-      - name: Check for output changes
-        if: steps.detect-changes.outputs.changed == 'true'
+        
+      - name: Check output exists
         id: check-output
         run: |
           if [ -f output/formula1.csv ]; then
-            echo "changes=true" >> $GITHUB_OUTPUT
-            echo "file_size=$(stat -f%z output/formula1.csv 2>/dev/null || stat -c%s output/formula1.csv)" >> $GITHUB_OUTPUT
+            echo "has_output=true" >> $GITHUB_OUTPUT
+            echo "::notice::Pipeline completed successfully!"
           else
-            echo "changes=false" >> $GITHUB_OUTPUT
+            echo "has_output=false" >> $GITHUB_OUTPUT
+            echo "::error::Pipeline completed but no output file found!"
+            exit 1
           fi
       
       - name: Commit outputs to repo
-        if: steps.check-output.outputs.changes == 'true'
+        if: steps.check-output.outputs.has_output == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'Update formula1.csv via ETL pipeline (${{ github.event.head_commit.message || 'automatic' }})'
+          commit_message: 'Update formula1.csv via ETL pipeline'
           file_pattern: output/formula1.csv output/formula1.sql
           branch: ${{ github.ref_name }}
-      
-      - name: Report success
-        if: steps.check-output.outputs.changes == 'true' && steps.detect-changes.outputs.changed == 'true'
-        run: |
-          cat >> $GITHUB_STEP_SUMMARY << EOF
-          ## ✅ Pipeline Completed Successfully
-
-          | Metric | Value |
-          |--------|-------|
-          | Output file | \`output/formula1.csv\` |
-          | File size | ${{ steps.check-output.outputs.file_size }} bytes |
-          | Commit | [\`${{ github.sha }}\`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}) |
-          EOF
