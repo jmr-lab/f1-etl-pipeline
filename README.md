@@ -18,7 +18,15 @@ This pipeline ingests raw CSV files from the [Ergast F1 API dataset](https://rel
    10 CSVs      Unified schema    Quality checks    CSV + SQL + DB
 ```
 
-## Features
+   ## Workflow Execution
+   
+   Here's an example of the pipeline running successfully:
+   
+   ![F1 ETL Pipeline workflow execution showing four stages: extract (20s), transform (16s), validate (24s), load (22s)](assets/workflow-execution.png)
+   
+   *Execution times may vary depending on runner configuration.*
+   
+   ## Features
 
 - **Extract**: Loads 10+ CSV tables from the Ergast F1 dataset with encoding resilience
 - **Transform**: Normalises schemas, merges relationships, calculates derived fields (driver age, cumulative points, image paths)
