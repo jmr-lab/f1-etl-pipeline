@@ -9,7 +9,6 @@ on:
       - 'src/**/*.py'
       - 'run_pipeline.py'
 
-# Add permissions for the workflow to commit changes
 permissions:
   contents: write
 
@@ -29,32 +28,66 @@ jobs:
       - name: Install dependencies
         run: pip install pandas
       
-      - name: Create output directory if needed
+      - name: Create output directory
         run: mkdir -p output
       
-      - name: Run ETL pipeline
-        id: pipeline
-        run: python run_pipeline.py
+      # Stage 1: Extract
+      - name: Extract data
+        id: extract
+        run: python run_pipeline.py --stage extract
         
-      - name: Check output exists
+      - name: Cache extracted data
+        uses: actions/cache@v4
+        with:
+          path: output/extracted_data.pkl
+          key: extracted-data-${{ github.sha }}
+      
+      # Stage 2: Transform
+      - name: Transform data
+        id: transform
+        run: python run_pipeline.py --stage transform
+      
+      - name: Cache transformed data
+        uses: actions/cache@v4
+        with:
+          path: output/transformed_data.pkl
+          key: transformed-data-${{ github.sha }}
+      
+      # Stage 3: Validate
+      - name: Validate data
+        id: validate
+        run: python run_pipeline.py --stage validate
+      
+      - name: Cache validated data
+        uses: actions/cache@v4
+        with:
+          path: output/validated_data.pkl
+          key: validated-data-${{ github.sha }}
+      
+      # Stage 4: Load
+      - name: Load data
+        id: load
+        run: python run_pipeline.py --stage load
+      
+      # Check outputs and commit
+      - name: Check outputs exist
         id: check-output
         run: |
           if [ -f output/formula1.csv ]; then
             echo "has_output=true" >> $GITHUB_OUTPUT
-            FILE_SIZE=$(stat -c%s output/formula1.csv 2>/dev/null || stat -f%z output/formula1.csv)
+            FILE_SIZE=$(stat -c%s output/formula1.csv)
             echo "file_size=$FILE_SIZE" >> $GITHUB_OUTPUT
-            echo "::notice::Pipeline completed successfully! Output: $FILE_SIZE bytes"
+            echo "::notice::Pipeline completed! Output: $FILE_SIZE bytes"
           else
-            echo "has_output=false" >> $GITHUB_OUTPUT
-            echo "::error::Pipeline completed but no output file found!"
+            echo "::error::No output file found!"
             exit 1
           fi
       
-      - name: Commit outputs to repo
+      - name: Commit outputs
         if: steps.check-output.outputs.has_output == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'Update formula1.csv via ETL pipeline'
+          commit_message: 'Update formula1 outputs via ETL pipeline'
           file_pattern: output/formula1.csv output/formula1.sql
           branch: ${{ github.ref_name }}
           skip_dirty_check: false
