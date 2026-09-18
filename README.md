@@ -15,7 +15,7 @@ This pipeline ingests raw CSV files from the [Ergast F1 API dataset](https://rel
 │ Extract  │ →  │  Transform  │ →  │  Validate  │ →  │   Load   │
 └──────────┘    └─────────────┘    └────────────┘    └──────────┘
       ↓               ↓                 ↓                ↓
-   10 CSVs      Unified schema    Quality checks    CSV + SQL
+   10 CSVs      Unified schema    Quality checks    CSV + SQL + DB
 ```
 
 ## Features
@@ -23,7 +23,7 @@ This pipeline ingests raw CSV files from the [Ergast F1 API dataset](https://rel
 - **Extract**: Loads 10+ CSV tables from the Ergast F1 dataset with encoding resilience
 - **Transform**: Normalises schemas, merges relationships, calculates derived fields (driver age, cumulative points, image paths)
 - **Validate**: 3 automated quality checks (year range, race winners, status-points consistency)
-- **Load**: Exports both CSV and MariaDB-compatible SQL formats
+- **Load**: Exports CSV, MariaDB-compatible SQL, and SQLite database formats
 
 ## Installation
 
@@ -53,7 +53,7 @@ f1-etl-pipeline/
 │   ├── validate.py
 │   └── load.py
 ├── data/
-├── output/            ← Generated formula1.csv and formula1.sql
+├── output/            ← Generated formula1.csv, formula1.sql and formula1.db
 ├── run_pipeline.py
 └── README.md
 ```
@@ -64,6 +64,7 @@ f1-etl-pipeline/
 | ------------------------ | -------------------------------- |
 | `output/formula1.csv`    | Analytics-ready dataset          |
 | `output/formula1.sql`    | MariaDB import script            |
+| `output/formula1.db`    | SQLite database with indexed formula1 table            |
 
 ## Data Schema
 
@@ -87,10 +88,15 @@ The `formula1.csv` file contains the following columns:
 | `driverImage`          | VARCHAR(255)    | Path to flag icon                          |
 | `constructorImage`     | VARCHAR(255)    | Path to flag icon                          |
 
+The SQLite database additionally includes two indexes optimised for common queries:
+- idx_formula1_race on (year, round) — fast per-race lookups
+- idx_formula1_driver on (driverName) — fast per-driver lookups
+
 ## Technologies
 
 - Python 3.11+
 - pandas (>= 2.0)
+- SQLite (via the built-in sqlite3 module)
 - No external API calls (offline CSV processing)
 
 ## Related Projects
