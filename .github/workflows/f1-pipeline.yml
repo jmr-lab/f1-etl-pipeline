@@ -136,7 +136,7 @@ jobs:
 
       - name: Commit outputs
         uses: stefanzweifel/git-auto-commit-action@v5
-       with:
+        with:
           commit_message: 'Update formula1 outputs via ETL pipeline (${{ github.sha }})'
           branch: ${{ github.ref_name }}
           add_options: '-u'  # Auto-add unstaged/untracked files
