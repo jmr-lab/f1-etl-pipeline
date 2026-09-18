@@ -146,7 +146,7 @@ if __name__ == "__main__":
 
     output_folder = Path(__file__).resolve().parent.parent / "output"
 
-    with open(output_folder / "validated_data.pkl", "rb") as f:
+    with open(output_folder / "transformed_data.pkl", "rb") as f:
         formula1 = pickle.load(f)
 
     save_formula1(formula1)
