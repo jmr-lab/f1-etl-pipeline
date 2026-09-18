@@ -137,6 +137,9 @@ jobs:
       - name: Commit outputs
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'Update formula1 outputs via ETL pipeline'
-          file_pattern: 'output/*.{csv,sql,db}'
+          commit_message: 'Update formula1 outputs via ETL pipeline (${{ github.sha }})'
+          file_pattern: 'output/formula1.csv output/formula1.sql output/formula1.db'
           branch: ${{ github.ref_name }}
+          add_options: '-u'  # Force add unstaged/untracked files
+          skip_fetch: false
+          skip_checkout: false
