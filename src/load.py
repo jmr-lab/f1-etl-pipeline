@@ -1,5 +1,6 @@
 from pathlib import Path
 import pandas as pd
+import sqlite3
 
 def get_output_folder() -> Path:
     """Return the project's output folder and create it if necessary."""
@@ -137,3 +138,15 @@ def save_formula1(formula1: pd.DataFrame) -> None:
     save_formula1_csv(formula1)
     save_formula1_sql(formula1)
     save_formula1_db(formula1)
+
+
+if __name__ == "__main__":
+    import pickle
+    from pathlib import Path
+
+    output_folder = Path(__file__).resolve().parent.parent / "output"
+
+    with open(output_folder / "validated_data.pkl", "rb") as f:
+        formula1 = pickle.load(f)
+
+    save_formula1(formula1)
