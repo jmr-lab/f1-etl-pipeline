@@ -79,7 +79,7 @@ Below is an extract from the output dataset showing a subset of rows and columns
 | 1950 | 1 | British Grand Prix | Lapsed | 68 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-france-50.png" width="20" height="20" /> Louis Rosier | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-france-50.png" width="20" height="20" /> Talbot-Lago | 5 | 2 |
 | 1950 | 1 | British Grand Prix | Lapsed | 67 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-great-britain-50.png" width="20" height="20" /> Bob Gerard | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-great-britain-50.png" width="20" height="20" /> ERA | 6 | 0 |
 
-*Full dataset contains 27,238 rows spanning from 1950 to the current year minus one. Flag images are hosted in the companion [Formula-1](https://github.com/jmr-lab/Formula-1) repository.*
+*Full dataset contains 27,238 rows spanning from 1950 to the current year minus one.*
 
 ## Data Schema
 
