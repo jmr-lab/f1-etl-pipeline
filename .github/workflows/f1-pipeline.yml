@@ -146,14 +146,10 @@ jobs:
           ls -la output/
           
           echo ""
-          echo "=== Creating output folder if missing ==="
-          mkdir -p output
-          
-          echo ""
-          echo "=== Manually adding all output files ==="
+          echo "=== Manually adding output files ==="
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add output/
+          git add output/formula1.csv output/formula1.sql output/formula1.db
           
           echo ""
           echo "=== Git status ==="
@@ -172,6 +168,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'Update formula1 outputs via ETL pipeline (${{ github.sha }})'
+          file_pattern: 'output/formula1.csv output/formula1.sql output/formula1.db'
           branch: ${{ github.ref_name }}
-          add_options: '-u'
-          status_options: '--untracked-files=all'
