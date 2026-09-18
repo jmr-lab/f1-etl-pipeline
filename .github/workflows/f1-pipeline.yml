@@ -133,13 +133,11 @@ jobs:
           [ -f output/formula1.csv ] && \
           echo "::notice::Pipeline completed! $(stat -c%s output/formula1.csv) bytes" || \
           { echo "::error::No output file found!"; exit 1; }
-      
+
       - name: Commit outputs
         uses: stefanzweifel/git-auto-commit-action@v5
-        with:
+       with:
           commit_message: 'Update formula1 outputs via ETL pipeline (${{ github.sha }})'
-          file_pattern: 'output/formula1.csv output/formula1.sql output/formula1.db'
           branch: ${{ github.ref_name }}
-          add_options: '-u'  # Force add unstaged/untracked files
-          skip_fetch: false
-          skip_checkout: false
+          add_options: '-u'  # Auto-add unstaged/untracked files
+          status_options: '--untracked-files=all'  # Ensure new files are seen
