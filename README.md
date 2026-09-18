@@ -66,6 +66,21 @@ f1-etl-pipeline/
 | `output/formula1.sql`    | MariaDB import script            |
 | `output/formula1.db`    | SQLite database with indexed formula1 table            |
 
+## Sample Data
+
+The following excerpt shows the opening races from the 1950 British Grand Prix (the first Formula 1 World Championship race):
+
+| resultId | grid | positionOrder | points | cumulPoints | laps | year | round | circuit | status | driverImage | driverName | driverAge | constructorImage | constructorName |
+| -------- | ---- | ------------- | ------ | ----------- | ---- | ---- | ----- | ------- | ------ | ----------- | ---------- | --------- | ---------------- | --------------- |
+| 20025 | 1 | 1 | 9 | 9 | 70 | 1950 | 1 | British Grand Prix | Finished | images/icons8-italy-50.png | Nino Farina | 43 | images/icons8-italy-50.png | Alfa Romeo |
+| 20026 | 2 | 2 | 6 | 6 | 70 | 1950 | 1 | British Grand Prix | Finished | images/icons8-italy-50.png | Luigi Fagioli | 51 | images/icons8-italy-50.png | Alfa Romeo |
+| 20027 | 4 | 3 | 4 | 4 | 70 | 1950 | 1 | British Grand Prix | Finished | images/icons8-great-britain-50.png | Reg Parnell | 38 | images/icons8-italy-50.png | Alfa Romeo |
+| 20028 | 6 | 4 | 3 | 3 | 68 | 1950 | 1 | British Grand Prix | Lapsed | images/icons8-france-50.png | Yves Cabantous | 45 | images/icons8-france-50.png | Talbot-Lago |
+| 20029 | 9 | 5 | 2 | 2 | 68 | 1950 | 1 | British Grand Prix | Lapsed | images/icons8-france-50.png | Louis Rosier | 44 | images/icons8-france-50.png | Talbot-Lago |
+| 20030 | 13 | 6 | 0 | 0 | 67 | 1950 | 1 | British Grand Prix | Lapsed | images/icons8-great-britain-50.png | Bob Gerard | 36 | images/icons8-great-britain-50.png | ERA |
+
+*Full dataset contains 27,238 rows spanning from 1950 to the current year minus one.*
+
 ## Data Schema
 
 The `formula1.csv` file contains the following columns:
