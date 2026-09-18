@@ -138,5 +138,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'Update formula1 outputs via ETL pipeline'
-          file_pattern: output/formula1.csv output/formula1.sql
+          file_pattern: 'output/*.{csv,sql,db}'
           branch: ${{ github.ref_name }}
