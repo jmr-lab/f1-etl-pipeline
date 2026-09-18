@@ -166,7 +166,11 @@ The SQLite database additionally includes two indexes optimised for common queri
 
 ## Why Two Languages?
 
-This pipeline uses Python for production-grade ETL (data extraction, transformation, validation, export), while the R project focuses on statistical analysis and visualisation. This demonstrates language-agnostic engineering patterns and lets analysts work in their preferred ecosystem.
+Separating ETL from analysis brings practical benefits:
+- **Python** excels at robust data pipelines and batch processing
+- **R** provides richer statistical modelling and visualisation capabilities (tidyverse, ggplot2)
+
+Analysts can focus on insights in R while trusting the Python pipeline delivers clean, validated data.
 
 ## Validation Scope
 
