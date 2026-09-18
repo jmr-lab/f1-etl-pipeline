@@ -7,7 +7,6 @@ on:
     paths:
       - 'data/*.csv'
       - 'src/**/*.py'
-      - 'run_pipeline.py'
 
 permissions:
   contents: write
@@ -15,8 +14,6 @@ permissions:
 jobs:
   extract:
     runs-on: ubuntu-latest
-    outputs:
-      extracted: ${{ steps.extract-success.outputs.result }}
     
     steps:
       - name: Checkout repository
@@ -30,23 +27,15 @@ jobs:
       - name: Install dependencies
         run: pip install pandas
       
-      - name: Create output directory
-        run: mkdir -p output
-      
       - name: Extract data
-        id: extract-step
-        run: python run_pipeline.py --stage extract
+        run: python src/extract.py
         
-      - name: Mark success
-        id: extract-success
-        if: success()
-        run: echo "result=true" >> $GITHUB_OUTPUT
-      
       - name: Upload extracted data
         uses: actions/upload-artifact@v4
         with:
           name: extracted-data
           path: output/extracted_data.pkl
+          if-no-files-found: error
           retention-days: 1
 
   transform:
@@ -72,13 +61,14 @@ jobs:
           path: output
       
       - name: Transform data
-        run: python run_pipeline.py --stage transform
+        run: python src/transform.py
       
       - name: Upload transformed data
         uses: actions/upload-artifact@v4
         with:
           name: transformed-data
           path: output/transformed_data.pkl
+          if-no-files-found: error
           retention-days: 1
 
   validate:
@@ -104,13 +94,13 @@ jobs:
           path: output
       
       - name: Validate data
-        run: python run_pipeline.py --stage validate
+        run: python src/validate.py
       
-      - name: Upload validated data
+      - name: Pass through validated data
         uses: actions/upload-artifact@v4
         with:
           name: validated-data
-          path: output/validated_data.pkl
+          path: output/transformed_data.pkl
           retention-days: 1
 
   load:
@@ -135,28 +125,18 @@ jobs:
           name: validated-data
           path: output
       
-      - name: Save outputs
-        run: python run_pipeline.py --stage load
+      - name: Load data
+        run: python src/load.py
       
       - name: Check outputs exist
-        id: check-output
         run: |
-          if [ -f output/formula1.csv ]; then
-            echo "has_output=true" >> $GITHUB_OUTPUT
-            FILE_SIZE=$(stat -c%s output/formula1.csv)
-            echo "file_size=$FILE_SIZE" >> $GITHUB_OUTPUT
-            echo "::notice::Pipeline completed! Output: $FILE_SIZE bytes"
-          else
-            echo "::error::No output file found!"
-            exit 1
-          fi
+          [ -f output/formula1.csv ] && \
+          echo "::notice::Pipeline completed! $(stat -c%s output/formula1.csv) bytes" || \
+          { echo "::error::No output file found!"; exit 1; }
       
       - name: Commit outputs
-        if: steps.check-output.outputs.has_output == 'true'
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'Update formula1 outputs via ETL pipeline'
           file_pattern: output/formula1.csv output/formula1.sql
           branch: ${{ github.ref_name }}
-          skip_dirty_check: false
-          add_options: '-A'
