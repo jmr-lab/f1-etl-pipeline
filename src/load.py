@@ -98,7 +98,42 @@ def save_formula1_sql(formula1: pd.DataFrame) -> None:
     print(f"Saved SQL file: {output_file}")
 
 
+def save_formula1_db(formula1: pd.DataFrame) -> None:
+    """Save the Formula 1 DataFrame as a SQLite database file."""
+
+    output_folder = get_output_folder()
+    output_file = output_folder / "formula1.db"
+
+    with sqlite3.connect(output_file) as connection:
+        formula1.to_sql(
+            "formula1",
+            connection,
+            if_exists="replace",
+            index=False,
+        )
+
+        # Indexes for common queries
+        connection.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_formula1_race
+            ON formula1 (year, round)
+            """
+        )
+
+        connection.execute(
+            """
+            CREATE INDEX IF NOT EXISTS idx_formula1_driver
+            ON formula1 (driverName)
+            """
+        )
+
+        connection.commit()
+
+    print(f"Saved database: {output_file} ({len(formula1):,} rows)")
+
+
 def save_formula1(formula1: pd.DataFrame) -> None:
     """Save the Formula 1 DataFrame as CSV and SQL."""
     save_formula1_csv(formula1)
     save_formula1_sql(formula1)
+    save_formula1_db(formula1)
