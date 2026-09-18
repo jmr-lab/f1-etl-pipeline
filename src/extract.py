@@ -77,6 +77,7 @@ def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
             raise ValueError(f"Empty CSV file: {csv_file.name}")
         except Exception as e:
             raise ValueError(f"Failed to parse {csv_file.name}: {e}")
+    return dataframes
 
 
 if __name__ == "__main__":
@@ -93,4 +94,3 @@ if __name__ == "__main__":
     print(f"Saved intermediate: {output_file}")
     
     print(f"\nTotal: {len(dataframes)} tables, {total_memory_mb:.2f} MB")
-    return dataframes
