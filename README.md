@@ -1,6 +1,6 @@
 # F1 ETL Pipeline
 
-[![F1 ETL Pipeline](https://img.shields.io/github/actions/workflow/status/jmr-lab/f1-etl-pipeline/f1-pipeline.yml?label=F1%20ETL)](https://github.com/jmr-lab/f1-etl-pipeline/actions)
+[![F1 ETL Pipeline](https://img.shields.io/github/actions/workflow/status/jmr-lab/f1-etl-pipeline/f1-pipeline.yml?label=F1%20ETL&logo=github)](https://github.com/jmr-lab/f1-etl-pipeline/actions)
 
 An ETL pipeline that transforms raw Ergast F1 CSV data into an analytics-ready dataset for Formula 1 analytics and driver GOAT analysis.
 
@@ -24,6 +24,25 @@ This pipeline ingests raw CSV files from the [Ergast F1 API dataset](https://rel
 - **Transform**: Normalises schemas, merges relationships, calculates derived fields (driver age, cumulative points, image paths)
 - **Validate**: 3 automated quality checks (year range, race winners, status-points consistency)
 - **Load**: Exports CSV, MariaDB-compatible SQL, and SQLite database formats
+
+## DevOps & Automation
+
+### GitHub Actions Workflow
+
+This project showcases production-grade ETL automation using GitHub Actions:
+
+| Capability | Implementation |
+| ---------- | -------------- |
+| Orchestrator | GitHub Actions (YAML pipeline definition) |
+| Jobs | 4-stage ETL pipeline (extract → transform → validate → load) |
+| Triggers | Manual dispatch + automatic on code/data changes |
+| Artifact Handling | Passes intermediate `.pkl` files between stages |
+| Commit Strategy | Auto-commits validated outputs to repository |
+| Validation | Fails workflow if data quality checks fail |
+
+See the full workflow definition: [.github/workflows/f1-pipeline.yml](https://github.com/jmr-lab/f1-etl-pipeline/blob/main/.github/workflows/f1-pipeline.yml)
+
+**Why This Matters**: Demonstrates ability to build repeatable, auditable data pipelines that enforce quality standards before data reaches downstream consumers (analysts, dashboards, ML models).
 
 ## Installation
 
