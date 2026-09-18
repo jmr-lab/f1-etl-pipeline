@@ -25,24 +25,41 @@ This pipeline ingests raw CSV files from the [Ergast F1 API dataset](https://rel
 - **Validate**: 3 automated quality checks (year range, race winners, status-points consistency)
 - **Load**: Exports CSV, MariaDB-compatible SQL, and SQLite database formats
 
-## DevOps & Automation
+## Automation
 
-### GitHub Actions Workflow
+The pipeline runs automatically via [GitHub Actions](https://github.com/features/actions). The workflow definition is available at [.github/workflows/f1-pipeline.yml](https://github.com/jmr-lab/f1-etl-pipeline/blob/main/.github/workflows/f1-pipeline.yml) and can be reused or adapted if you want to run this pipeline on your own fork.
 
-This project showcases production-grade ETL automation using GitHub Actions:
+### How It Works
 
-| Capability | Implementation |
-| ---------- | -------------- |
-| Orchestrator | GitHub Actions (YAML pipeline definition) |
-| Jobs | 4-stage ETL pipeline (extract → transform → validate → load) |
-| Triggers | Manual dispatch + automatic on code/data changes |
-| Artifact Handling | Passes intermediate `.pkl` files between stages |
-| Commit Strategy | Auto-commits validated outputs to repository |
-| Validation | Fails workflow if data quality checks fail |
+| Stage | Job | Description |
+| ----- | --- | ----------- |
+| 1 | `extract` | Loads the raw CSV files from `data/` and uploads them as a workflow artifact |
+| 2 | `transform` | Builds the unified `formula1` dataset and passes it to the next stage |
+| 3 | `validate` | Runs the data quality checks; the workflow fails if any check fails |
+| 4 | `load` | Generates `formula1.csv`, `formula1.sql` and `formula1.db`, then commits them to the repository |
 
-See the full workflow definition: [.github/workflows/f1-pipeline.yml](https://github.com/jmr-lab/f1-etl-pipeline/blob/main/.github/workflows/f1-pipeline.yml)
+Intermediate datasets (`.pkl` files) are passed between jobs as GitHub Actions artifacts and are not stored in the repository.
 
-**Why This Matters**: Demonstrates ability to build repeatable, auditable data pipelines that enforce quality standards before data reaches downstream consumers (analysts, dashboards, ML models).
+### Triggers
+
+The workflow runs:
+
+- **Automatically** on push, when files under `data/` change
+- **Manually** via the [Run workflow](https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow) button in the Actions tab
+
+### Running It Yourself
+
+If you fork this repository:
+
+1. Place the Ergast F1 CSV files in the `data/` folder
+2. Trigger the workflow (push a change or use manual dispatch)
+3. The validated outputs will be committed to `output/` once the pipeline completes
+
+You can also run the pipeline locally without GitHub Actions:
+
+```bash
+python run_pipeline.py
+```
 
 ## Installation
 
@@ -56,7 +73,7 @@ pip install pandas
 
 ## Usage
 
-You only need to run:
+For development, testing, or offline work:
 
 ```bash
 python run_pipeline.py
