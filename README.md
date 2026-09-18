@@ -103,10 +103,20 @@ The `formula1.csv` file contains the following columns:
 
 This pipeline uses Python for production-grade ETL (data extraction, transformation, validation, export), while the R project focuses on statistical analysis and visualisation. This demonstrates language-agnostic engineering patterns and lets analysts work in their preferred ecosystem.
 
+## Validation Scope
+
+The validation performed by this pipeline is intentionally basic. It checks a small number of high-level data-quality rules rather than attempting to enforce every possible Formula 1 racing constraint.
+
+For example, the pipeline checks that each race has at least one winner. Although a stricter rule could require exactly one winner, an analysis of the dataset found three races with two winners, so enforcing that constraint would incorrectly reject valid historical data.
+
+The pipeline also checks that drivers marked as `Not Qualified` or `Not Classified` have zero points. It does not currently enforce a zero-point rule for disqualified drivers. The dataset includes at least one historical exception: Stirling Moss was disqualified but received one point for recording the fastest lap.
+
+These exceptions, along with the broader characteristics of the dataset, were identified through analysis in the companion [Formula-1 Analytics](https://github.com/jmr-lab/Formula-1) repository. The validation rules should therefore be understood as pragmatic consistency checks rather than a complete representation of Formula 1 sporting regulations.
+
 ## Validation Checks
 
-The pipeline enforces these data quality rules:
+The pipeline enforces these basic data-quality rules:
 
 1. **Year Range**: All races must be between 1950 and the current year.
-2. **Race Winners**: Every race (year, round combination) must have at least one winner.
-3. **Status-Points Consistency**: Drivers marked "Not Qualified" or "Not Classified" must have 0 points.
+2. **Race Winners**: Every race (year, round combination) must have at least one winner. The pipeline does not require exactly one winner because the dataset contains three races with two winners.
+3. **Status-Points Consistency**: Drivers marked `Not Qualified` or `Not Classified` must have 0 points. Disqualified drivers are not covered by this validation rule.
