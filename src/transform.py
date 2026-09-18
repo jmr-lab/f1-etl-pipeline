@@ -321,3 +321,19 @@ def transform_data(dataframes: dict) -> pd.DataFrame:
     ].copy()
 
     return formula1
+
+
+if __name__ == "__main__":
+    import pickle
+    from pathlib import Path
+
+    output_folder = Path(__file__).resolve().parent.parent / "output"
+
+    with open(output_folder / "extracted_data.pkl", "rb") as f:
+        dataframes = pickle.load(f)
+
+    formula1 = transform_data(dataframes)
+    print(f"Output shape: {formula1.shape[0]:,} rows x {formula1.shape[1]} columns")
+
+    with open(output_folder / "transformed_data.pkl", "wb") as f:
+        pickle.dump(formula1, f)
