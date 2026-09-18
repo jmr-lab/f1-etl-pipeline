@@ -250,3 +250,15 @@ def _get_error_summary() -> str:
         summaries.append(f"{err['check']}: {err['message'][:100]}")
 
     return "; ".join(summaries[:5])
+
+
+if __name__ == "__main__":
+    import pickle
+    from pathlib import Path
+
+    output_folder = Path(__file__).resolve().parent.parent / "output"
+
+    with open(output_folder / "transformed_data.pkl", "rb") as f:
+        formula1 = pickle.load(f)
+
+    validate_formula1(formula1)  # raises ValueError and exits non-zero on failure
