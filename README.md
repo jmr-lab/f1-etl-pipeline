@@ -68,16 +68,16 @@ f1-etl-pipeline/
 
 ## Sample Data
 
-The following excerpt shows the opening races from the 1950 British Grand Prix (the first Formula 1 World Championship race):
+Below is an extract from the output dataset showing a subset of rows and columns (not all data displayed for readability). This excerpt covers the opening races from the 1950 British Grand Prix (the first Formula 1 World Championship race):
 
-| resultId | grid | positionOrder | points | cumulPoints | laps | year | round | circuit | status | driverName | driverAge | constructorName |
-| -------- | ---- | ------------- | ------ | ----------- | ---- | ---- | ----- | ------- | ------ | ---------- | --------- | --------------- |
-| 20025 | 1 | 1 | 9 | 9 | 70 | 1950 | 1 | British Grand Prix | Finished | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> Nino Farina | 43 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> Alfa Romeo |
-| 20026 | 2 | 2 | 6 | 6 | 70 | 1950 | 1 | British Grand Prix | Finished | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> Luigi Fagioli | 51 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> Alfa Romeo |
-| 20027 | 4 | 3 | 4 | 4 | 70 | 1950 | 1 | British Grand Prix | Finished | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-great-britain-50.png" width="20" height="20" /> Reg Parnell | 38 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> Alfa Romeo |
-| 20028 | 6 | 4 | 3 | 3 | 68 | 1950 | 1 | British Grand Prix | Lapsed | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-france-50.png" width="20" height="20" /> Yves Cabantous | 45 | <img src="https.com/jmr-lab/Formula-1/raw/main/images/icons8-france-50.png" width="20" height="20" /> Talbot-Lago |
-| 20029 | 9 | 5 | 2 | 2 | 68 | 1950 | 1 | British Grand Prix | Lapsed | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-france-50.png" width="20" height="20" /> Louis Rosier | 44 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-france-50.png" width="20" height="20" /> Talbot-Lago |
-| 20030 | 13 | 6 | 0 | 0 | 67 | 1950 | 1 | British Grand Prix | Lapsed | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-great-britain-50.png" width="20" height="20" /> Bob Gerard | 36 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> ERA |
+| year | round | circuit | status | laps | driverName | constructorName | positionOrder | points |
+| ---- | ----- | ------- | ------ | ---- | ---------- | --------------- | ------------- | ------ |
+| 1950 | 1 | British Grand Prix | Finished | 70 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> Nino Farina | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> Alfa Romeo | 1 | 9 |
+| 1950 | 1 | British Grand Prix | Finished | 70 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> Luigi Fagioli | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> Alfa Romeo | 2 | 6 |
+| 1950 | 1 | British Grand Prix | Finished | 70 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-great-britain-50.png" width="20" height="20" /> Reg Parnell | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-italy-50.png" width="20" height="20" /> Alfa Romeo | 3 | 4 |
+| 1950 | 1 | British Grand Prix | Lapsed | 68 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-france-50.png" width="20" height="20" /> Yves Cabantous | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-france-50.png" width="20" height="20" /> Talbot-Lago | 4 | 3 |
+| 1950 | 1 | British Grand Prix | Lapsed | 68 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-france-50.png" width="20" height="20" /> Louis Rosier | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-france-50.png" width="20" height="20" /> Talbot-Lago | 5 | 2 |
+| 1950 | 1 | British Grand Prix | Lapsed | 67 | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-great-britain-50.png" width="20" height="20" /> Bob Gerard | <img src="https://github.com/jmr-lab/Formula-1/raw/main/images/icons8-great-britain-50.png" width="20" height="20" /> ERA | 6 | 0 |
 
 *Full dataset contains 27,238 rows spanning from 1950 to the current year minus one. Flag images are hosted in the companion [Formula-1](https://github.com/jmr-lab/Formula-1) repository.*
 
