@@ -5,7 +5,7 @@ on:
   
   push:
     paths:
-      - 'data/*.csv'
+      - 'data/raw/*.csv'
       - 'src/**/*.py'
 
 permissions:
@@ -149,7 +149,7 @@ jobs:
           echo "=== Manually adding output files ==="
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add output/formula1.csv output/formula1.sql output/formula1.db
+          git add data/processed/formula1.csv sql/formula1.sql sql/formula1.db
           
           echo ""
           echo "=== Git status ==="
@@ -168,5 +168,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'Update formula1 outputs via ETL pipeline (${{ github.sha }})'
-          file_pattern: 'output/formula1.csv output/formula1.sql output/formula1.db'
+          file_pattern: 'data/processed/formula1.csv sql/formula1.sql sql/formula1.db'
           branch: ${{ github.ref_name }}
