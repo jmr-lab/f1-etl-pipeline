@@ -11,8 +11,7 @@ REQUIRED_TABLES = {
     "drivers",
     "races",
     "results",
-    "status",
-    "Countries"
+    "status"
 }
 
 def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
