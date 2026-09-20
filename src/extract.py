@@ -17,7 +17,7 @@ REQUIRED_TABLES = {
 
 def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
     """
-    Load all CSV files from the project's data folder.
+    Load all CSV files from the project's data/raw folder.
     
     Args:
         required_tables: Set of expected table names (CSV filenames without extension)
@@ -32,12 +32,12 @@ def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
     
     # Locate data folder relative to this file
     src_folder = Path(__file__).resolve().parent
-    data_folder = src_folder.parent / "data"
+    data_folder = src_folder.parent / "data" / "raw"
     
     if not data_folder.exists():
         raise FileNotFoundError(
-            f"Data folder not found at {data_folder}. "
-            "Expected structure: data/*.csv"
+            f"Raw data folder not found at {data_folder}. "
+            "Expected structure: data/raw/*.csv"
         )
     
     # Find all CSV files
@@ -46,7 +46,7 @@ def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
     if not csv_files:
         raise FileNotFoundError(
             f"No CSV files found in {data_folder}. "
-            "Download the ErgastF1 dataset and extract to data/"
+            "Download the ErgastF1 dataset and extract to data/raw/"
         )
     
     # Check for required tables
