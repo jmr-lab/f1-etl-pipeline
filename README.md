@@ -18,15 +18,15 @@ This pipeline ingests raw CSV files from the [Ergast F1 API dataset](https://rel
    10 CSVs      Unified schema    Quality checks    CSV + SQL + DB
 ```
 
-   ## Workflow Execution
+## Workflow Execution
    
-   Here's an example of the pipeline running successfully:
+Here's an example of the pipeline running successfully:
    
-   ![F1 ETL Pipeline workflow execution showing four stages: extract (20s), transform (16s), validate (24s), load (22s)](assets/workflow-execution.png)
+![F1 ETL Pipeline workflow execution showing four stages: extract (20s), transform (16s), validate (24s), load (22s)](assets/workflow-execution.png)
    
-   *Execution times may vary depending on runner configuration.*
+*Execution times may vary depending on runner configuration.*
    
-   ## Features
+## Features
 
 - **Extract**: Loads 10+ CSV tables from the Ergast F1 dataset with encoding resilience
 - **Transform**: Normalises schemas, merges relationships, calculates derived fields (driver age, cumulative points, image paths)
@@ -41,10 +41,10 @@ The pipeline runs automatically via [GitHub Actions](https://github.com/features
 
 | Stage | Job | Description |
 | ----- | --- | ----------- |
-| 1 | `extract` | Loads the raw CSV files from `data/` and uploads them as a workflow artifact |
+| 1 | `extract` | Loads the raw CSV files from `data/raw/` and uploads them as a workflow artifact |
 | 2 | `transform` | Builds the unified `formula1` dataset and passes it to the next stage |
 | 3 | `validate` | Runs the data quality checks; the workflow fails if any check fails |
-| 4 | `load` | Generates `formula1.csv`, `formula1.sql` and `formula1.db`, then commits them to the repository |
+| 4 | `load` | Generates `data/processed/formula1.csv`, `sql/formula1.sql` and `sql/formula1.db`, then commits them to the repository |
 
 Intermediate datasets (`.pkl` files) are passed between jobs as GitHub Actions artifacts and are not stored in the repository.
 
@@ -52,16 +52,16 @@ Intermediate datasets (`.pkl` files) are passed between jobs as GitHub Actions a
 
 The workflow runs:
 
-- **Automatically** on push, when files under `data/` change
+- **Automatically** on push, when files under `data/raw/` change
 - **Manually** via the [Run workflow](https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow) button in the Actions tab
 
 ### Running It Yourself
 
 If you fork this repository:
 
-1. Place the Ergast F1 CSV files in the `data/` folder
+1. Place the Ergast F1 CSV files in the `data/raw/` folder
 2. Trigger the workflow (push a change or use manual dispatch)
-3. The validated outputs will be committed to `output/` once the pipeline completes
+3. The validated outputs will be committed to `data/processed/` and `sql/` once the pipeline completes
 
 You can also run the pipeline locally without GitHub Actions:
 
@@ -95,9 +95,12 @@ f1-etl-pipeline/
 │   ├── extract.py
 │   ├── transform.py
 │   ├── validate.py
-│   └── load.py
+│   ├── load.py
+│   └── resources/           ← Custom lookup tables
 ├── data/
-├── output/            ← Generated formula1.csv, formula1.sql and formula1.db
+│   ├── raw/                 ← Place Ergast CSV files here
+│   └── processed/           ← Generated formula1.csv
+├── sql/                     ← Generated formula1.sql and formula1.db
 ├── run_pipeline.py
 └── README.md
 ```
@@ -106,9 +109,9 @@ f1-etl-pipeline/
 
 | File                     | Description                      |
 | ------------------------ | -------------------------------- |
-| `output/formula1.csv`    | Analytics-ready dataset          |
-| `output/formula1.sql`    | MariaDB import script            |
-| `output/formula1.db`    | SQLite database with indexed formula1 table            |
+| `data/processed/formula1.csv`    | Analytics-ready dataset                          |
+| `sql/formula1.sql`               | MariaDB import script                            |
+| `sql/formula1.db`                | SQLite database with indexed formula1 table      |
 
 ## Sample Data
 
