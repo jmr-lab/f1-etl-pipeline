@@ -2,18 +2,26 @@ from pathlib import Path
 import pandas as pd
 import sqlite3
 
-def get_output_folder() -> Path:
-    """Return the project's output folder and create it if necessary."""
+def get_processed_folder() -> Path:
+    """Return the data/processed folder and create it if necessary."""
     src_folder = Path(__file__).resolve().parent
-    output_folder = src_folder.parent / "output"
-    output_folder.mkdir(parents=True, exist_ok=True)
-    return output_folder
+    processed_folder = src_folder.parent / "data" / "processed"
+    processed_folder.mkdir(parents=True, exist_ok=True)
+    return processed_folder
+
+
+def get_sql_folder() -> Path:
+    """Return the sql folder and create it if necessary."""
+    src_folder = Path(__file__).resolve().parent
+    sql_folder = src_folder.parent / "sql"
+    sql_folder.mkdir(parents=True, exist_ok=True)
+    return sql_folder
 
 
 def save_formula1_csv(formula1: pd.DataFrame) -> None:
     """Save the Formula 1 DataFrame as a CSV file."""
-    output_folder = get_output_folder()
-    output_file = output_folder / "formula1.csv"
+    processed_folder = get_processed_folder()
+    output_file = processed_folder / "formula1.csv"
     
     formula1.to_csv(output_file, index=False)
     print(f"Saved CSV: {output_file} ({len(formula1):,} rows)")
@@ -35,8 +43,8 @@ def sql_value(value):
 def save_formula1_sql(formula1: pd.DataFrame) -> None:
     """Save the Formula 1 DataFrame as a MariaDB-compatible SQL file."""
 
-    output_folder = get_output_folder()
-    output_file = output_folder / "formula1.sql"
+    sql_folder = get_sql_folder()
+    output_file = sql_folder / "formula1.sql"
 
     column_definitions = {
         "resultId": "INT",
@@ -102,8 +110,8 @@ def save_formula1_sql(formula1: pd.DataFrame) -> None:
 def save_formula1_db(formula1: pd.DataFrame) -> None:
     """Save the Formula 1 DataFrame as a SQLite database file."""
 
-    output_folder = get_output_folder()
-    output_file = output_folder / "formula1.db"
+    sql_folder = get_sql_folder()
+    output_file = sql_folder / "formula1.db"
 
     with sqlite3.connect(output_file) as connection:
         formula1.to_sql(
@@ -145,6 +153,12 @@ if __name__ == "__main__":
     from pathlib import Path
 
     output_folder = Path(__file__).resolve().parent.parent / "output"
+    processed_folder = Path(__file__).resolve().parent.parent / "data" / "processed"
+    sql_folder = Path(__file__).resolve().parent.parent / "sql"
+    
+    # Create folders if needed
+    processed_folder.mkdir(parents=True, exist_ok=True)
+    sql_folder.mkdir(parents=True, exist_ok=True)
 
     with open(output_folder / "transformed_data.pkl", "rb") as f:
         formula1 = pickle.load(f)
