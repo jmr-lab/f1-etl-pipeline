@@ -78,7 +78,9 @@ def transform_data(dataframes: dict) -> pd.DataFrame:
     races = dataframes["races"].copy()
     results = dataframes["results"].copy()
     status = dataframes["status"].copy()
-    countries = dataframes["Countries"].copy()
+
+    countries_path = Path(__file__).resolve().parent / "resources" / "countries_lookup.csv"
+    countries = pd.read_csv(countries_path)
 
     # Remove unnecessary columns
     circuits_df = circuits.drop(
