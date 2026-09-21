@@ -38,6 +38,12 @@ def scrape_wikipedia():
     return success_count == len(scrape_results)
 
 
+def keep_digits(value):
+    import re
+    digits = re.sub(r"\D", "", str(value))
+    return int(digits) if digits else None
+
+
 def get_seasons():
     import requests
     
