@@ -56,12 +56,6 @@ jobs:
       - name: Install dependencies
         run: pip install pandas requests lxml beautifulsoup4
       
-      - name: Download scraped data
-        uses: actions/download-artifact@v4
-        with:
-          name: scraped-data
-          path: data/raw
-
       - name: Extract data
         run: python src/extract.py
         
