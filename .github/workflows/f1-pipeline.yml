@@ -28,12 +28,14 @@ jobs:
         run: python src/scrape.py
         continue-on-error: true
       
-      - name: Upload scraped data
-        uses: actions/upload-artifact@v4
-        with:
-          name: scraped-data
-          path: data/raw/*.csv
-          if-no-files-found: warn
+      - name: Commit scraped files
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+          git add data/raw/seasons.csv
+          git diff --cached --quiet || git commit -m "Update seasons.csv via scraper [skip ci]"
+          git push
+        continue-on-error: true
 
   extract:
     runs-on: ubuntu-latest
