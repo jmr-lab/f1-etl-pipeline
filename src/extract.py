@@ -83,8 +83,15 @@ def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
 
 def get_data():
     url = "https://en.wikipedia.org/wiki/List_of_Formula_One_seasons"
-    
-    tables = pd.read_html(url)
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (compatible; TableExtractor/1.0)"
+    }
+
+    response = requests.get(url, headers=headers, timeout=30)
+    response.raise_for_status()
+
+    tables = pd.read_html(io.StringIO(response.text))
     print(f"Found {len(tables)} tables")
 
     for i, table in enumerate(tables):
