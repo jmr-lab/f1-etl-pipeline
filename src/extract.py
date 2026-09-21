@@ -1,7 +1,5 @@
 from pathlib import Path
 import pandas as pd
-import io
-import requests
 
 # Define required input files
 REQUIRED_TABLES = {
@@ -80,25 +78,18 @@ def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
             raise ValueError(f"Failed to parse {csv_file.name}: {e}")
     
     print(f"\nTotal: {len(dataframes)} tables, {total_memory_mb:.2f} MB")
-
-    url = "https://en.wikipedia.org/wiki/List_of_Formula_One_seasons"
-    
-    headers = {
-        "User-Agent": "Mozilla/5.0 (compatible; TableExtractor/1.0)"
-    }
-    
-    response = requests.get(url, headers=headers, timeout=30)
-    response.raise_for_status()
-    
-    tables = pd.read_html(io.StringIO(response.text))
-    
-    print(f"Found {len(tables)} tables")
-    
-    df = tables[0]
-    print(df.head())
-
     return dataframes
 
+
+def get_data():
+    url = "https://en.wikipedia.org/wiki/List_of_Formula_One_seasons"
+    
+    tables = pd.read_html(url)
+    print(f"Found {len(tables)} tables")
+
+    for i, table in enumerate(tables):
+        print(i, table.shape)
+        print(table.columns)
 
 if __name__ == "__main__":
     import pickle
@@ -108,6 +99,7 @@ if __name__ == "__main__":
     output_folder.mkdir(parents=True, exist_ok=True)
 
     dataframes = load_csv_files()
+    get_data()
     output_file = output_folder / "extracted_data.pkl"
     with open(output_file, "wb") as f:
         pickle.dump(dataframes, f)
