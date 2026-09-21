@@ -1,18 +1,19 @@
-# src/scrape_wikipedia.py
+# src/scrape.py
 
 from pathlib import Path
 import logging
 from datetime import datetime
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+import re
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 def scrape_wikipedia():
-    """
-    Scrape Wikipedia for F1 data.
-    Returns True if successful, False otherwise.
-    Never raises exceptions — logs errors and returns False.
-    """
+    """Scrape Wikipedia for F1 data. Returns True if successful, False otherwise."""
     output_folder = Path(__file__).resolve().parent.parent / "data" / "raw"
     output_folder.mkdir(parents=True, exist_ok=True)
     
@@ -29,32 +30,22 @@ def scrape_wikipedia():
         except Exception as e:
             logger.warning(f"Failed to scrape {table_name}: {e}")
             scrape_results[table_name] = "failed"
-            # Don't re-raise — continue with other tables
     
-    # Log summary
     success_count = sum(1 for v in scrape_results.values() if v == "success")
     logger.info(f"Scrape complete: {success_count}/{len(scrape_results)} tables succeeded")
     
     return success_count == len(scrape_results)
 
-
 def keep_digits(value):
-    import re
     digits = re.sub(r"\D", "", str(value))
     return int(digits) if digits else None
 
-
 def get_seasons():
-    import requests
-    
-    from bs4 import BeautifulSoup
-    from urllib.parse import urljoin
-    
     url = "https://en.wikipedia.org/wiki/List_of_Formula_One_seasons"
 
     response = requests.get(
         url,
-        headers={"User-Agent": "WikipediaTableExtractor/1.0"},
+        headers={"User-Agent": "F1ETLScraper/1.0"},
         timeout=30,
     )
     response.raise_for_status()
@@ -64,10 +55,7 @@ def get_seasons():
     target_table = None
 
     for table in soup.find_all("table"):
-        headers = [
-            cell.get_text(" ", strip=True)
-            for cell in table.find_all("th")
-        ]
+        headers = [cell.get_text(" ", strip=True) for cell in table.find_all("th")]
 
         if "Season" in headers:
             target_table = table
@@ -102,12 +90,10 @@ def get_seasons():
         })
     
     df = pd.DataFrame(rows)
-    
     print(df.to_string(index=False))
 
     return df
 
-
 if __name__ == "__main__":
     success = scrape_wikipedia()
-    exit(0 if success else 0)  # Always exit 0 to avoid blocking pipeline
+    exit(0)  # Always exit 0 to avoid blocking pipeline
