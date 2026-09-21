@@ -126,14 +126,14 @@ def get_data():
         link = first_cell.find("a")
     
         rows.append({
-            "season": first_cell.get_text(" ", strip=True),
-            "season_url": (
+            "year": first_cell.get_text(" ", strip=True),
+            "url": (
                 urljoin(url, link["href"])
                 if link and link.get("href")
                 else None
             ),
-            "second_column": cells[1].get_text(" ", strip=True),
-            "third_column": cells[2].get_text(" ", strip=True),
+            "races": cells[1].get_text(" ", strip=True),
+            "countries": cells[2].get_text(" ", strip=True),
         })
     
     df = pd.DataFrame(rows)
