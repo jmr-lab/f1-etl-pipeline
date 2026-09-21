@@ -81,7 +81,7 @@ def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
     
     print(f"\nTotal: {len(dataframes)} tables, {total_memory_mb:.2f} MB")
 
-    url = "https://en.wikipedia.org/wiki/List_of_countries_by_population"
+    url = "https://en.wikipedia.org/wiki/List_of_Formula_One_seasons"
     
     headers = {
         "User-Agent": "Mozilla/5.0 (compatible; TableExtractor/1.0)"
