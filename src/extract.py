@@ -1,7 +1,5 @@
 from pathlib import Path
 import pandas as pd
-import requests
-import io
 
 # Define required input files
 REQUIRED_TABLES = {
@@ -84,24 +82,64 @@ def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
 
 
 def get_data():
+    import requests
+    
+    from bs4 import BeautifulSoup
+    from urllib.parse import urljoin
+    
     url = "https://en.wikipedia.org/wiki/List_of_Formula_One_seasons"
-
-    headers = {
-        "User-Agent": "Mozilla/5.0 (compatible; TableExtractor/1.0)"
-    }
-
-    response = requests.get(url, headers=headers, timeout=30)
+    
+    response = requests.get(
+        url,
+        headers={"User-Agent": "WikipediaTableExtractor/1.0"},
+        timeout=30,
+    )
     response.raise_for_status()
-
-    tables = pd.read_html(io.StringIO(response.text))
-    print(f"Found {len(tables)} tables")
-
-    for table in tables:
-        if "Season" in table.columns:
-            df = table
+    
+    soup = BeautifulSoup(response.text, "lxml")
+    
+    # Find the table whose header contains "Season"
+    target_table = None
+    
+    for table in soup.find_all("table"):
+        headers = [
+            cell.get_text(" ", strip=True)
+            for cell in table.find_all("th")
+        ]
+    
+        if "Season" in headers:
+            target_table = table
             break
+    
+    if target_table is None:
+        raise ValueError("Could not find the seasons table")
+    
+    rows = []
+    
+    for row in target_table.find_all("tr"):
+        cells = row.find_all("td")
+    
+        if len(cells) < 3:
+            continue
+    
+        first_cell = cells[0]
+        link = first_cell.find("a")
+    
+        rows.append({
+            "season": first_cell.get_text(" ", strip=True),
+            "season_url": (
+                urljoin(url, link["href"])
+                if link and link.get("href")
+                else None
+            ),
+            "second_column": cells[1].get_text(" ", strip=True),
+            "third_column": cells[2].get_text(" ", strip=True),
+        })
+    
+    df = pd.DataFrame(rows)
+    
+    print(df.to_string(index=False))
 
-    print(df.head())
 
 if __name__ == "__main__":
     import pickle
