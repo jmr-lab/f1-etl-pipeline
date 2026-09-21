@@ -21,7 +21,7 @@ def scrape_wikipedia():
     for table_name in ["seasons"]:
         try:
             logger.info(f"Scraping {table_name}...")
-            df = scrape_single_table(table_name)
+            df = get_seasons()
             df.to_csv(output_folder / f"{table_name}.csv", index=False)
             scrape_results[table_name] = "success"
             logger.info(f"Saved {table_name}.csv ({len(df)} rows)")
@@ -36,6 +36,70 @@ def scrape_wikipedia():
     logger.info(f"Scrape complete: {success_count}/{len(scrape_results)} tables succeeded")
     
     return success_count == len(scrape_results)
+
+
+def get_seasons():
+    import requests
+    
+    from bs4 import BeautifulSoup
+    from urllib.parse import urljoin
+    
+    url = "https://en.wikipedia.org/wiki/List_of_Formula_One_seasons"
+
+    response = requests.get(
+        url,
+        headers={"User-Agent": "WikipediaTableExtractor/1.0"},
+        timeout=30,
+    )
+    response.raise_for_status()
+
+    soup = BeautifulSoup(response.text, "lxml")
+
+    target_table = None
+
+    for table in soup.find_all("table"):
+        headers = [
+            cell.get_text(" ", strip=True)
+            for cell in table.find_all("th")
+        ]
+
+        if "Season" in headers:
+            target_table = table
+            break
+
+    if target_table is None:
+        raise ValueError("Could not find the seasons table")
+
+    rows = []
+    
+    for row in target_table.find_all("tr"):
+        cells = row.find_all(["th", "td"])
+    
+        if len(cells) < 4:
+            continue
+    
+        if cells[0].get_text(" ", strip=True) == "Season":
+            continue
+    
+        first_cell = cells[0]
+        link = first_cell.find("a")
+    
+        rows.append({
+            "year": keep_digits(first_cell.get_text(" ", strip=True)),
+            "url": (
+                urljoin(url, link["href"])
+                if link and link.get("href")
+                else None
+            ),
+            "races": keep_digits(cells[1].get_text(" ", strip=True)),
+            "countries": keep_digits(cells[2].get_text(" ", strip=True)),
+        })
+    
+    df = pd.DataFrame(rows)
+    
+    print(df.to_string(index=False))
+
+    return df
 
 
 if __name__ == "__main__":
