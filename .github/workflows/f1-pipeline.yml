@@ -16,6 +16,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Install dependencies
+        run: pip install pandas requests lxml beautifulsoup4
+
       - name: Scrape Wikipedia for fresh data
         run: python src/scrape.py
         continue-on-error: true
