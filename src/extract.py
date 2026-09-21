@@ -96,9 +96,12 @@ def get_data():
     tables = pd.read_html(io.StringIO(response.text))
     print(f"Found {len(tables)} tables")
 
-    for i, table in enumerate(tables):
-        print(i, table.shape)
-        print(table.columns)
+    for table in tables:
+        if "Season" in table.columns:
+            df = table
+            break
+
+    print(df.head())
 
 if __name__ == "__main__":
     import pickle
