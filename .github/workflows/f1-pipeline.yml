@@ -28,7 +28,7 @@ jobs:
           python-version: '3.11'
       
       - name: Install dependencies
-        run: pip install pandas
+        run: pip install pandas requests
       
       - name: Extract data
         run: python src/extract.py
