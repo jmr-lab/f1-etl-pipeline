@@ -16,6 +16,11 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
       - name: Install dependencies
         run: pip install pandas requests lxml beautifulsoup4
 
@@ -29,13 +34,7 @@ jobs:
           name: scraped-data
           path: data/raw/*.csv
           if-no-files-found: warn
-      
-      - name: Verify cached data exists
-        run: |
-          if [ ! -d "data/raw" ] || [ -z "$(ls -A data/raw)" ]; then
-            echo "No fresh scrape found. Check if existing data/raw files exist."
-          fi
-          
+
   extract:
     runs-on: ubuntu-latest
     needs: scrape
