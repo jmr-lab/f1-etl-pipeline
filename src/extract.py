@@ -81,6 +81,11 @@ def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
     return dataframes
 
 
+def keep_digits(value):
+    import re
+    digits = re.sub(r"\D", "", str(value))
+    return int(digits) if digits else None
+    
 def get_data():
     import requests
     
@@ -114,34 +119,32 @@ def get_data():
         raise ValueError("Could not find the seasons table")
 
     rows = []
-
+    
     for row in target_table.find_all("tr"):
-        # Include both th and td cells
         cells = row.find_all(["th", "td"])
-
+    
         if len(cells) < 4:
             continue
-
-        # Skip the header row
+    
         if cells[0].get_text(" ", strip=True) == "Season":
             continue
-
+    
         first_cell = cells[0]
         link = first_cell.find("a")
-
+    
         rows.append({
-            "year": first_cell.get_text(" ", strip=True),
+            "year": keep_digits(first_cell.get_text(" ", strip=True)),
             "url": (
                 urljoin(url, link["href"])
                 if link and link.get("href")
                 else None
             ),
-            "races": cells[1].get_text(" ", strip=True),
-            "countries": cells[2].get_text(" ", strip=True),
+            "races": keep_digits(cells[1].get_text(" ", strip=True)),
+            "countries": keep_digits(cells[2].get_text(" ", strip=True)),
         })
-
+    
     df = pd.DataFrame(rows)
-
+    
     print(df.to_string(index=False))
 
     return df
