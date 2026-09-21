@@ -1,5 +1,6 @@
 from pathlib import Path
 import pandas as pd
+import requests
 
 # Define required input files
 REQUIRED_TABLES = {
