@@ -88,43 +88,47 @@ def get_data():
     from urllib.parse import urljoin
     
     url = "https://en.wikipedia.org/wiki/List_of_Formula_One_seasons"
-    
+
     response = requests.get(
         url,
         headers={"User-Agent": "WikipediaTableExtractor/1.0"},
         timeout=30,
     )
     response.raise_for_status()
-    
+
     soup = BeautifulSoup(response.text, "lxml")
-    
-    # Find the table whose header contains "Season"
+
     target_table = None
-    
+
     for table in soup.find_all("table"):
         headers = [
             cell.get_text(" ", strip=True)
             for cell in table.find_all("th")
         ]
-    
+
         if "Season" in headers:
             target_table = table
             break
-    
+
     if target_table is None:
         raise ValueError("Could not find the seasons table")
-    
+
     rows = []
-    
+
     for row in target_table.find_all("tr"):
-        cells = row.find_all("td")
-    
-        if len(cells) < 3:
+        # Include both th and td cells
+        cells = row.find_all(["th", "td"])
+
+        if len(cells) < 4:
             continue
-    
+
+        # Skip the header row
+        if cells[0].get_text(" ", strip=True) == "Season":
+            continue
+
         first_cell = cells[0]
         link = first_cell.find("a")
-    
+
         rows.append({
             "year": first_cell.get_text(" ", strip=True),
             "url": (
@@ -135,10 +139,12 @@ def get_data():
             "races": cells[1].get_text(" ", strip=True),
             "countries": cells[2].get_text(" ", strip=True),
         })
-    
+
     df = pd.DataFrame(rows)
-    
+
     print(df.to_string(index=False))
+
+    return df
 
 
 if __name__ == "__main__":
