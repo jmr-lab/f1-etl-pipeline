@@ -32,10 +32,10 @@ def scrape_wikipedia():
             output_file = output_folder / f"{table_name}.csv"
             df.to_csv(output_file, index=False)
             scrape_results[table_name] = "success"
-            logger.info(f"✓ Saved {table_name}.csv ({len(df)} rows, {output_file.stat().st_size / 1024:.1f} KB)")
+            logger.info(f"Saved {table_name}.csv ({len(df)} rows, {output_file.stat().st_size / 1024:.1f} KB)")
             
         except Exception as e:
-            logger.warning(f"✗ Failed to scrape {table_name}: {e}")
+            logger.warning(f"Failed to scrape {table_name}: {e}")
             scrape_results[table_name] = "failed"
     
     # Log summary
@@ -228,6 +228,8 @@ def get_drivers():
     df = pd.DataFrame(rows)
     logger.info(f"Extracted {len(df)} drivers from Wikipedia")
     
+    print(df.to_string(index=False))
+
     # Verify uniqueness of driverRef
     duplicates = df[df.duplicated(subset=['driverRef'], keep=False)]
     if not duplicates.empty:
