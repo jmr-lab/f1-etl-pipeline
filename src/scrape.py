@@ -57,6 +57,7 @@ def get_seasons():
     try:
         response = requests.get(
             api_url,
+            params={"limit": 200},
             headers={"User-Agent": f"F1ETLScraper/{version}"},
             timeout=30,
         )
