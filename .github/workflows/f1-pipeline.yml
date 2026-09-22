@@ -32,8 +32,8 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add data/raw/seasons.csv
-          git diff --cached --quiet || git commit -m "Update seasons.csv via scraper [skip ci]"
+          git add data/raw/*.csv
+          git diff --cached --quiet || git commit -m "Update F1 raw data via scraper [skip ci]"
           git push
         continue-on-error: true
 
