@@ -145,28 +145,10 @@ def get_races() -> pd.DataFrame:
         record_type="Race"
     )
 
-def get_grid() -> pd.DataFrame:
-    return fetch_ergast_data(
-        endpoint_url="https://api.jolpi.ca/ergast/f1/grid/",
-        record_type="Grid"
-    )
-
 def get_results() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/results/",
         record_type="Result"
-    )
-
-def get_podiums() -> pd.DataFrame:
-    return fetch_ergast_data(
-        endpoint_url="https://api.jolpi.ca/ergast/f1/podiums/",
-        record_type="Podium"
-    )
-
-def get_fastest_laps() -> pd.DataFrame:
-    return fetch_ergast_data(
-        endpoint_url="https://api.jolpi.ca/ergast/f1/fastest/",
-        record_type="Fastest"
     )
 
 def get_standings_drivers() -> pd.DataFrame:
@@ -214,10 +196,7 @@ def scrape_all() -> bool:
         "constructors": get_constructors,
         "circuits": get_circuits,
         "races": get_races,
-        "grid": get_grid,
         "results": get_results,
-        "podiums": get_podiums,
-        "fastest_laps": get_fastest_laps,
         "driver_standings": get_standings_drivers,
         "constructor_standings": get_standings_constructors,
         "qualifying": get_qualifying,
