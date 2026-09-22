@@ -1,242 +1,256 @@
 # src/scrape.py
 
 from pathlib import Path
-import logging
-from datetime import datetime
 import pandas as pd
 import requests
-from bs4 import BeautifulSoup
-from urllib.parse import urljoin
-import re
+import time
+from datetime import datetime
 
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
+    """
+    Generic function to fetch all records from Ergast API endpoint.
+    
+    Args:
+        endpoint_url: The base API URL (e.g., 'https://api.jolpi.ca/ergast/f1/seasons/')
+        record_type: The type name used in the JSON response (e.g., 'Season', 'Driver', 'Constructor')
+    
+    Returns:
+        pd.DataFrame with all records and all available fields as text
+    """
+    api_base = endpoint_url.rstrip('/')
+    version = "1.0.0"
+    
+    # Step 1: Get total count with a minimal request
+    try:
+        print(f"Fetching metadata from {api_base}...")
+        meta_response = requests.get(
+            api_base,
+            headers={"User-Agent": f"F1ETLScraper/{version}"},
+            timeout=30,
+        )
+        meta_response.raise_for_status()
+        meta_data = meta_response.json()
+        
+        # Extract total from MRData.total
+        total = int(meta_data.get("MRData", {}).get("total", 0))
+        
+        if total == 0:
+            print(f"WARNING: No records found for {record_type}")
+            return pd.DataFrame()
+        
+        print(f"Total {record_type}(s) available: {total}")
+        
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(f"Failed to fetch metadata from Ergast API: {e}")
+    except ValueError as e:
+        raise RuntimeError(f"Failed to parse JSON metadata: {e}")
+    
+    # Wait before fetching actual data (respect rate limits)
+    time.sleep(1)
+    
+    # Step 2: Fetch all records with limit=total
+    try:
+        print(f"Fetching all {total} {record_type}(s)...")
+        data_response = requests.get(
+            api_base,
+            params={"limit": total},
+            headers={"User-Agent": f"F1ETLScraper/{version}"},
+            timeout=60,
+        )
+        data_response.raise_for_status()
+        
+        data = data_response.json()
+        
+        # Extract the table - look for any key ending with "Table"
+        mrdata = data.get("MRData", {})
+        table_key = None
+        table_data = None
+        
+        for key in mrdata.keys():
+            if key.endswith("Table"):
+                table_key = key
+                table_data = mrdata[key].get(record_type + "s", [])
+                break
+        
+        if table_data is None or not table_data:
+            print(f"WARNING: No table data found for {record_type} in {table_key}")
+            return pd.DataFrame()
+        
+        print(f"API returned {len(table_data)} of {total} {record_type}(s)")
+        
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(f"Failed to fetch {record_type} data from Ergast API: {e}")
+    except ValueError as e:
+        raise RuntimeError(f"Failed to parse JSON data: {e}")
+    
+    # Step 3: Extract all fields from each record (preserving as text)
+    rows = []
+    all_keys = set()
+    
+    for record in table_data:
+        entry = {
+            "_source": "ergast_api",
+            "_fetched_at": datetime.utcnow().isoformat(),
+            "_endpoint": api_base,
+        }
+        
+        for key, value in record.items():
+            entry[key] = str(value) if value is not None else ""
+            all_keys.add(key)
+        
+        rows.append(entry)
+    
+    # Create DataFrame
+    df = pd.DataFrame(rows)
+    
+    # Ensure consistent column order (metadata first, then alphabetically sorted fields)
+    cols = [col for col in df.columns if col.startswith("_")] + sorted([col for col in df.columns if not col.startswith("_")])
+    df = df.reindex(cols, axis=1)
+    
+    print(f"Extracted {len(df)} {record_type}(s) with fields: {[c for c in df.columns if not c.startswith('_')]}")
+    
+    return df
 
-def scrape_wikipedia():
-    """Scrape Wikipedia for F1 data. Returns True if successful, False otherwise."""
+# ============================================================================
+# TABLE-SPECIFIC FETCHERS
+# ============================================================================
+
+def get_seasons() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/seasons/",
+        record_type="Season"
+    )
+
+def get_drivers() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/drivers/",
+        record_type="Driver"
+    )
+
+def get_constructors() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/constructors/",
+        record_type="Constructor"
+    )
+
+def get_circuits() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/circuits/",
+        record_type="Circuit"
+    )
+
+def get_races() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/races/",
+        record_type="Race"
+    )
+
+def get_grid() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/grid/",
+        record_type="Grid"
+    )
+
+def get_results() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/results/",
+        record_type="Result"
+    )
+
+def get_podiums() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/podiums/",
+        record_type="Podium"
+    )
+
+def get_fastest_laps() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/fastest/",
+        record_type="Fastest"
+    )
+
+def get_standings_drivers() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/driverStandings/",
+        record_type="Standing"
+    )
+
+def get_standings_constructors() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/constructorStandings/",
+        record_type="Standing"
+    )
+
+def get_qualifying() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/qualifying/",
+        record_type="Qualifying"
+    )
+
+def get_status() -> pd.DataFrame:
+    return fetch_ergast_data(
+        endpoint_url="https://api.jolpi.ca/ergast/f1/status/",
+        record_type="Status"
+    )
+
+# ============================================================================
+# MAIN ORCHESTRATION
+# ============================================================================
+
+def scrape_all() -> bool:
+    """
+    Main scraping function that orchestrates all Ergast API calls.
+    
+    Returns:
+        bool: True if all tables succeeded, False otherwise
+    """
     output_folder = Path(__file__).resolve().parent.parent / "data" / "raw"
     output_folder.mkdir(parents=True, exist_ok=True)
     
-    scrape_results = {}
+    # Define all tables to fetch from Ergast API
     tables_to_scrape = {
         "seasons": get_seasons,
         "drivers": get_drivers,
         "constructors": get_constructors,
-        # Add more as you implement them
+        "circuits": get_circuits,
+        "races": get_races,
+        "grid": get_grid,
+        "results": get_results,
+        "podiums": get_podiums,
+        "fastest_laps": get_fastest_laps,
+        "driver_standings": get_standings_drivers,
+        "constructor_standings": get_standings_constructors,
+        "qualifying": get_qualifying,
+        "status": get_status,
     }
+    
+    scrape_results = {}
     
     for table_name, scrape_func in tables_to_scrape.items():
         try:
-            logger.info(f"Scraping {table_name}...")
-            df = scrape_func()  # Each function returns its own DataFrame
+            print(f"Fetching {table_name}...")
+            df = scrape_func()
             output_file = output_folder / f"{table_name}.csv"
             df.to_csv(output_file, index=False)
             scrape_results[table_name] = "success"
-            logger.info(f"Saved {table_name}.csv ({len(df)} rows, {output_file.stat().st_size / 1024:.1f} KB)")
+            
+            size_kb = output_file.stat().st_size / 1024 if output_file.exists() else 0
+            print(f"✓ Saved {table_name}.csv ({len(df)} rows, {size_kb:.1f} KB)")
             
         except Exception as e:
-            logger.warning(f"Failed to scrape {table_name}: {e}")
+            print(f"✗ Failed to fetch {table_name}: {e}")
             scrape_results[table_name] = "failed"
+        
+        # Wait before next API call (respect rate limits)
+        time.sleep(1)
     
     # Log summary
     success_count = sum(1 for v in scrape_results.values() if v == "success")
-    logger.info(f"Scrape complete: {success_count}/{len(scrape_results)} tables succeeded")
-
-    return success_count == len(scrape_results)
-
-def get_seasons():
-    """
-    Fetch F1 seasons data from the Ergast API (via Jolpi endpoint).
+    total_count = len(scrape_results)
+    print(f"Scrape complete: {success_count}/{total_count} tables succeeded")
     
-    Returns:
-        pd.DataFrame with columns: year, url
-    """
-    api_url = "https://api.jolpi.ca/ergast/f1/seasons/"
-    version = "1.0.0"
-    
-    try:
-        response = requests.get(
-            api_url,
-            params={"limit": 200},
-            headers={"User-Agent": f"F1ETLScraper/{version}"},
-            timeout=30,
-        )
-        response.raise_for_status()
-        
-        data = response.json()
-        
-        # Navigate the nested JSON structure
-        seasons_list = data.get("MRData", {}).get("SeasonTable", {}).get("Seasons", [])
-        
-        if not seasons_list:
-            logger.warning("No seasons found in API response")
-            return pd.DataFrame(columns=["year", "url"])
-        
-        # Extract year and url from each season entry
-        rows = []
-        for season_entry in seasons_list:
-            rows.append({
-                "year": season_entry.get("season"),
-                "url": season_entry.get("url"),
-            })
-        
-        df = pd.DataFrame(rows)
-        
-        # Convert year to integer for consistency
-        df["year"] = pd.to_numeric(df["year"], errors="coerce").astype("Int64")
-        
-        # Sort by year descending (most recent first, matching your existing CSV)
-        df = df.sort_values(by="year", ascending=False).reset_index(drop=True)
-        
-        logger.info(f"Extracted {len(df)} seasons from Ergast API")
-        
-        return df
-    
-    except requests.exceptions.RequestException as e:
-        raise RuntimeError(f"Failed to fetch seasons from Ergast API: {e}")
-    except ValueError as e:
-        raise RuntimeError(f"Failed to parse JSON response: {e}")
-
-
-def get_driver_id(index):
-    """Generate a unique numeric driver ID based on list index."""
-    return index + 1
-
-def get_code(driver_ref):
-    """
-    Generate F1-style driver code from driver reference.
-    Format: 1 letter from forename + 2-3 letters from surnames
-    
-    Examples:
-        "max_verstappen" -> "VER"
-        "lewis_hamilton" -> "HAM"
-        "charles_leclerc" -> "LEC"
-        "fernando_alonso" -> "ALO"
-    """
-    parts = driver_ref.split("_")
-    forename = parts[0] if len(parts) > 0 else ""
-    surname = parts[1] if len(parts) > 1 else ""
-    
-    # Take first letter of forename
-    code = forename[0].upper() if forename else ""
-    
-    # Take up to 3 letters from surname (or multiple surname parts)
-    surname_parts = surname.replace("-", "_").split("_")
-    for i, part in enumerate(surname_parts[:2]):  # Max 2 surname parts
-        if i == 0:
-            code += part[:2].upper()
-        else:
-            code += part[:1].upper()
-    
-    return code[:4] if len(code) <= 4 else code[:3]  # F1 codes are 3 chars, cap at 4
-
-def get_drivers():
-    """
-    Scrape the List of Formula One drivers table from Wikipedia.
-    
-    Returns:
-        pd.DataFrame with columns: driverId, driverRef, code, forename, surname, nationality, url
-    """
-    url = "https://en.wikipedia.org/wiki/List_of_Formula_One_drivers"
-    
-    response = requests.get(
-        url,
-        headers={"User-Agent": "F1ETLScraper/1.0"},
-        timeout=30,
-    )
-    response.raise_for_status()
-    
-    soup = BeautifulSoup(response.text, "lxml")
-    
-    # Find the table with "Driver name" header
-    target_table = None
-    
-    for table in soup.find_all("table"):
-        headers = [
-            cell.get_text(" ", strip=True).lower()
-            for cell in table.find_all("th")
-        ]
-        
-        # Look for table with "Driver name" in headers
-        if any("driver name" in h for h in headers):
-            target_table = table
-            break
-    
-    if target_table is None:
-        raise ValueError("Could not find the drivers table (expected 'Driver name' header)")
-    
-    rows = []
-    
-    for idx, row in enumerate(target_table.find_all("tr")[1:]):  # Skip header row
-        cells = row.find_all(["th", "td"])
-        
-        # Need at least 2 columns (Driver name, Nationality)
-        if len(cells) < 2:
-            continue
-        
-        # Column 0 = Driver name
-        driver_cell = cells[0]
-        driver_link = driver_cell.find("a")
-        
-        driver_name_full = driver_link.get_text(" ", strip=True) if driver_link else driver_cell.get_text(" ", strip=True).strip()
-        
-        # Skip if no valid driver name
-        if not driver_name_full or len(driver_name_full.split()) < 1:
-            continue
-        
-        # Split into forename and surname
-        name_parts = driver_name_full.split()
-        forename = name_parts[0] if name_parts else ""
-        surname = name_parts[-1] if len(name_parts) > 1 else forename
-        
-        # Generate identifiers
-        driver_ref = f"{forename.lower()}_{surname.lower()}"
-        driver_id = idx + 1
-        code = get_code(driver_ref)
-        
-        # URL from driver link
-        url_path = driver_link["href"] if driver_link and driver_link.get("href") else None
-        driver_url = urljoin(url, url_path) if url_path else None
-        
-        # Column 1 = Nationality
-        nat_cell = cells[1]
-        img = nat_cell.find("img")
-        if img and img.get("alt"):
-            nationality = img.get("alt").replace("Flag of ", "").replace("flagicon ", "")
-        else:
-            nationality = nat_cell.get_text(" ", strip=True)
-        
-        rows.append({
-            "driverId": driver_id,
-            "driverRef": driver_ref,
-            "code": code,
-            "forename": forename,
-            "surname": surname,
-            "nationality": nationality,
-            "url": driver_url,
-        })
-    
-    df = pd.DataFrame(rows)
-    logger.info(f"Extracted {len(df)} drivers from Wikipedia")
-    print(df.to_string(index=False))
-    
-    return df
-
-
-def get_constructors():
-    """Scrape constructors table from Wikipedia."""
-    # Similar to get_seasons()
-    # Return a DataFrame
-    pass
-
-
-def get_circuits():
-    """Scrape circuits table from Wikipedia."""
-    # Similar to get_seasons()
-    # Return a DataFrame
-    pass
-
+    return success_count == total_count
 
 if __name__ == "__main__":
-    success = scrape_wikipedia()
-    exit(0)  # Always exit 0 to avoid blocking pipeline
+    success = scrape_all()
+    exit(0)  # Always exit 0 to avoid blocking pipeline even on partial failure
