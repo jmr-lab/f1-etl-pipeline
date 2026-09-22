@@ -3,10 +3,8 @@ name: F1 ETL Pipeline
 on:
   workflow_dispatch:
   
-  push:
-    paths:
-      - 'data/raw/*.csv'
-      - 'src/**/*.py'
+  schedule:
+    - cron: '0 0 * * 3'
 
 permissions:
   contents: write
