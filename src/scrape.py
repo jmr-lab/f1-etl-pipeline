@@ -18,22 +18,30 @@ def scrape_wikipedia():
     output_folder.mkdir(parents=True, exist_ok=True)
     
     scrape_results = {}
+    tables_to_scrape = {
+        "seasons": get_seasons,
+        "drivers": get_drivers,
+        "constructors": get_constructors,
+        # Add more as you implement them
+    }
     
-    for table_name in ["seasons"]:
+    for table_name, scrape_func in tables_to_scrape.items():
         try:
             logger.info(f"Scraping {table_name}...")
-            df = get_seasons()
-            df.to_csv(output_folder / f"{table_name}.csv", index=False)
+            df = scrape_func()  # Each function returns its own DataFrame
+            output_file = output_folder / f"{table_name}.csv"
+            df.to_csv(output_file, index=False)
             scrape_results[table_name] = "success"
-            logger.info(f"Saved {table_name}.csv ({len(df)} rows)")
+            logger.info(f"✓ Saved {table_name}.csv ({len(df)} rows, {output_file.stat().st_size / 1024:.1f} KB)")
             
         except Exception as e:
-            logger.warning(f"Failed to scrape {table_name}: {e}")
+            logger.warning(f"✗ Failed to scrape {table_name}: {e}")
             scrape_results[table_name] = "failed"
     
+    # Log summary
     success_count = sum(1 for v in scrape_results.values() if v == "success")
     logger.info(f"Scrape complete: {success_count}/{len(scrape_results)} tables succeeded")
-    
+
     return success_count == len(scrape_results)
 
 def keep_digits(value):
@@ -93,6 +101,28 @@ def get_seasons():
     print(df.to_string(index=False))
 
     return df
+
+
+def get_drivers():
+    """Scrape drivers table from Wikipedia."""
+    # Similar to get_seasons()
+    # Return a DataFrame
+    pass
+
+
+def get_constructors():
+    """Scrape constructors table from Wikipedia."""
+    # Similar to get_seasons()
+    # Return a DataFrame
+    pass
+
+
+def get_circuits():
+    """Scrape circuits table from Wikipedia."""
+    # Similar to get_seasons()
+    # Return a DataFrame
+    pass
+
 
 if __name__ == "__main__":
     success = scrape_wikipedia()
