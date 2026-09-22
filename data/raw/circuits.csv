@@ -1,79 +1,79 @@
-circuitId,circuitRef,name,location,country,lat,lng,alt,url
-1,"albert_park","Albert Park Grand Prix Circuit","Melbourne","Australia",-37.8497,144.968,10,"http://en.wikipedia.org/wiki/Melbourne_Grand_Prix_Circuit"
-2,"sepang","Sepang International Circuit","Kuala Lumpur","Malaysia",2.76083,101.738,18,"http://en.wikipedia.org/wiki/Sepang_International_Circuit"
-3,"bahrain","Bahrain International Circuit","Sakhir","Bahrain",26.0325,50.5106,7,"http://en.wikipedia.org/wiki/Bahrain_International_Circuit"
-4,"catalunya","Circuit de Barcelona-Catalunya","Montmeló","Spain",41.57,2.26111,109,"http://en.wikipedia.org/wiki/Circuit_de_Barcelona-Catalunya"
-5,"istanbul","Istanbul Park","Istanbul","Turkey",40.9517,29.405,130,"http://en.wikipedia.org/wiki/Istanbul_Park"
-6,"monaco","Circuit de Monaco","Monte-Carlo","Monaco",43.7347,7.42056,7,"http://en.wikipedia.org/wiki/Circuit_de_Monaco"
-7,"villeneuve","Circuit Gilles Villeneuve","Montreal","Canada",45.5,-73.5228,13,"http://en.wikipedia.org/wiki/Circuit_Gilles_Villeneuve"
-8,"magny_cours","Circuit de Nevers Magny-Cours","Magny Cours","France",46.8642,3.16361,228,"http://en.wikipedia.org/wiki/Circuit_de_Nevers_Magny-Cours"
-9,"silverstone","Silverstone Circuit","Silverstone","UK",52.0786,-1.01694,153,"http://en.wikipedia.org/wiki/Silverstone_Circuit"
-10,"hockenheimring","Hockenheimring","Hockenheim","Germany",49.3278,8.56583,103,"http://en.wikipedia.org/wiki/Hockenheimring"
-11,"hungaroring","Hungaroring","Budapest","Hungary",47.5789,19.2486,264,"http://en.wikipedia.org/wiki/Hungaroring"
-12,"valencia","Valencia Street Circuit","Valencia","Spain",39.4589,-0.331667,4,"http://en.wikipedia.org/wiki/Valencia_Street_Circuit"
-13,"spa","Circuit de Spa-Francorchamps","Spa","Belgium",50.4372,5.97139,401,"http://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps"
-14,"monza","Autodromo Nazionale di Monza","Monza","Italy",45.6156,9.28111,162,"http://en.wikipedia.org/wiki/Autodromo_Nazionale_Monza"
-15,"marina_bay","Marina Bay Street Circuit","Marina Bay","Singapore",1.2914,103.864,18,"http://en.wikipedia.org/wiki/Marina_Bay_Street_Circuit"
-16,"fuji","Fuji Speedway","Oyama","Japan",35.3717,138.927,583,"http://en.wikipedia.org/wiki/Fuji_Speedway"
-17,"shanghai","Shanghai International Circuit","Shanghai","China",31.3389,121.22,5,"http://en.wikipedia.org/wiki/Shanghai_International_Circuit"
-18,"interlagos","Autódromo José Carlos Pace","São Paulo","Brazil",-23.7036,-46.6997,785,"http://en.wikipedia.org/wiki/Aut%C3%B3dromo_Jos%C3%A9_Carlos_Pace"
-19,"indianapolis","Indianapolis Motor Speedway","Indianapolis","USA",39.795,-86.2347,223,"http://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway"
-20,"nurburgring","Nürburgring","Nürburg","Germany",50.3356,6.9475,578,"http://en.wikipedia.org/wiki/N%C3%BCrburgring"
-21,"imola","Autodromo Enzo e Dino Ferrari","Imola","Italy",44.3439,11.7167,37,"http://en.wikipedia.org/wiki/Autodromo_Enzo_e_Dino_Ferrari"
-22,"suzuka","Suzuka Circuit","Suzuka","Japan",34.8431,136.541,45,"http://en.wikipedia.org/wiki/Suzuka_Circuit"
-24,"yas_marina","Yas Marina Circuit","Abu Dhabi","UAE",24.4672,54.6031,3,"http://en.wikipedia.org/wiki/Yas_Marina_Circuit"
-25,"galvez","Autódromo Juan y Oscar Gálvez","Buenos Aires","Argentina",-34.6943,-58.4593,8,"http://en.wikipedia.org/wiki/Aut%C3%B3dromo_Oscar_Alfredo_G%C3%A1lvez"
-26,"jerez","Circuito de Jerez","Jerez de la Frontera","Spain",36.7083,-6.03417,37,"http://en.wikipedia.org/wiki/Circuito_Permanente_de_Jerez"
-27,"estoril","Autódromo do Estoril","Estoril","Portugal",38.7506,-9.39417,130,"http://en.wikipedia.org/wiki/Aut%C3%B3dromo_do_Estoril"
-28,"okayama","Okayama International Circuit","Okayama","Japan",34.915,134.221,266,"http://en.wikipedia.org/wiki/TI_Circuit"
-29,"adelaide","Adelaide Street Circuit","Adelaide","Australia",-34.9272,138.617,58,"http://en.wikipedia.org/wiki/Adelaide_Street_Circuit"
-30,"kyalami","Kyalami","Midrand","South Africa",-25.9894,28.0767,1460,"http://en.wikipedia.org/wiki/Kyalami"
-31,"donington","Donington Park","Castle Donington","UK",52.8306,-1.37528,88,"http://en.wikipedia.org/wiki/Donington_Park"
-32,"rodriguez","Autódromo Hermanos Rodríguez","Mexico City","Mexico",19.4042,-99.0907,2227,"http://en.wikipedia.org/wiki/Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez"
-33,"phoenix","Phoenix street circuit","Phoenix","USA",33.4479,-112.075,345,"http://en.wikipedia.org/wiki/Phoenix_street_circuit"
-34,"ricard","Circuit Paul Ricard","Le Castellet","France",43.2506,5.79167,432,"http://en.wikipedia.org/wiki/Paul_Ricard_Circuit"
-35,"yeongam","Korean International Circuit","Yeongam County","Korea",34.7333,126.417,0,"http://en.wikipedia.org/wiki/Korean_International_Circuit"
-36,"jacarepagua","Autódromo Internacional Nelson Piquet","Rio de Janeiro","Brazil",-22.9756,-43.395,1126,"http://en.wikipedia.org/wiki/Aut%C3%B3dromo_Internacional_Nelson_Piquet"
-37,"detroit","Detroit Street Circuit","Detroit","USA",42.3298,-83.0401,177,"http://en.wikipedia.org/wiki/Detroit_street_circuit"
-38,"brands_hatch","Brands Hatch","Kent","UK",51.3569,0.263056,145,"http://en.wikipedia.org/wiki/Brands_Hatch"
-39,"zandvoort","Circuit Park Zandvoort","Zandvoort","Netherlands",52.3888,4.54092,6,"http://en.wikipedia.org/wiki/Circuit_Zandvoort"
-40,"zolder","Zolder","Heusden-Zolder","Belgium",50.9894,5.25694,36,"http://en.wikipedia.org/wiki/Zolder"
-41,"dijon","Dijon-Prenois","Dijon","France",47.3625,4.89913,484,"http://en.wikipedia.org/wiki/Dijon-Prenois"
-42,"dallas","Fair Park","Dallas","USA",32.7774,-96.7587,139,"http://en.wikipedia.org/wiki/Fair_Park"
-43,"long_beach","Long Beach","California","USA",33.7651,-118.189,12,"http://en.wikipedia.org/wiki/Long_Beach,_California"
-44,"las_vegas","Las Vegas Street Circuit","Nevada","USA",36.1162,-115.174,639,"http://en.wikipedia.org/wiki/Las_Vegas_Street_Circuit"
-45,"jarama","Jarama","Madrid","Spain",40.6171,-3.58558,609,"http://en.wikipedia.org/wiki/Circuito_Permanente_Del_Jarama"
-46,"watkins_glen","Watkins Glen","New York State","USA",42.3369,-76.9272,485,"http://en.wikipedia.org/wiki/Watkins_Glen_International"
-47,"anderstorp","Scandinavian Raceway","Anderstorp","Sweden",57.2653,13.6042,153,"http://en.wikipedia.org/wiki/Scandinavian_Raceway"
-48,"mosport","Mosport International Raceway","Ontario","Canada",44.0481,-78.6756,332,"http://en.wikipedia.org/wiki/Mosport"
-49,"montjuic","Montjuïc","Barcelona","Spain",41.3664,2.15167,79,"http://en.wikipedia.org/wiki/Montju%C3%AFc_circuit"
-50,"nivelles","Nivelles-Baulers","Brussels","Belgium",50.6211,4.32694,139,"http://en.wikipedia.org/wiki/Nivelles-Baulers"
-51,"charade","Charade Circuit","Clermont-Ferrand","France",45.7472,3.03889,790,"http://en.wikipedia.org/wiki/Charade_Circuit"
-52,"tremblant","Circuit Mont-Tremblant","Quebec","Canada",46.1877,-74.6099,214,"http://en.wikipedia.org/wiki/Circuit_Mont-Tremblant"
-53,"essarts","Rouen-Les-Essarts","Rouen","France",49.3306,1.00458,81,"http://en.wikipedia.org/wiki/Rouen-Les-Essarts"
-54,"lemans","Le Mans","Le Mans","France",47.95,0.224231,67,"http://en.wikipedia.org/wiki/Circuit_de_la_Sarthe#Bugatti_Circuit"
-55,"reims","Reims-Gueux","Reims","France",49.2542,3.93083,88,"http://en.wikipedia.org/wiki/Reims-Gueux"
-56,"george","Prince George Circuit","Eastern Cape Province","South Africa",-33.0486,27.8736,15,"http://en.wikipedia.org/wiki/Prince_George_Circuit"
-57,"zeltweg","Zeltweg","Styria","Austria",47.2039,14.7478,676,"http://en.wikipedia.org/wiki/Zeltweg_Airfield"
-58,"aintree","Aintree","Liverpool","UK",53.4769,-2.94056,20,"http://en.wikipedia.org/wiki/Aintree_Motor_Racing_Circuit"
-59,"boavista","Circuito da Boavista","Oporto","Portugal",41.1705,-8.67325,28,"http://en.wikipedia.org/wiki/Circuito_da_Boavista"
-60,"riverside","Riverside International Raceway","California","USA",33.937,-117.273,470,"http://en.wikipedia.org/wiki/Riverside_International_Raceway"
-61,"avus","AVUS","Berlin","Germany",52.4806,13.2514,53,"http://en.wikipedia.org/wiki/AVUS"
-62,"monsanto","Monsanto Park Circuit","Lisbon","Portugal",38.7197,-9.20306,158,"http://en.wikipedia.org/wiki/Monsanto_Park_Circuit"
-63,"sebring","Sebring International Raceway","Florida","USA",27.4547,-81.3483,18,"http://en.wikipedia.org/wiki/Sebring_Raceway"
-64,"ain-diab","Ain Diab","Casablanca","Morocco",33.5786,-7.6875,19,"http://en.wikipedia.org/wiki/Ain-Diab_Circuit"
-65,"pescara","Pescara Circuit","Pescara","Italy",42.475,14.1508,129,"http://en.wikipedia.org/wiki/Pescara_Circuit"
-66,"bremgarten","Circuit Bremgarten","Bern","Switzerland",46.9589,7.40194,551,"http://en.wikipedia.org/wiki/Circuit_Bremgarten"
-67,"pedralbes","Circuit de Pedralbes","Barcelona","Spain",41.3903,2.11667,85,"http://en.wikipedia.org/wiki/Pedralbes_Circuit"
-68,"buddh","Buddh International Circuit","Uttar Pradesh","India",28.3487,77.5331,194,"http://en.wikipedia.org/wiki/Buddh_International_Circuit"
-69,"americas","Circuit of the Americas","Austin","USA",30.1328,-97.6411,161,"http://en.wikipedia.org/wiki/Circuit_of_the_Americas"
-70,"red_bull_ring","Red Bull Ring","Spielberg","Austria",47.2197,14.7647,678,"http://en.wikipedia.org/wiki/Red_Bull_Ring"
-71,"sochi","Sochi Autodrom","Sochi","Russia",43.4057,39.9578,2,"http://en.wikipedia.org/wiki/Sochi_Autodrom"
-73,"baku","Baku City Circuit","Baku","Azerbaijan",40.3725,49.8533,-7,"http://en.wikipedia.org/wiki/Baku_City_Circuit"
-75,"portimao","Autódromo Internacional do Algarve","Portimão","Portugal",37.227,-8.6267,108,"http://en.wikipedia.org/wiki/Algarve_International_Circuit"
-76,"mugello","Autodromo Internazionale del Mugello","Mugello","Italy",43.9975,11.3719,255,"http://en.wikipedia.org/wiki/Mugello_Circuit"
-77,"jeddah","Jeddah Corniche Circuit","Jeddah","Saudi Arabia",21.6319,39.1044,15,"http://en.wikipedia.org/wiki/Jeddah_Street_Circuit"
-78,"losail","Losail International Circuit","Al Daayen","Qatar",25.49,51.4542,12,"http://en.wikipedia.org/wiki/Losail_International_Circuit"
-79,"miami","Miami International Autodrome","Miami","USA",25.9581,-80.2389,0,"http://en.wikipedia.org/wiki/Miami_International_Autodrome"
-80,"vegas","Las Vegas Strip Street Circuit","Las Vegas","United States",36.1147,-115.173,642,"https://en.wikipedia.org/wiki/Las_Vegas_Grand_Prix#Circuit"
-81,"madring","Madring","Madrid","Spain",40.46528,-3.61528,667,"https://en.wikipedia.org/wiki/Madring"
+_source,_fetched_at,_endpoint,Location,circuitId,circuitName,url
+ergast_api,2026-09-22T23:20:34.749916,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '-34.9272', 'long': '138.617', 'locality': 'Adelaide', 'country': 'Australia'}",adelaide,Adelaide Street Circuit,https://en.wikipedia.org/wiki/Adelaide_Street_Circuit
+ergast_api,2026-09-22T23:20:34.749936,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '33.5786', 'long': '-7.6875', 'locality': 'Casablanca', 'country': 'Morocco'}",ain-diab,Ain Diab,https://en.wikipedia.org/wiki/Ain-Diab_Circuit
+ergast_api,2026-09-22T23:20:34.749941,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '53.4769', 'long': '-2.94056', 'locality': 'Liverpool', 'country': 'UK'}",aintree,Aintree,https://en.wikipedia.org/wiki/Aintree_Motor_Racing_Circuit
+ergast_api,2026-09-22T23:20:34.749944,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '-37.8497', 'long': '144.968', 'locality': 'Melbourne', 'country': 'Australia'}",albert_park,Albert Park Grand Prix Circuit,https://en.wikipedia.org/wiki/Albert_Park_Circuit
+ergast_api,2026-09-22T23:20:34.749947,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '30.1328', 'long': '-97.6411', 'locality': 'Austin', 'country': 'USA'}",americas,Circuit of the Americas,https://en.wikipedia.org/wiki/Circuit_of_the_Americas
+ergast_api,2026-09-22T23:20:34.749950,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '57.2653', 'long': '13.6042', 'locality': 'Anderstorp', 'country': 'Sweden'}",anderstorp,Scandinavian Raceway,https://en.wikipedia.org/wiki/Anderstorp_Raceway
+ergast_api,2026-09-22T23:20:34.749954,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '52.4806', 'long': '13.2514', 'locality': 'Berlin', 'country': 'Germany'}",avus,AVUS,https://en.wikipedia.org/wiki/AVUS
+ergast_api,2026-09-22T23:20:34.749962,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '26.0325', 'long': '50.5106', 'locality': 'Sakhir', 'country': 'Bahrain'}",bahrain,Bahrain International Circuit,https://en.wikipedia.org/wiki/Bahrain_International_Circuit
+ergast_api,2026-09-22T23:20:34.749966,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '40.3725', 'long': '49.8533', 'locality': 'Baku', 'country': 'Azerbaijan'}",baku,Baku City Circuit,https://en.wikipedia.org/wiki/Baku_City_Circuit
+ergast_api,2026-09-22T23:20:34.749971,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '41.1705', 'long': '-8.67325', 'locality': 'Oporto', 'country': 'Portugal'}",boavista,Circuito da Boavista,https://en.wikipedia.org/wiki/Circuito_da_Boavista
+ergast_api,2026-09-22T23:20:34.749976,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '51.3569', 'long': '0.263056', 'locality': 'Kent', 'country': 'UK'}",brands_hatch,Brands Hatch,https://en.wikipedia.org/wiki/Brands_Hatch
+ergast_api,2026-09-22T23:20:34.749980,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '46.9589', 'long': '7.40194', 'locality': 'Bern', 'country': 'Switzerland'}",bremgarten,Circuit Bremgarten,https://en.wikipedia.org/wiki/Circuit_Bremgarten
+ergast_api,2026-09-22T23:20:34.749984,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '28.3487', 'long': '77.5331', 'locality': 'Uttar Pradesh', 'country': 'India'}",buddh,Buddh International Circuit,https://en.wikipedia.org/wiki/Buddh_International_Circuit
+ergast_api,2026-09-22T23:20:34.749989,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '41.57', 'long': '2.26111', 'locality': 'Barcelona', 'country': 'Spain'}",catalunya,Circuit de Barcelona-Catalunya,https://en.wikipedia.org/wiki/Circuit_de_Barcelona-Catalunya
+ergast_api,2026-09-22T23:20:34.749993,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '45.7472', 'long': '3.03889', 'locality': 'Clermont-Ferrand', 'country': 'France'}",charade,Charade Circuit,https://en.wikipedia.org/wiki/Circuit_de_Charade
+ergast_api,2026-09-22T23:20:34.749997,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '32.7774', 'long': '-96.7587', 'locality': 'Dallas', 'country': 'USA'}",dallas,Fair Park,https://en.wikipedia.org/wiki/Fair_Park
+ergast_api,2026-09-22T23:20:34.750002,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '42.3298', 'long': '-83.0401', 'locality': 'Detroit', 'country': 'USA'}",detroit,Detroit Street Circuit,https://en.wikipedia.org/wiki/Detroit_street_circuit
+ergast_api,2026-09-22T23:20:34.750007,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '47.3625', 'long': '4.89913', 'locality': 'Dijon', 'country': 'France'}",dijon,Dijon-Prenois,https://en.wikipedia.org/wiki/Dijon-Prenois
+ergast_api,2026-09-22T23:20:34.750012,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '52.8306', 'long': '-1.37528', 'locality': 'Castle Donington', 'country': 'UK'}",donington,Donington Park,https://en.wikipedia.org/wiki/Donington_Park
+ergast_api,2026-09-22T23:20:34.750016,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '49.3306', 'long': '1.00458', 'locality': 'Rouen', 'country': 'France'}",essarts,Rouen-Les-Essarts,https://en.wikipedia.org/wiki/Rouen-Les-Essarts
+ergast_api,2026-09-22T23:20:34.750020,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '38.7506', 'long': '-9.39417', 'locality': 'Estoril', 'country': 'Portugal'}",estoril,Autódromo do Estoril,https://en.wikipedia.org/wiki/Circuito_do_Estoril
+ergast_api,2026-09-22T23:20:34.750024,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '35.3717', 'long': '138.927', 'locality': 'Oyama', 'country': 'Japan'}",fuji,Fuji Speedway,https://en.wikipedia.org/wiki/Fuji_Speedway
+ergast_api,2026-09-22T23:20:34.750028,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '-34.6943', 'long': '-58.4593', 'locality': 'Buenos Aires', 'country': 'Argentina'}",galvez,Autódromo Juan y Oscar Gálvez,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez
+ergast_api,2026-09-22T23:20:34.750032,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '-33.0486', 'long': '27.8736', 'locality': 'Eastern Cape Province', 'country': 'South Africa'}",george,Prince George Circuit,https://en.wikipedia.org/wiki/Prince_George_Circuit
+ergast_api,2026-09-22T23:20:34.750036,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '49.3278', 'long': '8.56583', 'locality': 'Hockenheim', 'country': 'Germany'}",hockenheimring,Hockenheimring,https://en.wikipedia.org/wiki/Hockenheimring
+ergast_api,2026-09-22T23:20:34.750041,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '47.5789', 'long': '19.2486', 'locality': 'Budapest', 'country': 'Hungary'}",hungaroring,Hungaroring,https://en.wikipedia.org/wiki/Hungaroring
+ergast_api,2026-09-22T23:20:34.750045,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '44.3439', 'long': '11.7167', 'locality': 'Imola', 'country': 'Italy'}",imola,Autodromo Enzo e Dino Ferrari,https://en.wikipedia.org/wiki/Imola_Circuit
+ergast_api,2026-09-22T23:20:34.750049,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '39.795', 'long': '-86.2347', 'locality': 'Indianapolis', 'country': 'USA'}",indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+ergast_api,2026-09-22T23:20:34.750053,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '-23.7036', 'long': '-46.6997', 'locality': 'São Paulo', 'country': 'Brazil'}",interlagos,Autódromo José Carlos Pace,https://en.wikipedia.org/wiki/Interlagos_Circuit
+ergast_api,2026-09-22T23:20:34.750059,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '40.9517', 'long': '29.405', 'locality': 'Istanbul', 'country': 'Turkey'}",istanbul,Istanbul Park,https://en.wikipedia.org/wiki/Istanbul_Park
+ergast_api,2026-09-22T23:20:34.750064,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '-22.9756', 'long': '-43.395', 'locality': 'Rio de Janeiro', 'country': 'Brazil'}",jacarepagua,Autódromo Internacional Nelson Piquet,https://en.wikipedia.org/wiki/Aut%C3%B3dromo_Internacional_Nelson_Piquet
+ergast_api,2026-09-22T23:20:34.750068,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '40.6171', 'long': '-3.58558', 'locality': 'Madrid', 'country': 'Spain'}",jarama,Jarama,https://en.wikipedia.org/wiki/Circuito_del_Jarama
+ergast_api,2026-09-22T23:20:34.750072,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '21.6319', 'long': '39.1044', 'locality': 'Jeddah', 'country': 'Saudi Arabia'}",jeddah,Jeddah Corniche Circuit,https://en.wikipedia.org/wiki/Jeddah_Corniche_Circuit
+ergast_api,2026-09-22T23:20:34.750077,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '36.7083', 'long': '-6.03417', 'locality': 'Jerez de la Frontera', 'country': 'Spain'}",jerez,Circuito de Jerez,https://en.wikipedia.org/wiki/Circuito_de_Jerez
+ergast_api,2026-09-22T23:20:34.750086,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '-25.9894', 'long': '28.0767', 'locality': 'Midrand', 'country': 'South Africa'}",kyalami,Kyalami,https://en.wikipedia.org/wiki/Kyalami
+ergast_api,2026-09-22T23:20:34.750090,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '36.1162', 'long': '-115.174', 'locality': 'Nevada', 'country': 'USA'}",las_vegas,Las Vegas Street Circuit,https://en.wikipedia.org/wiki/Las_Vegas_Strip_Circuit
+ergast_api,2026-09-22T23:20:34.750095,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '47.95', 'long': '0.224231', 'locality': 'Le Mans', 'country': 'France'}",lemans,Le Mans,https://en.wikipedia.org/wiki/Circuit_de_la_Sarthe#Bugatti_Circuit
+ergast_api,2026-09-22T23:20:34.750099,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '33.7651', 'long': '-118.189', 'locality': 'California', 'country': 'USA'}",long_beach,Long Beach,"https://en.wikipedia.org/wiki/Long_Beach,_California"
+ergast_api,2026-09-22T23:20:34.750104,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '25.49', 'long': '51.4542', 'locality': 'Lusail', 'country': 'Qatar'}",losail,Lusail International Circuit,https://en.wikipedia.org/wiki/Lusail_International_Circuit
+ergast_api,2026-09-22T23:20:34.750108,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '40.46528', 'long': '-3.61528', 'locality': 'Madrid', 'country': 'Spain'}",madring,Madring,https://en.wikipedia.org/wiki/Madring
+ergast_api,2026-09-22T23:20:34.750113,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '46.8642', 'long': '3.16361', 'locality': 'Magny Cours', 'country': 'France'}",magny_cours,Circuit de Nevers Magny-Cours,https://en.wikipedia.org/wiki/Circuit_de_Nevers_Magny-Cours
+ergast_api,2026-09-22T23:20:34.750118,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '1.2914', 'long': '103.864', 'locality': 'Marina Bay', 'country': 'Singapore'}",marina_bay,Marina Bay Street Circuit,https://en.wikipedia.org/wiki/Marina_Bay_Street_Circuit
+ergast_api,2026-09-22T23:20:34.750122,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '25.9581', 'long': '-80.2389', 'locality': 'Miami', 'country': 'USA'}",miami,Miami International Autodrome,https://en.wikipedia.org/wiki/Miami_International_Autodrome
+ergast_api,2026-09-22T23:20:34.750126,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '43.7347', 'long': '7.42056', 'locality': 'Monte Carlo', 'country': 'Monaco'}",monaco,Circuit de Monaco,https://en.wikipedia.org/wiki/Circuit_de_Monaco
+ergast_api,2026-09-22T23:20:34.750131,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '38.7197', 'long': '-9.20306', 'locality': 'Lisbon', 'country': 'Portugal'}",monsanto,Monsanto Park Circuit,https://en.wikipedia.org/wiki/Circuito_de_Monsanto
+ergast_api,2026-09-22T23:20:34.750135,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '41.3664', 'long': '2.15167', 'locality': 'Barcelona', 'country': 'Spain'}",montjuic,Montjuïc,https://en.wikipedia.org/wiki/Montju%C3%AFc_circuit
+ergast_api,2026-09-22T23:20:34.750140,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '45.6156', 'long': '9.28111', 'locality': 'Monza', 'country': 'Italy'}",monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit
+ergast_api,2026-09-22T23:20:34.750144,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '44.0481', 'long': '-78.6756', 'locality': 'Ontario', 'country': 'Canada'}",mosport,Mosport International Raceway,https://en.wikipedia.org/wiki/Canadian_Tire_Motorsport_Park
+ergast_api,2026-09-22T23:20:34.750149,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '43.9975', 'long': '11.3719', 'locality': 'Mugello', 'country': 'Italy'}",mugello,Autodromo Internazionale del Mugello,https://en.wikipedia.org/wiki/Mugello_Circuit
+ergast_api,2026-09-22T23:20:34.750153,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '50.6211', 'long': '4.32694', 'locality': 'Brussels', 'country': 'Belgium'}",nivelles,Nivelles-Baulers,https://en.wikipedia.org/wiki/Nivelles-Baulers
+ergast_api,2026-09-22T23:20:34.750157,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '50.3356', 'long': '6.9475', 'locality': 'Nürburg', 'country': 'Germany'}",nurburgring,Nürburgring,https://en.wikipedia.org/wiki/N%C3%BCrburgring
+ergast_api,2026-09-22T23:20:34.750162,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '34.915', 'long': '134.221', 'locality': 'Okayama', 'country': 'Japan'}",okayama,Okayama International Circuit,https://en.wikipedia.org/wiki/Okayama_International_Circuit
+ergast_api,2026-09-22T23:20:34.750166,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '41.3903', 'long': '2.11667', 'locality': 'Barcelona', 'country': 'Spain'}",pedralbes,Circuit de Pedralbes,https://en.wikipedia.org/wiki/Pedralbes_Circuit
+ergast_api,2026-09-22T23:20:34.750173,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '42.475', 'long': '14.1508', 'locality': 'Pescara', 'country': 'Italy'}",pescara,Pescara Circuit,https://en.wikipedia.org/wiki/Pescara_Circuit
+ergast_api,2026-09-22T23:20:34.750177,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '33.4479', 'long': '-112.075', 'locality': 'Phoenix', 'country': 'USA'}",phoenix,Phoenix street circuit,https://en.wikipedia.org/wiki/Phoenix_street_circuit
+ergast_api,2026-09-22T23:20:34.750181,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '37.227', 'long': '-8.6267', 'locality': 'Portimão', 'country': 'Portugal'}",portimao,Autódromo Internacional do Algarve,https://en.wikipedia.org/wiki/Algarve_International_Circuit
+ergast_api,2026-09-22T23:20:34.750185,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '47.2197', 'long': '14.7647', 'locality': 'Spielberg', 'country': 'Austria'}",red_bull_ring,Red Bull Ring,https://en.wikipedia.org/wiki/Red_Bull_Ring
+ergast_api,2026-09-22T23:20:34.750190,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '49.2542', 'long': '3.93083', 'locality': 'Reims', 'country': 'France'}",reims,Reims-Gueux,https://en.wikipedia.org/wiki/Reims-Gueux
+ergast_api,2026-09-22T23:20:34.750194,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '43.2506', 'long': '5.79167', 'locality': 'Le Castellet', 'country': 'France'}",ricard,Circuit Paul Ricard,https://en.wikipedia.org/wiki/Circuit_Paul_Ricard
+ergast_api,2026-09-22T23:20:34.750198,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '33.937', 'long': '-117.273', 'locality': 'California', 'country': 'USA'}",riverside,Riverside International Raceway,https://en.wikipedia.org/wiki/Riverside_International_Raceway
+ergast_api,2026-09-22T23:20:34.750202,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '19.4042', 'long': '-99.0907', 'locality': 'Mexico City', 'country': 'Mexico'}",rodriguez,Autódromo Hermanos Rodríguez,https://en.wikipedia.org/wiki/Aut%C3%B3dromo_Hermanos_Rodr%C3%ADguez
+ergast_api,2026-09-22T23:20:34.750206,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '27.4547', 'long': '-81.3483', 'locality': 'Florida', 'country': 'USA'}",sebring,Sebring International Raceway,https://en.wikipedia.org/wiki/Sebring_International_Raceway
+ergast_api,2026-09-22T23:20:34.750210,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '2.76083', 'long': '101.738', 'locality': 'Kuala Lumpur', 'country': 'Malaysia'}",sepang,Sepang International Circuit,https://en.wikipedia.org/wiki/Sepang_International_Circuit
+ergast_api,2026-09-22T23:20:34.750215,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '31.3389', 'long': '121.22', 'locality': 'Shanghai', 'country': 'China'}",shanghai,Shanghai International Circuit,https://en.wikipedia.org/wiki/Shanghai_International_Circuit
+ergast_api,2026-09-22T23:20:34.750219,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '52.0786', 'long': '-1.01694', 'locality': 'Silverstone', 'country': 'UK'}",silverstone,Silverstone Circuit,https://en.wikipedia.org/wiki/Silverstone_Circuit
+ergast_api,2026-09-22T23:20:34.750224,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '43.4057', 'long': '39.9578', 'locality': 'Sochi', 'country': 'Russia'}",sochi,Sochi Autodrom,https://en.wikipedia.org/wiki/Sochi_Autodrom
+ergast_api,2026-09-22T23:20:34.750228,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '50.4372', 'long': '5.97139', 'locality': 'Spa', 'country': 'Belgium'}",spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+ergast_api,2026-09-22T23:20:34.750233,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '34.8431', 'long': '136.541', 'locality': 'Suzuka', 'country': 'Japan'}",suzuka,Suzuka Circuit,https://en.wikipedia.org/wiki/Suzuka_International_Racing_Course
+ergast_api,2026-09-22T23:20:34.750237,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '46.1877', 'long': '-74.6099', 'locality': 'Quebec', 'country': 'Canada'}",tremblant,Circuit Mont-Tremblant,https://en.wikipedia.org/wiki/Circuit_Mont-Tremblant
+ergast_api,2026-09-22T23:20:34.750244,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '39.4589', 'long': '-0.331667', 'locality': 'Valencia', 'country': 'Spain'}",valencia,Valencia Street Circuit,https://en.wikipedia.org/wiki/Valencia_Street_Circuit
+ergast_api,2026-09-22T23:20:34.750248,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '36.1147', 'long': '-115.173', 'locality': 'Las Vegas', 'country': 'USA'}",vegas,Las Vegas Strip Street Circuit,https://en.wikipedia.org/wiki/Las_Vegas_Grand_Prix#Circuit
+ergast_api,2026-09-22T23:20:34.750253,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '45.5', 'long': '-73.5228', 'locality': 'Montreal', 'country': 'Canada'}",villeneuve,Circuit Gilles Villeneuve,https://en.wikipedia.org/wiki/Circuit_Gilles_Villeneuve
+ergast_api,2026-09-22T23:20:34.750257,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '42.3369', 'long': '-76.9272', 'locality': 'New York State', 'country': 'USA'}",watkins_glen,Watkins Glen,https://en.wikipedia.org/wiki/Watkins_Glen_International
+ergast_api,2026-09-22T23:20:34.750264,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '24.4672', 'long': '54.6031', 'locality': 'Abu Dhabi', 'country': 'UAE'}",yas_marina,Yas Marina Circuit,https://en.wikipedia.org/wiki/Yas_Marina_Circuit
+ergast_api,2026-09-22T23:20:34.750269,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '34.7333', 'long': '126.417', 'locality': 'Yeongam County', 'country': 'Korea'}",yeongam,Korean International Circuit,https://en.wikipedia.org/wiki/Korea_International_Circuit
+ergast_api,2026-09-22T23:20:34.750273,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '52.3888', 'long': '4.54092', 'locality': 'Zandvoort', 'country': 'Netherlands'}",zandvoort,Circuit Park Zandvoort,https://en.wikipedia.org/wiki/Circuit_Zandvoort
+ergast_api,2026-09-22T23:20:34.750278,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '47.2039', 'long': '14.7478', 'locality': 'Styria', 'country': 'Austria'}",zeltweg,Zeltweg,https://en.wikipedia.org/wiki/Zeltweg_Air_Base
+ergast_api,2026-09-22T23:20:34.750283,https://api.jolpi.ca/ergast/f1/circuits,"{'lat': '50.9894', 'long': '5.25694', 'locality': 'Heusden-Zolder', 'country': 'Belgium'}",zolder,Zolder,https://en.wikipedia.org/wiki/Circuit_Zolder
