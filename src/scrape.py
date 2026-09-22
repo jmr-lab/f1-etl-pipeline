@@ -88,11 +88,7 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
     all_keys = set()
     
     for record in table_data:
-        entry = {
-            "_source": "ergast_api",
-            "_fetched_at": datetime.utcnow().isoformat(),
-            "_endpoint": api_base,
-        }
+        entry = {}
         
         for key, value in record.items():
             entry[key] = str(value) if value is not None else ""
@@ -104,7 +100,7 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
     df = pd.DataFrame(rows)
     
     # Ensure consistent column order (metadata first, then alphabetically sorted fields)
-    cols = [col for col in df.columns if col.startswith("_")] + sorted([col for col in df.columns if not col.startswith("_")])
+    cols = sorted([col for col in df.columns])
     df = df.reindex(cols, axis=1)
     
     print(f"Extracted {len(df)} {record_type}(s) with fields: {[c for c in df.columns if not c.startswith('_')]}")
