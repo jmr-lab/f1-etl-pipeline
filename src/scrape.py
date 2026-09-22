@@ -153,67 +153,63 @@ def get_drivers():
     
     soup = BeautifulSoup(response.text, "lxml")
     
-    # Find the main drivers table (look for table with headers containing "Driver")
+    # Find the table with "Driver name" header
     target_table = None
     
     for table in soup.find_all("table"):
         headers = [
-            cell.get_text(" ", strip=True)
+            cell.get_text(" ", strip=True).lower()
             for cell in table.find_all("th")
         ]
         
-        # Look for table with "Driver" in headers
-        if any("driver" in h.lower() for h in headers):
+        # Look for table with "Driver name" in headers
+        if any("driver name" in h for h in headers):
             target_table = table
             break
     
     if target_table is None:
-        raise ValueError("Could not find the drivers table on Wikipedia")
+        raise ValueError("Could not find the drivers table (expected 'Driver name' header)")
     
     rows = []
     
     for idx, row in enumerate(target_table.find_all("tr")[1:]):  # Skip header row
         cells = row.find_all(["th", "td"])
         
-        # Ensure we have enough columns (typically: #, Driver, Nat, etc.)
+        # Need at least 2 columns (Driver name, Nationality)
         if len(cells) < 2:
             continue
         
-        # Extract driver name and url
-        driver_cell = cells[1]  # Usually second column contains driver name
+        # Column 0 = Driver name
+        driver_cell = cells[0]
         driver_link = driver_cell.find("a")
         
-        driver_name_full = driver_link.get_text(" ", strip=True) if driver_link else driver_cell.get_text(" ", strip=True)
+        driver_name_full = driver_link.get_text(" ", strip=True) if driver_link else driver_cell.get_text(" ", strip=True).strip()
+        
+        # Skip if no valid driver name
+        if not driver_name_full or len(driver_name_full.split()) < 1:
+            continue
         
         # Split into forename and surname
-        name_parts = driver_name_full.strip().split()
+        name_parts = driver_name_full.split()
         forename = name_parts[0] if name_parts else ""
-        surname = name_parts[-1] if len(name_parts) > 1 else forename  # Last word is surname
+        surname = name_parts[-1] if len(name_parts) > 1 else forename
         
-        # Generate driverRef (forename_surname, lowercase)
+        # Generate identifiers
         driver_ref = f"{forename.lower()}_{surname.lower()}"
-        
-        # Generate driverId (sequential unique number)
-        driver_id = get_driver_id(idx)
-        
-        # Generate driver code
+        driver_id = idx + 1
         code = get_code(driver_ref)
         
-        # Get URL
+        # URL from driver link
         url_path = driver_link["href"] if driver_link and driver_link.get("href") else None
         driver_url = urljoin(url, url_path) if url_path else None
         
-        # Extract nationality
-        nat_cell = cells[2] if len(cells) > 2 else None
-        if nat_cell:
-            # Try flag image first, then text
-            img = nat_cell.find("img")
-            if img and img.get("alt"):
-                nationality = img.get("alt").replace("Flag of ", "").replace("flagicon ", "")
-            else:
-                nationality = nat_cell.get_text(" ", strip=True)
+        # Column 1 = Nationality
+        nat_cell = cells[1]
+        img = nat_cell.find("img")
+        if img and img.get("alt"):
+            nationality = img.get("alt").replace("Flag of ", "").replace("flagicon ", "")
         else:
-            nationality = None
+            nationality = nat_cell.get_text(" ", strip=True)
         
         rows.append({
             "driverId": driver_id,
@@ -227,13 +223,6 @@ def get_drivers():
     
     df = pd.DataFrame(rows)
     logger.info(f"Extracted {len(df)} drivers from Wikipedia")
-    
-    print(df.to_string(index=False))
-
-    # Verify uniqueness of driverRef
-    duplicates = df[df.duplicated(subset=['driverRef'], keep=False)]
-    if not duplicates.empty:
-        logger.warning(f"Found {len(duplicates)} duplicate driverRefs: {list(duplicates['driverRef'].unique())}")
     
     return df
 
