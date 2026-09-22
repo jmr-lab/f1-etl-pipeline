@@ -14,8 +14,8 @@ This pipeline currently scrapes some data from Wikipedia, with the remaining tab
 ┌─────────────┐    ┌──────────┐    ┌─────────────┐    ┌────────────┐    ┌──────────┐
 │ Scrape Wiki │ →  │ Extract  │ →  │  Transform  │ →  │  Validate  │ →  │   Load   │
 └─────────────┘    └──────────┘    └─────────────┘    └────────────┘    └──────────┘
-      ↓               ↓               ↓                 ↓                ↓
- Wikipedia      10+ CSVs      Unified schema    Quality checks    CSV + SQL + DB
+       ↓                 ↓                 ↓                 ↓                ↓
+ Wikipedia          Raw CSVs        Unified schema     Quality checks    CSV + SQL + DB
 ```
 
 ## Workflow Execution
