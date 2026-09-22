@@ -103,11 +103,137 @@ def get_seasons():
     return df
 
 
+def get_driver_id(index):
+    """Generate a unique numeric driver ID based on list index."""
+    return index + 1
+
+def get_code(driver_ref):
+    """
+    Generate F1-style driver code from driver reference.
+    Format: 1 letter from forename + 2-3 letters from surnames
+    
+    Examples:
+        "max_verstappen" -> "VER"
+        "lewis_hamilton" -> "HAM"
+        "charles_leclerc" -> "LEC"
+        "fernando_alonso" -> "ALO"
+    """
+    parts = driver_ref.split("_")
+    forename = parts[0] if len(parts) > 0 else ""
+    surname = parts[1] if len(parts) > 1 else ""
+    
+    # Take first letter of forename
+    code = forename[0].upper() if forename else ""
+    
+    # Take up to 3 letters from surname (or multiple surname parts)
+    surname_parts = surname.replace("-", "_").split("_")
+    for i, part in enumerate(surname_parts[:2]):  # Max 2 surname parts
+        if i == 0:
+            code += part[:2].upper()
+        else:
+            code += part[:1].upper()
+    
+    return code[:4] if len(code) <= 4 else code[:3]  # F1 codes are 3 chars, cap at 4
+
 def get_drivers():
-    """Scrape drivers table from Wikipedia."""
-    # Similar to get_seasons()
-    # Return a DataFrame
-    pass
+    """
+    Scrape the List of Formula One drivers table from Wikipedia.
+    
+    Returns:
+        pd.DataFrame with columns: driverId, driverRef, code, forename, surname, nationality, url
+    """
+    url = "https://en.wikipedia.org/wiki/List_of_Formula_One_drivers"
+    
+    response = requests.get(
+        url,
+        headers={"User-Agent": "F1ETLScraper/1.0"},
+        timeout=30,
+    )
+    response.raise_for_status()
+    
+    soup = BeautifulSoup(response.text, "lxml")
+    
+    # Find the main drivers table (look for table with headers containing "Driver")
+    target_table = None
+    
+    for table in soup.find_all("table"):
+        headers = [
+            cell.get_text(" ", strip=True)
+            for cell in table.find_all("th")
+        ]
+        
+        # Look for table with "Driver" in headers
+        if any("driver" in h.lower() for h in headers):
+            target_table = table
+            break
+    
+    if target_table is None:
+        raise ValueError("Could not find the drivers table on Wikipedia")
+    
+    rows = []
+    
+    for idx, row in enumerate(target_table.find_all("tr")[1:]):  # Skip header row
+        cells = row.find_all(["th", "td"])
+        
+        # Ensure we have enough columns (typically: #, Driver, Nat, etc.)
+        if len(cells) < 2:
+            continue
+        
+        # Extract driver name and url
+        driver_cell = cells[1]  # Usually second column contains driver name
+        driver_link = driver_cell.find("a")
+        
+        driver_name_full = driver_link.get_text(" ", strip=True) if driver_link else driver_cell.get_text(" ", strip=True)
+        
+        # Split into forename and surname
+        name_parts = driver_name_full.strip().split()
+        forename = name_parts[0] if name_parts else ""
+        surname = name_parts[-1] if len(name_parts) > 1 else forename  # Last word is surname
+        
+        # Generate driverRef (forename_surname, lowercase)
+        driver_ref = f"{forename.lower()}_{surname.lower()}"
+        
+        # Generate driverId (sequential unique number)
+        driver_id = get_driver_id(idx)
+        
+        # Generate driver code
+        code = get_code(driver_ref)
+        
+        # Get URL
+        url_path = driver_link["href"] if driver_link and driver_link.get("href") else None
+        driver_url = urljoin(url, url_path) if url_path else None
+        
+        # Extract nationality
+        nat_cell = cells[2] if len(cells) > 2 else None
+        if nat_cell:
+            # Try flag image first, then text
+            img = nat_cell.find("img")
+            if img and img.get("alt"):
+                nationality = img.get("alt").replace("Flag of ", "").replace("flagicon ", "")
+            else:
+                nationality = nat_cell.get_text(" ", strip=True)
+        else:
+            nationality = None
+        
+        rows.append({
+            "driverId": driver_id,
+            "driverRef": driver_ref,
+            "code": code,
+            "forename": forename,
+            "surname": surname,
+            "nationality": nationality,
+            "url": driver_url,
+        })
+    
+    df = pd.DataFrame(rows)
+    logger.info(f"Extracted {len(df)} drivers from Wikipedia")
+    
+    # Verify uniqueness of driverRef
+    duplicates = df[df.duplicated(subset=['driverRef'], keep=False)]
+    if not duplicates.empty:
+        logger.warning(f"Found {len(duplicates)} duplicate driverRefs: {list(duplicates['driverRef'].unique())}")
+    
+    return df
 
 
 def get_constructors():
