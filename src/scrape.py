@@ -223,6 +223,7 @@ def get_drivers():
     
     df = pd.DataFrame(rows)
     logger.info(f"Extracted {len(df)} drivers from Wikipedia")
+    print(df.to_string(index=False))
     
     return df
 
