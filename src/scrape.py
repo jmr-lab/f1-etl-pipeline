@@ -44,63 +44,57 @@ def scrape_wikipedia():
 
     return success_count == len(scrape_results)
 
-def keep_digits(value):
-    digits = re.sub(r"\D", "", str(value))
-    return int(digits) if digits else None
-
 def get_seasons():
-    url = "https://en.wikipedia.org/wiki/List_of_Formula_One_seasons"
-
-    response = requests.get(
-        url,
-        headers={"User-Agent": "F1ETLScraper/1.0"},
-        timeout=30,
-    )
-    response.raise_for_status()
-
-    soup = BeautifulSoup(response.text, "lxml")
-
-    target_table = None
-
-    for table in soup.find_all("table"):
-        headers = [cell.get_text(" ", strip=True) for cell in table.find_all("th")]
-
-        if "Season" in headers:
-            target_table = table
-            break
-
-    if target_table is None:
-        raise ValueError("Could not find the seasons table")
-
-    rows = []
+    """
+    Fetch F1 seasons data from the Ergast API (via Jolpi endpoint).
     
-    for row in target_table.find_all("tr"):
-        cells = row.find_all(["th", "td"])
+    Returns:
+        pd.DataFrame with columns: year, url
+    """
+    api_url = "https://api.jolpi.ca/ergast/f1/seasons/"
+    version = "1.0.0"
     
-        if len(cells) < 4:
-            continue
+    try:
+        response = requests.get(
+            api_url,
+            headers={"User-Agent": f"F1ETLScraper/{version}"},
+            timeout=30,
+        )
+        response.raise_for_status()
+        
+        data = response.json()
+        
+        # Navigate the nested JSON structure
+        seasons_list = data.get("MRData", {}).get("SeasonTable", {}).get("Seasons", [])
+        
+        if not seasons_list:
+            logger.warning("No seasons found in API response")
+            return pd.DataFrame(columns=["year", "url"])
+        
+        # Extract year and url from each season entry
+        rows = []
+        for season_entry in seasons_list:
+            rows.append({
+                "year": season_entry.get("season"),
+                "url": season_entry.get("url"),
+            })
+        
+        df = pd.DataFrame(rows)
+        
+        # Convert year to integer for consistency
+        df["year"] = pd.to_numeric(df["year"], errors="coerce").astype("Int64")
+        
+        # Sort by year descending (most recent first, matching your existing CSV)
+        df = df.sort_values(by="year", ascending=False).reset_index(drop=True)
+        
+        logger.info(f"Extracted {len(df)} seasons from Ergast API")
+        
+        return df
     
-        if cells[0].get_text(" ", strip=True) == "Season":
-            continue
-    
-        first_cell = cells[0]
-        link = first_cell.find("a")
-    
-        rows.append({
-            "year": keep_digits(first_cell.get_text(" ", strip=True)),
-            "url": (
-                urljoin(url, link["href"])
-                if link and link.get("href")
-                else None
-            ),
-            "races": keep_digits(cells[1].get_text(" ", strip=True)),
-            "countries": keep_digits(cells[2].get_text(" ", strip=True)),
-        })
-    
-    df = pd.DataFrame(rows)
-    print(df.to_string(index=False))
-
-    return df
+    except requests.exceptions.RequestException as e:
+        raise RuntimeError(f"Failed to fetch seasons from Ergast API: {e}")
+    except ValueError as e:
+        raise RuntimeError(f"Failed to parse JSON response: {e}")
 
 
 def get_driver_id(index):
