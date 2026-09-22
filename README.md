@@ -2,20 +2,20 @@
 
 [![F1 ETL Pipeline](https://img.shields.io/github/actions/workflow/status/jmr-lab/f1-etl-pipeline/f1-pipeline.yml?label=F1%20ETL&logo=github)](https://github.com/jmr-lab/f1-etl-pipeline/actions)
 
-An ETL pipeline that transforms raw Ergast F1 CSV data into an analytics-ready dataset for Formula 1 analytics and driver GOAT analysis.
+An ETL pipeline that scrapes Wikipedia for F1 data and transforms it into an analytics-ready dataset for Formula 1 analytics and driver GOAT analysis.
 
 ## Overview
 
-This pipeline ingests raw CSV files from the [Ergast F1 API dataset](https://relational.fel.cvut.cz/dataset/ErgastF1), validates data quality, applies transformations, and outputs a unified `formula1.csv` file. The cleaned dataset feeds the companion [Formula-1 Analytics](https://github.com/jmr-lab/Formula-1) R project for exploratory analysis and GOAT modelling.
+This pipeline currently scrapes some data from Wikipedia, with the remaining tables sourced from the [Ergast F1 API dataset](https://relational.fel.cvut.cz/dataset/ErgastF1). Future releases will migrate all data sources to Wikipedia for better currency. It then validates data quality, applies transformations, and outputs a unified `formula1.csv` file. The cleaned dataset feeds the companion [Formula-1 Analytics](https://github.com/jmr-lab/Formula-1) R project for exploratory analysis and GOAT modelling.
 
 ## Pipeline Architecture
 
 ```
-┌──────────┐    ┌─────────────┐    ┌────────────┐    ┌──────────┐
-│ Extract  │ →  │  Transform  │ →  │  Validate  │ →  │   Load   │
-└──────────┘    └─────────────┘    └────────────┘    └──────────┘
-      ↓               ↓                 ↓                ↓
-   10 CSVs      Unified schema    Quality checks    CSV + SQL + DB
+┌─────────────┐    ┌──────────┐    ┌─────────────┐    ┌────────────┐    ┌──────────┐
+│ Scrape Wiki │ →  │ Extract  │ →  │  Transform  │ →  │  Validate  │ →  │   Load   │
+└─────────────┘    └──────────┘    └─────────────┘    └────────────┘    └──────────┘
+      ↓               ↓               ↓                 ↓                ↓
+ Wikipedia      10+ CSVs      Unified schema    Quality checks    CSV + SQL + DB
 ```
 
 ## Workflow Execution
@@ -28,6 +28,7 @@ Here's an example of the pipeline running successfully:
    
 ## Features
 
+- **Scrape**: Fetches fresh F1 data from Wikipedia (with graceful degradation if scraping fails)
 - **Extract**: Loads 10+ CSV tables from the Ergast F1 dataset with encoding resilience
 - **Transform**: Normalises schemas, merges relationships, calculates derived fields (driver age, cumulative points, image paths)
 - **Validate**: 3 automated quality checks (year range, race winners, status-points consistency)
@@ -41,18 +42,19 @@ The pipeline runs automatically via [GitHub Actions](https://github.com/features
 
 | Stage | Job | Description |
 | ----- | --- | ----------- |
-| 1 | `extract` | Loads the raw CSV files from `data/raw/` and uploads them as a workflow artifact |
-| 2 | `transform` | Builds the unified `formula1` dataset and passes it to the next stage |
-| 3 | `validate` | Runs the data quality checks; the workflow fails if any check fails |
-| 4 | `load` | Generates `data/processed/formula1.csv`, `sql/formula1.sql` and `sql/formula1.db`, then commits them to the repository |
+| 1 | `scrape` | Scrapes Wikipedia for fresh F1 data (optional; pipeline continues if scrape fails) |
+| 2 | `extract` | Loads the raw CSV files from `data/raw/` and uploads them as a workflow artifact |
+| 3 | `transform` | Builds the unified `formula1` dataset and passes it to the next stage |
+| 4 | `validate` | Runs the data quality checks; the workflow fails if any check fails |
+| 5 | `load` | Generates `data/processed/formula1.csv`, `sql/formula1.sql` and `sql/formula1.db`, then commits them to the repository |
 
-Intermediate datasets (`.pkl` files) are passed between jobs as GitHub Actions artifacts and are not stored in the repository.
+The `scrape` job uploads raw CSVs as artifacts; intermediate datasets (`.pkl` files) are passed between remaining jobs as GitHub Actions artifacts and are not stored in the repository.
 
 ### Triggers
 
 The workflow runs:
 
-- **Automatically** on push, when files under `data/raw/` change
+- **Automatically** on push, when files under `data/raw/` change or when `src/scrape.py` is modified
 - **Manually** via the [Run workflow](https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow) button in the Actions tab
 
 ### Running It Yourself
