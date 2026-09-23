@@ -8,14 +8,14 @@ from datetime import datetime
 
 def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
     """
-    Generic function to fetch all records from Ergast API endpoint.
+    Generic function to fetch and flatten all records from Ergast API endpoint.
     
     Args:
-        endpoint_url: The base API URL (e.g., 'https://api.jolpi.ca/ergast/f1/seasons/')
-        record_type: The type name used in the JSON response (e.g., 'Season', 'Driver', 'Constructor')
+        endpoint_url: The base API URL
+        record_type: The type name used in the JSON response
     
     Returns:
-        pd.DataFrame with all records and all available fields as text
+        pd.DataFrame with flattened records (objects → IDs, arrays exploded)
     """
     api_base = endpoint_url.rstrip('/')
     version = "1.0.0"
@@ -31,7 +31,6 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
         meta_response.raise_for_status()
         meta_data = meta_response.json()
         
-        # Extract total from MRData.total
         total = int(meta_data.get("MRData", {}).get("total", 0))
         
         if total == 0:
@@ -45,7 +44,6 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
     except ValueError as e:
         raise RuntimeError(f"Failed to parse JSON metadata: {e}")
     
-    # Wait before fetching actual data (respect rate limits)
     time.sleep(1)
     
     # Step 2: Fetch all records with limit=total
@@ -61,7 +59,6 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
         
         data = data_response.json()
         
-        # Extract the table - look for any key ending with "Table"
         mrdata = data.get("MRData", {})
         table_key = None
         table_data = None
@@ -73,7 +70,7 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
                 break
         
         if table_data is None or not table_data:
-            print(f"WARNING: No table data found for {record_type} in {table_key}")
+            print(f"WARNING: No table data found for {record_type}")
             return pd.DataFrame()
         
         print(f"API returned {len(table_data)} of {total} {record_type}(s)")
@@ -83,27 +80,101 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
     except ValueError as e:
         raise RuntimeError(f"Failed to parse JSON data: {e}")
     
-    # Step 3: Extract all fields from each record (preserving as text)
-    rows = []
-    all_keys = set()
-    
-    for record in table_data:
-        entry = {}
+    # Step 3: Flatten and explode the data
+    def flatten_record(record, prefix=""):
+        """Recursively flatten a record, extracting IDs from objects."""
+        result = {}
         
         for key, value in record.items():
-            entry[key] = str(value) if value is not None else ""
-            all_keys.add(key)
+            new_key = f"{prefix}{key}" if prefix else key
+            
+            if isinstance(value, dict):
+                # Object: extract only the ID field if it exists
+                if "Id" in value:
+                    result[f"{new_key}Id"] = str(value["Id"]) if value["Id"] else ""
+                # Also handle special case of nested Location
+                elif "lat" in value:
+                    for loc_key, loc_value in value.items():
+                        result[f"{new_key}_{loc_key}"] = str(loc_value) if loc_value else ""
+                else:
+                    # For other objects, flatten all fields
+                    result.update(flatten_record(value, f"{new_key}_"))
+            elif isinstance(value, list):
+                # Array: return marker to signal explosion
+                result[new_key] = value
+            elif value is not None:
+                result[new_key] = str(value)
+            else:
+                result[new_key] = ""
         
-        rows.append(entry)
+        return result
+    
+    def explode_arrays(row_dict):
+        """Explode all array fields in a record into multiple rows."""
+        array_fields = [k for k, v in row_dict.items() if isinstance(v, list)]
+        
+        if not array_fields:
+            return [row_dict]
+        
+        # Take first array field to explode (typically QualifyingResults, Results, etc.)
+        first_array = array_fields[0]
+        array_items = row_dict[first_array]
+        
+        # If array is empty, return single row with None/empty values
+        if not array_items:
+            row_copy = {k: ("" if v is None else v) for k, v in row_dict.items()}
+            row_copy[first_array] = None
+            return [row_copy]
+        
+        # For each array item, create a new row with array content merged
+        rows = []
+        for item in array_items:
+            if isinstance(item, dict):
+                # Flatten the array item (extract IDs from nested objects)
+                flattened_item = flatten_record(item)
+                
+                # Merge with parent data (excluding the array field itself)
+                merged_row = {
+                    k: ("" if v is None else v) 
+                    for k, v in row_dict.items() 
+                    if k != first_array and not isinstance(v, list)
+                }
+                merged_row.update(flattened_item)
+                rows.append(merged_row)
+            else:
+                # Non-dict array item (primitive value)
+                merged_row = {
+                    k: ("" if v is None else v) 
+                    for k, v in row_dict.items() 
+                    if k != first_array and not isinstance(v, list)
+                }
+                merged_row[first_array] = str(item)
+                rows.append(merged_row)
+        
+        return rows
+    
+    # Process all top-level records
+    all_rows = []
+    
+    for record in table_data:
+        # First flatten the record (extract IDs from objects)
+        flattened = flatten_record(record)
+        
+        # Then explode any arrays (create multiple rows if needed)
+        exploded_rows = explode_arrays(flattened)
+        all_rows.extend(exploded_rows)
     
     # Create DataFrame
-    df = pd.DataFrame(rows)
+    if not all_rows:
+        return pd.DataFrame()
     
-    # Ensure consistent column order (metadata first, then alphabetically sorted fields)
+    df = pd.DataFrame(all_rows)
+    
+    # Sort columns alphabetically
     cols = sorted([col for col in df.columns])
     df = df.reindex(cols, axis=1)
     
-    print(f"Extracted {len(df)} {record_type}(s) with fields: {[c for c in df.columns if not c.startswith('_')]}")
+    print(f"Extracted {len(df)} rows with fields: {[c for c in df.columns]}")
     
     return df
 
