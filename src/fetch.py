@@ -8,7 +8,7 @@ from datetime import datetime
 
 def fetch_ergast_data(endpoint_url: str, record_type: str, max_per_request: int = 100) -> pd.DataFrame:
     """
-    Generic function to fetch and flatten all records from Ergast API endpoint with pagination.
+    Generic function to fetch and flatten all records from Ergast API endpoint with smart pagination.
     
     Args:
         endpoint_url: The base API URL
@@ -21,40 +21,15 @@ def fetch_ergast_data(endpoint_url: str, record_type: str, max_per_request: int 
     api_base = endpoint_url.rstrip('/')
     version = "1.0.0"
     
-    # Step 1: Get total count with a minimal request
-    try:
-        print(f"Fetching metadata from {api_base}...")
-        meta_response = requests.get(
-            api_base,
-            params={"format": "json"},
-            headers={"User-Agent": f"F1ETLScraper/{version}"},
-            timeout=30,
-        )
-        meta_response.raise_for_status()
-        meta_data = meta_response.json()
-        
-        total = int(meta_data.get("MRData", {}).get("total", 0))
-        
-        if total == 0:
-            print(f"WARNING: No records found for {record_type}")
-            return pd.DataFrame()
-        
-        print(f"Total {record_type}(s) available: {total}")
-        
-    except requests.exceptions.RequestException as e:
-        raise RuntimeError(f"Failed to fetch metadata from Ergast API: {e}")
-    except ValueError as e:
-        raise RuntimeError(f"Failed to parse JSON metadata: {e}")
-    
-    # Step 2: Fetch all records with pagination
     all_records = []
+    total = None
     
     try:
-        print(f"Fetching all {total} {record_type}(s) in batches of {max_per_request}...")
+        print(f"Fetching {record_type}(s) from {api_base}...")
         
         offset = 0
-        while offset < total:
-            batch_limit = min(max_per_request, total - offset)
+        while True:
+            batch_limit = min(max_per_request, 100)  # Keep at 100 per request
             
             data_response = requests.get(
                 api_base,
@@ -67,8 +42,16 @@ def fetch_ergast_data(endpoint_url: str, record_type: str, max_per_request: int 
             data = data_response.json()
             
             mrdata = data.get("MRData", {})
-            table_data = None
             
+            # Extract total from first response only
+            if total is None:
+                total = int(mrdata.get("total", 0))
+                if total == 0:
+                    print(f"WARNING: No records found for {record_type}")
+                    return pd.DataFrame()
+                print(f"Total {record_type}(s) available: {total}")
+            
+            table_data = None
             for key in mrdata.keys():
                 if key.endswith("Table"):
                     table_data = mrdata[key].get(record_type + "s", [])
@@ -78,10 +61,15 @@ def fetch_ergast_data(endpoint_url: str, record_type: str, max_per_request: int 
                 print(f"WARNING: No batch data found for {record_type} at offset {offset}")
                 break
             
-            print(f"  Batch {offset+1}-{offset+len(table_data)} of {total} {record_type}(s)...")
+            current_batch = len(table_data)
+            print(f"  Batch {offset+1}-{offset+current_batch} of {total} {record_type}(s)...")
             all_records.extend(table_data)
             
-            offset += len(table_data)
+            offset += current_batch
+            
+            # Check if we've got all records
+            if offset >= total:
+                break
             
             # Respect rate limits between batches
             time.sleep(1)
@@ -93,7 +81,7 @@ def fetch_ergast_data(endpoint_url: str, record_type: str, max_per_request: int 
     except ValueError as e:
         raise RuntimeError(f"Failed to parse JSON data: {e}")
     
-    # Step 3: Flatten and explode the data
+    # Step 2: Flatten and explode the data
     def flatten_record(record, prefix=""):
         """Recursively flatten a record, extracting IDs from objects."""
         result = {}
