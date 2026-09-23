@@ -246,9 +246,9 @@ def get_status() -> pd.DataFrame:
 # MAIN ORCHESTRATION
 # ============================================================================
 
-def scrape_all() -> bool:
+def fetch_all() -> bool:
     """
-    Main scraping function that orchestrates all Ergast API calls.
+    Main fetching function that orchestrates all Ergast API calls.
     
     Returns:
         bool: True if all tables succeeded, False otherwise
@@ -298,5 +298,5 @@ def scrape_all() -> bool:
     return success_count == total_count
 
 if __name__ == "__main__":
-    success = scrape_all()
+    success = fetch_all()
     exit(0)  # Always exit 0 to avoid blocking pipeline even on partial failure
