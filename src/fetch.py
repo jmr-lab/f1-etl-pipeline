@@ -5,7 +5,37 @@ import requests
 import zipfile
 import shutil
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
+
+def check_data_freshness(output_folder: Path, days_threshold: int = 7) -> tuple[bool, str]:
+    """
+    Check if the data in the output folder is older than the threshold.
+    
+    Args:
+        output_folder: Path to the data/raw folder
+        days_threshold: Number of days after which data is considered stale
+    
+    Returns:
+        tuple: (should_download, message)
+    """
+    if not output_folder.exists():
+        return True, "Output folder does not exist"
+    
+    csv_files = list(output_folder.glob("*.csv"))
+    
+    if not csv_files:
+        return True, "No CSV files found in output folder"
+    
+    # Find the MOST RECENT file by modification time
+    newest_file = max(csv_files, key=lambda f: f.stat().st_mtime)
+    newest_time = datetime.fromtimestamp(newest_file.stat().st_mtime)
+    
+    age_days = (datetime.now() - newest_time).days
+    
+    if age_days < days_threshold:
+        return False, f"Most recent file ({newest_file.name}) is {age_days} day(s) old (threshold: {days_threshold} days)"
+    else:
+        return True, f"Most recent file ({newest_file.name}) is {age_days} day(s) old (threshold: {days_threshold} days)"
 
 def fetch_all() -> bool:
     """
@@ -19,6 +49,21 @@ def fetch_all() -> bool:
     
     # Ensure output folder exists
     output_folder.mkdir(parents=True, exist_ok=True)
+    
+    # Check data freshness before downloading
+    should_download, message = check_data_freshness(output_folder, days_threshold=7)
+    
+    if not should_download:
+        print(message)
+        print("Skipping download - data is still fresh")
+        print(f"{'='*50}")
+        print(f"Database refresh skipped")
+        print(f"{'='*50}")
+        return True
+    
+    print(message)
+    print("Starting download...")
+    print()
     
     temp_zip_path = output_folder / "jolpica_dump.zip"
     extract_temp_folder = output_folder / "_temp_extract"
