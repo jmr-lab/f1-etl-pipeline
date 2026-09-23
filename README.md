@@ -2,33 +2,33 @@
 
 [![F1 ETL Pipeline](https://img.shields.io/github/actions/workflow/status/jmr-lab/f1-etl-pipeline/f1-pipeline.yml?label=F1%20ETL&logo=github)](https://github.com/jmr-lab/f1-etl-pipeline/actions)
 
-An ETL pipeline that scrapes Wikipedia for F1 data and transforms it into an analytics-ready dataset for Formula 1 analytics and driver GOAT analysis.
+An ETL pipeline that downloads the official F1 database dump from [Jolpica](https://api.jolpi.ca/) and transforms it into an analytics-ready dataset for Formula 1 analytics and driver GOAT analysis.
 
 ## Overview
 
-This pipeline currently scrapes some data from Wikipedia, with the remaining tables sourced from the [Ergast F1 API dataset](https://relational.fel.cvut.cz/dataset/ErgastF1). Future releases will migrate all data sources to Wikipedia for better currency. It then validates data quality, applies transformations, and outputs a unified `formula1.csv` file. The cleaned dataset feeds the companion [Formula-1 Analytics](https://github.com/jmr-lab/Formula-1) R project for exploratory analysis and GOAT modelling.
+This pipeline downloads a compressed CSV archive from the Jolpica F1 database, extracts all tables, validates data quality, applies transformations, and outputs a unified `formula1.csv` file. The cleaned dataset feeds the companion [Formula-1 Analytics](https://github.com/jmr-lab/Formula-1) R project for exploratory analysis and GOAT modelling.
 
 ## Pipeline Architecture
 
 ```
-┌─────────────┐    ┌──────────┐    ┌─────────────┐    ┌────────────┐    ┌──────────┐
-│ Scrape Wiki │ →  │ Extract  │ →  │  Transform  │ →  │  Validate  │ →  │   Load   │
-└─────────────┘    └──────────┘    └─────────────┘    └────────────┘    └──────────┘
-       ↓                 ↓                 ↓                 ↓                ↓
- Wikipedia          Raw CSVs        Unified schema     Quality checks    CSV + SQL + DB
+┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
+│  Fetch DB   │ →  │   Extract   │ →  │  Transform  │ →  │   Validate  │ →  │    Load     │
+└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
+       ↓                  ↓                   ↓                   ↓                  ↓
+ Jolpica DB         Raw CSVs         Unified schema       Quality checks      CSV + SQL + DB
 ```
 
 ## Workflow Execution
    
 Here's an example of the pipeline running successfully:
    
-![F1 ETL Pipeline workflow execution showing four stages: extract (20s), transform (16s), validate (24s), load (22s)](assets/workflow-execution.png)
+![F1 ETL Pipeline workflow execution showing five stages: fetch (60s), extract (20s), transform (16s), validate (24s), load (22s)](assets/workflow-execution.png)
    
-*Execution times may vary depending on runner configuration.*
+*Execution times may vary depending on runner configuration and network speed.*
    
 ## Features
 
-- **Scrape**: Fetches fresh F1 data from Wikipedia (with graceful degradation if scraping fails)
+- **Fetch**: Downloads the full F1 database dump from Jolpica with automatic freshness checks (skips if data < 7 days old)
 - **Extract**: Loads 10+ CSV tables from the Ergast F1 dataset with encoding resilience
 - **Transform**: Normalises schemas, merges relationships, calculates derived fields (driver age, cumulative points, image paths)
 - **Validate**: 3 automated quality checks (year range, race winners, status-points consistency)
@@ -42,7 +42,7 @@ The pipeline runs automatically via [GitHub Actions](https://github.com/features
 
 | Stage | Job | Description |
 | ----- | --- | ----------- |
-| 1 | `scrape` | Scrapes Wikipedia for fresh F1 data (optional; pipeline continues if scrape fails) |
+| 1 | `fetch` | Downloads the Jolpica database dump (skips if data < 7 days old) |
 | 2 | `extract` | Loads the raw CSV files from `data/raw/` and uploads them as a workflow artifact |
 | 3 | `transform` | Builds the unified `formula1` dataset and passes it to the next stage |
 | 4 | `validate` | Runs the data quality checks; the workflow fails if any check fails |
@@ -54,16 +54,17 @@ The `scrape` job uploads raw CSVs as artifacts; intermediate datasets (`.pkl` fi
 
 The workflow runs:
 
-- **Automatically** on push, when files under `data/raw/` change or when `src/scrape.py` is modified
+- **Weekly** automatically on a scheduled day to refresh the database
 - **Manually** via the [Run workflow](https://docs.github.com/en/actions/managing-workflow-runs/manually-running-a-workflow) button in the Actions tab
 
 ### Running It Yourself
 
 If you fork this repository:
 
-1. Place the Ergast F1 CSV files in the `data/raw/` folder
-2. Trigger the workflow (push a change or use manual dispatch)
-3. The validated outputs will be committed to `data/processed/` and `sql/` once the pipeline completes
+1. Clone the repository locally
+2. Run the fetch script to download the Jolpica database: `python src/fetch.py`
+3. Trigger the workflow (push a change or use manual dispatch)
+4. The validated outputs will be committed to `data/processed/` and `sql/` once the pipeline completes
 
 You can also run the pipeline locally without GitHub Actions:
 
@@ -78,7 +79,7 @@ Clone this repository and ensure Python 3.11+ is installed:
 ```bash
 git clone https://github.com/jmr-lab/f1-etl-pipeline.git
 cd f1-etl-pipeline
-pip install pandas
+pip install pandas requests
 ```
 
 ## Usage
@@ -89,11 +90,18 @@ For development, testing, or offline work:
 python run_pipeline.py
 ```
 
+To manually refresh the raw data:
+
+```bash
+python src/fetch.py
+```
+
 ## Directory Structure
 
 ```
 f1-etl-pipeline/
 ├── src/
+│   ├── fetch.py             ← Downloads Jolpica database dump
 │   ├── extract.py
 │   ├── transform.py
 │   ├── validate.py
@@ -161,7 +169,11 @@ The SQLite database additionally includes two indexes optimised for common queri
 - Python 3.11+
 - pandas (>= 2.0)
 - SQLite (via the built-in sqlite3 module)
-- No external API calls (offline CSV processing)
+- Bulk database download
+
+## Data Source
+
+The pipeline sources all raw data from [Jolpica](https://api.jolpi.ca/), which hosts a maintained copy of the Ergast F1 database in CSV format. The database dump is updated regularly and provides a complete historical dataset from 1950 to the most recent completed season.
 
 ## Related Projects
 
@@ -194,3 +206,20 @@ The pipeline enforces these basic data-quality rules:
 1. **Year Range**: All races must be between 1950 and the current year.
 2. **Race Winners**: Every race (year, round combination) must have at least one winner. The pipeline does not require exactly one winner because the dataset contains three races with two winners.
 3. **Status-Points Consistency**: Drivers marked `Not Qualified` or `Not Classified` must have 0 points. Disqualified drivers are not covered by this validation rule.
+
+## Troubleshooting
+
+### Download Failed
+
+If the Jolpica database download fails:
+
+- Check your internet connection
+- Verify the Jolpica endpoint is accessible: `curl https://api.jolpi.ca/data/dumps/download/delayed/?dump_type=csv`
+- Retry the workflow manually from the Actions tab
+
+### Data Freshness Check
+
+By default, the pipeline skips downloading if the most recent CSV file is less than 7 days old. To force a refresh:
+
+- Delete all CSV files in `data/raw/` and run again, or
+- Modify `days_threshold` in `src/fetch.py` to a lower value
