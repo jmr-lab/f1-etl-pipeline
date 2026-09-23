@@ -95,10 +95,11 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
                 # Also handle special case of nested Location
                 elif "lat" in value:
                     for loc_key, loc_value in value.items():
-                        result[f"{new_key}_{loc_key}"] = str(loc_value) if loc_value else ""
+                        # No prefix - just use the field name directly
+                        result[loc_key] = str(loc_value) if loc_value else ""
                 else:
-                    # For other objects, flatten all fields
-                    result.update(flatten_record(value, f"{new_key}_"))
+                    # For other objects, flatten all fields without prefix
+                    result.update(flatten_record(value))
             elif isinstance(value, list):
                 # Array: return marker to signal explosion
                 result[new_key] = value
