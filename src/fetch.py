@@ -6,13 +6,14 @@ import requests
 import time
 from datetime import datetime
 
-def fetch_ergast_data(endpoint_url: str, record_type: str, max_per_request: int = 100) -> pd.DataFrame:
+def fetch_ergast_data(endpoint_url: str, record_type: str, table_name: str, max_per_request: int = 100) -> pd.DataFrame:
     """
     Generic function to fetch and flatten all records from Ergast API endpoint with smart pagination.
     
     Args:
         endpoint_url: The base API URL
         record_type: The type name used in the JSON response
+        table_name: The Table key in MRData (e.g., "RaceTable", "DriversTable")
         max_per_request: Max records per API call (default 100 for Jolpica/Ergast)
     
     Returns:
@@ -51,30 +52,23 @@ def fetch_ergast_data(endpoint_url: str, record_type: str, max_per_request: int 
                     return pd.DataFrame()
                 print(f"Total {record_type}(s) available: {total}")
             
-            # Find the table data - look for any key ending with "Table"
+            # Find the table data using the specified table_name
             table_data = None
-            for key in mrdata.keys():
-                if key.endswith("Table"):
-                    table_content = mrdata[key]
-                    
-                    # Try different variations of the record type key
-                    possible_keys = [
-                        record_type + "s",      # plural (e.g., "Drivers")
-                        record_type,             # singular (e.g., "Status")
-                        record_type.capitalize() + "s",  # Capitalized plural (e.g., "Drivers")
-                        record_type.capitalize(),       # Capitalized singular (e.g., "Status")
-                    ]
-                    
-                    for possible_key in possible_keys:
-                        if possible_key in table_content:
-                            table_data = table_content[possible_key]
-                            break
-                    
-                    if table_data is not None:
-                        break
             
-            if table_data is None or not table_data:
-                print(f"WARNING: No batch data found for {record_type} at offset {offset}")
+            if table_name and table_name in mrdata:
+                table_content = mrdata[table_name]
+                
+                # Find the first array value in the table (the actual records)
+                for array_key in table_content.keys():
+                    if isinstance(table_content[array_key], list):
+                        table_data = table_content[array_key]
+                        break
+                
+                if table_data is None or not table_data:
+                    print(f"WARNING: No array found in {table_name}")
+                    break
+            else:
+                print(f"ERROR: {table_name} not found in MRData")
                 break
             
             current_batch = len(table_data)
@@ -203,61 +197,71 @@ def fetch_ergast_data(endpoint_url: str, record_type: str, max_per_request: int 
 def get_seasons() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/seasons/",
-        record_type="Season"
+        record_type="Season",
+        table_name="SeasonTable"
     )
 
 def get_drivers() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/drivers/",
-        record_type="Driver"
+        record_type="Driver",
+        table_name="DriversTable"
     )
 
 def get_constructors() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/constructors/",
-        record_type="Constructor"
+        record_type="Constructor",
+        table_name="ConstructorsTable"
     )
 
 def get_circuits() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/circuits/",
-        record_type="Circuit"
+        record_type="Circuit",
+        table_name="CircuitsTable"
     )
 
 def get_races() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/races/",
-        record_type="Race"
+        record_type="Race",
+        table_name="RaceTable"
     )
 
 def get_results() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/results/",
-        record_type="Result"
+        record_type="Result",
+        table_name="RaceTable"
     )
 
 def get_standings_drivers() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/driverStandings/",
-        record_type="Standing"
+        record_type="Standing",
+        table_name="DriverStandingsTable"
     )
 
 def get_standings_constructors() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/constructorStandings/",
-        record_type="Standing"
+        record_type="Standing",
+        table_name="ConstructorStandingsTable"
     )
 
 def get_qualifying() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/qualifying/",
-        record_type="Qualifying"
+        record_type="Qualifying",
+        table_name="RaceTable"
     )
 
 def get_status() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/status/",
-        record_type="Status"
+        record_type="Status",
+        table_name="StatusTable"
     )
 
 # ============================================================================
