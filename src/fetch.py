@@ -205,21 +205,21 @@ def get_drivers() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/drivers/",
         record_type="Driver",
-        table_name="DriversTable"
+        table_name="DriverTable"
     )
 
 def get_constructors() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/constructors/",
         record_type="Constructor",
-        table_name="ConstructorsTable"
+        table_name="ConstructorTable"
     )
 
 def get_circuits() -> pd.DataFrame:
     return fetch_ergast_data(
         endpoint_url="https://api.jolpi.ca/ergast/f1/circuits/",
         record_type="Circuit",
-        table_name="CircuitsTable"
+        table_name="CircuitTable"
     )
 
 def get_races() -> pd.DataFrame:
