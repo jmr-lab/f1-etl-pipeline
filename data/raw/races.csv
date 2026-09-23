@@ -1,101 +1,101 @@
-Circuit_Location_country,Circuit_Location_lat,Circuit_Location_locality,Circuit_Location_long,Circuit_circuitId,Circuit_circuitName,Circuit_url,date,raceName,round,season,url
-UK,52.0786,Silverstone,-1.01694,silverstone,Silverstone Circuit,https://en.wikipedia.org/wiki/Silverstone_Circuit,1950-05-13,British Grand Prix,1,1950,https://en.wikipedia.org/wiki/1950_British_Grand_Prix
-Monaco,43.7347,Monte Carlo,7.42056,monaco,Circuit de Monaco,https://en.wikipedia.org/wiki/Circuit_de_Monaco,1950-05-21,Monaco Grand Prix,2,1950,https://en.wikipedia.org/wiki/1950_Monaco_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1950-05-30,Indianapolis 500,3,1950,https://en.wikipedia.org/wiki/1950_Indianapolis_500
-Switzerland,46.9589,Bern,7.40194,bremgarten,Circuit Bremgarten,https://en.wikipedia.org/wiki/Circuit_Bremgarten,1950-06-04,Swiss Grand Prix,4,1950,https://en.wikipedia.org/wiki/1950_Swiss_Grand_Prix
-Belgium,50.4372,Spa,5.97139,spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps,1950-06-18,Belgian Grand Prix,5,1950,https://en.wikipedia.org/wiki/1950_Belgian_Grand_Prix
-France,49.2542,Reims,3.93083,reims,Reims-Gueux,https://en.wikipedia.org/wiki/Reims-Gueux,1950-07-02,French Grand Prix,6,1950,https://en.wikipedia.org/wiki/1950_French_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1950-09-03,Italian Grand Prix,7,1950,https://en.wikipedia.org/wiki/1950_Italian_Grand_Prix
-Switzerland,46.9589,Bern,7.40194,bremgarten,Circuit Bremgarten,https://en.wikipedia.org/wiki/Circuit_Bremgarten,1951-05-27,Swiss Grand Prix,1,1951,https://en.wikipedia.org/wiki/1951_Swiss_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1951-05-30,Indianapolis 500,2,1951,https://en.wikipedia.org/wiki/1951_Indianapolis_500
-Belgium,50.4372,Spa,5.97139,spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps,1951-06-17,Belgian Grand Prix,3,1951,https://en.wikipedia.org/wiki/1951_Belgian_Grand_Prix
-France,49.2542,Reims,3.93083,reims,Reims-Gueux,https://en.wikipedia.org/wiki/Reims-Gueux,1951-07-01,French Grand Prix,4,1951,https://en.wikipedia.org/wiki/1951_French_Grand_Prix
-UK,52.0786,Silverstone,-1.01694,silverstone,Silverstone Circuit,https://en.wikipedia.org/wiki/Silverstone_Circuit,1951-07-14,British Grand Prix,5,1951,https://en.wikipedia.org/wiki/1951_British_Grand_Prix
-Germany,50.3356,Nürburg,6.9475,nurburgring,Nürburgring,https://en.wikipedia.org/wiki/N%C3%BCrburgring,1951-07-29,German Grand Prix,6,1951,https://en.wikipedia.org/wiki/1951_German_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1951-09-16,Italian Grand Prix,7,1951,https://en.wikipedia.org/wiki/1951_Italian_Grand_Prix
-Spain,41.3903,Barcelona,2.11667,pedralbes,Circuit de Pedralbes,https://en.wikipedia.org/wiki/Pedralbes_Circuit,1951-10-28,Spanish Grand Prix,8,1951,https://en.wikipedia.org/wiki/1951_Spanish_Grand_Prix
-Switzerland,46.9589,Bern,7.40194,bremgarten,Circuit Bremgarten,https://en.wikipedia.org/wiki/Circuit_Bremgarten,1952-05-18,Swiss Grand Prix,1,1952,https://en.wikipedia.org/wiki/1952_Swiss_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1952-05-30,Indianapolis 500,2,1952,https://en.wikipedia.org/wiki/1952_Indianapolis_500
-Belgium,50.4372,Spa,5.97139,spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps,1952-06-22,Belgian Grand Prix,3,1952,https://en.wikipedia.org/wiki/1952_Belgian_Grand_Prix
-France,49.3306,Rouen,1.00458,essarts,Rouen-Les-Essarts,https://en.wikipedia.org/wiki/Rouen-Les-Essarts,1952-07-06,French Grand Prix,4,1952,https://en.wikipedia.org/wiki/1952_French_Grand_Prix
-UK,52.0786,Silverstone,-1.01694,silverstone,Silverstone Circuit,https://en.wikipedia.org/wiki/Silverstone_Circuit,1952-07-19,British Grand Prix,5,1952,https://en.wikipedia.org/wiki/1952_British_Grand_Prix
-Germany,50.3356,Nürburg,6.9475,nurburgring,Nürburgring,https://en.wikipedia.org/wiki/N%C3%BCrburgring,1952-08-03,German Grand Prix,6,1952,https://en.wikipedia.org/wiki/1952_German_Grand_Prix
-Netherlands,52.3888,Zandvoort,4.54092,zandvoort,Circuit Park Zandvoort,https://en.wikipedia.org/wiki/Circuit_Zandvoort,1952-08-17,Dutch Grand Prix,7,1952,https://en.wikipedia.org/wiki/1952_Dutch_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1952-09-07,Italian Grand Prix,8,1952,https://en.wikipedia.org/wiki/1952_Italian_Grand_Prix
-Argentina,-34.6943,Buenos Aires,-58.4593,galvez,Autódromo Juan y Oscar Gálvez,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez,1953-01-18,Argentine Grand Prix,1,1953,https://en.wikipedia.org/wiki/1953_Argentine_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1953-05-30,Indianapolis 500,2,1953,https://en.wikipedia.org/wiki/1953_Indianapolis_500
-Netherlands,52.3888,Zandvoort,4.54092,zandvoort,Circuit Park Zandvoort,https://en.wikipedia.org/wiki/Circuit_Zandvoort,1953-06-07,Dutch Grand Prix,3,1953,https://en.wikipedia.org/wiki/1953_Dutch_Grand_Prix
-Belgium,50.4372,Spa,5.97139,spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps,1953-06-21,Belgian Grand Prix,4,1953,https://en.wikipedia.org/wiki/1953_Belgian_Grand_Prix
-France,49.2542,Reims,3.93083,reims,Reims-Gueux,https://en.wikipedia.org/wiki/Reims-Gueux,1953-07-05,French Grand Prix,5,1953,https://en.wikipedia.org/wiki/1953_French_Grand_Prix
-UK,52.0786,Silverstone,-1.01694,silverstone,Silverstone Circuit,https://en.wikipedia.org/wiki/Silverstone_Circuit,1953-07-18,British Grand Prix,6,1953,https://en.wikipedia.org/wiki/1953_British_Grand_Prix
-Germany,50.3356,Nürburg,6.9475,nurburgring,Nürburgring,https://en.wikipedia.org/wiki/N%C3%BCrburgring,1953-08-02,German Grand Prix,7,1953,https://en.wikipedia.org/wiki/1953_German_Grand_Prix
-Switzerland,46.9589,Bern,7.40194,bremgarten,Circuit Bremgarten,https://en.wikipedia.org/wiki/Circuit_Bremgarten,1953-08-23,Swiss Grand Prix,8,1953,https://en.wikipedia.org/wiki/1953_Swiss_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1953-09-13,Italian Grand Prix,9,1953,https://en.wikipedia.org/wiki/1953_Italian_Grand_Prix
-Argentina,-34.6943,Buenos Aires,-58.4593,galvez,Autódromo Juan y Oscar Gálvez,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez,1954-01-17,Argentine Grand Prix,1,1954,https://en.wikipedia.org/wiki/1954_Argentine_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1954-05-31,Indianapolis 500,2,1954,https://en.wikipedia.org/wiki/1954_Indianapolis_500
-Belgium,50.4372,Spa,5.97139,spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps,1954-06-20,Belgian Grand Prix,3,1954,https://en.wikipedia.org/wiki/1954_Belgian_Grand_Prix
-France,49.2542,Reims,3.93083,reims,Reims-Gueux,https://en.wikipedia.org/wiki/Reims-Gueux,1954-07-04,French Grand Prix,4,1954,https://en.wikipedia.org/wiki/1954_French_Grand_Prix
-UK,52.0786,Silverstone,-1.01694,silverstone,Silverstone Circuit,https://en.wikipedia.org/wiki/Silverstone_Circuit,1954-07-17,British Grand Prix,5,1954,https://en.wikipedia.org/wiki/1954_British_Grand_Prix
-Germany,50.3356,Nürburg,6.9475,nurburgring,Nürburgring,https://en.wikipedia.org/wiki/N%C3%BCrburgring,1954-08-01,German Grand Prix,6,1954,https://en.wikipedia.org/wiki/1954_German_Grand_Prix
-Switzerland,46.9589,Bern,7.40194,bremgarten,Circuit Bremgarten,https://en.wikipedia.org/wiki/Circuit_Bremgarten,1954-08-22,Swiss Grand Prix,7,1954,https://en.wikipedia.org/wiki/1954_Swiss_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1954-09-05,Italian Grand Prix,8,1954,https://en.wikipedia.org/wiki/1954_Italian_Grand_Prix
-Spain,41.3903,Barcelona,2.11667,pedralbes,Circuit de Pedralbes,https://en.wikipedia.org/wiki/Pedralbes_Circuit,1954-10-24,Spanish Grand Prix,9,1954,https://en.wikipedia.org/wiki/1954_Spanish_Grand_Prix
-Argentina,-34.6943,Buenos Aires,-58.4593,galvez,Autódromo Juan y Oscar Gálvez,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez,1955-01-16,Argentine Grand Prix,1,1955,https://en.wikipedia.org/wiki/1955_Argentine_Grand_Prix
-Monaco,43.7347,Monte Carlo,7.42056,monaco,Circuit de Monaco,https://en.wikipedia.org/wiki/Circuit_de_Monaco,1955-05-22,Monaco Grand Prix,2,1955,https://en.wikipedia.org/wiki/1955_Monaco_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1955-05-30,Indianapolis 500,3,1955,https://en.wikipedia.org/wiki/1955_Indianapolis_500
-Belgium,50.4372,Spa,5.97139,spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps,1955-06-05,Belgian Grand Prix,4,1955,https://en.wikipedia.org/wiki/1955_Belgian_Grand_Prix
-Netherlands,52.3888,Zandvoort,4.54092,zandvoort,Circuit Park Zandvoort,https://en.wikipedia.org/wiki/Circuit_Zandvoort,1955-06-19,Dutch Grand Prix,5,1955,https://en.wikipedia.org/wiki/1955_Dutch_Grand_Prix
-UK,53.4769,Liverpool,-2.94056,aintree,Aintree,https://en.wikipedia.org/wiki/Aintree_Motor_Racing_Circuit,1955-07-16,British Grand Prix,6,1955,https://en.wikipedia.org/wiki/1955_British_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1955-09-11,Italian Grand Prix,7,1955,https://en.wikipedia.org/wiki/1955_Italian_Grand_Prix
-Argentina,-34.6943,Buenos Aires,-58.4593,galvez,Autódromo Juan y Oscar Gálvez,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez,1956-01-22,Argentine Grand Prix,1,1956,https://en.wikipedia.org/wiki/1956_Argentine_Grand_Prix
-Monaco,43.7347,Monte Carlo,7.42056,monaco,Circuit de Monaco,https://en.wikipedia.org/wiki/Circuit_de_Monaco,1956-05-13,Monaco Grand Prix,2,1956,https://en.wikipedia.org/wiki/1956_Monaco_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1956-05-30,Indianapolis 500,3,1956,https://en.wikipedia.org/wiki/1956_Indianapolis_500
-Belgium,50.4372,Spa,5.97139,spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps,1956-06-03,Belgian Grand Prix,4,1956,https://en.wikipedia.org/wiki/1956_Belgian_Grand_Prix
-France,49.2542,Reims,3.93083,reims,Reims-Gueux,https://en.wikipedia.org/wiki/Reims-Gueux,1956-07-01,French Grand Prix,5,1956,https://en.wikipedia.org/wiki/1956_French_Grand_Prix
-UK,52.0786,Silverstone,-1.01694,silverstone,Silverstone Circuit,https://en.wikipedia.org/wiki/Silverstone_Circuit,1956-07-14,British Grand Prix,6,1956,https://en.wikipedia.org/wiki/1956_British_Grand_Prix
-Germany,50.3356,Nürburg,6.9475,nurburgring,Nürburgring,https://en.wikipedia.org/wiki/N%C3%BCrburgring,1956-08-05,German Grand Prix,7,1956,https://en.wikipedia.org/wiki/1956_German_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1956-09-02,Italian Grand Prix,8,1956,https://en.wikipedia.org/wiki/1956_Italian_Grand_Prix
-Argentina,-34.6943,Buenos Aires,-58.4593,galvez,Autódromo Juan y Oscar Gálvez,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez,1957-01-13,Argentine Grand Prix,1,1957,https://en.wikipedia.org/wiki/1957_Argentine_Grand_Prix
-Monaco,43.7347,Monte Carlo,7.42056,monaco,Circuit de Monaco,https://en.wikipedia.org/wiki/Circuit_de_Monaco,1957-05-19,Monaco Grand Prix,2,1957,https://en.wikipedia.org/wiki/1957_Monaco_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1957-05-30,Indianapolis 500,3,1957,https://en.wikipedia.org/wiki/1957_Indianapolis_500
-France,49.3306,Rouen,1.00458,essarts,Rouen-Les-Essarts,https://en.wikipedia.org/wiki/Rouen-Les-Essarts,1957-07-07,French Grand Prix,4,1957,https://en.wikipedia.org/wiki/1957_French_Grand_Prix
-UK,53.4769,Liverpool,-2.94056,aintree,Aintree,https://en.wikipedia.org/wiki/Aintree_Motor_Racing_Circuit,1957-07-20,British Grand Prix,5,1957,https://en.wikipedia.org/wiki/1957_British_Grand_Prix
-Germany,50.3356,Nürburg,6.9475,nurburgring,Nürburgring,https://en.wikipedia.org/wiki/N%C3%BCrburgring,1957-08-04,German Grand Prix,6,1957,https://en.wikipedia.org/wiki/1957_German_Grand_Prix
-Italy,42.475,Pescara,14.1508,pescara,Pescara Circuit,https://en.wikipedia.org/wiki/Pescara_Circuit,1957-08-18,Pescara Grand Prix,7,1957,https://en.wikipedia.org/wiki/1957_Pescara_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1957-09-08,Italian Grand Prix,8,1957,https://en.wikipedia.org/wiki/1957_Italian_Grand_Prix
-Argentina,-34.6943,Buenos Aires,-58.4593,galvez,Autódromo Juan y Oscar Gálvez,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez,1958-01-19,Argentine Grand Prix,1,1958,https://en.wikipedia.org/wiki/1958_Argentine_Grand_Prix
-Monaco,43.7347,Monte Carlo,7.42056,monaco,Circuit de Monaco,https://en.wikipedia.org/wiki/Circuit_de_Monaco,1958-05-18,Monaco Grand Prix,2,1958,https://en.wikipedia.org/wiki/1958_Monaco_Grand_Prix
-Netherlands,52.3888,Zandvoort,4.54092,zandvoort,Circuit Park Zandvoort,https://en.wikipedia.org/wiki/Circuit_Zandvoort,1958-05-26,Dutch Grand Prix,3,1958,https://en.wikipedia.org/wiki/1958_Dutch_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1958-05-30,Indianapolis 500,4,1958,https://en.wikipedia.org/wiki/1958_Indianapolis_500
-Belgium,50.4372,Spa,5.97139,spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps,1958-06-15,Belgian Grand Prix,5,1958,https://en.wikipedia.org/wiki/1958_Belgian_Grand_Prix
-France,49.2542,Reims,3.93083,reims,Reims-Gueux,https://en.wikipedia.org/wiki/Reims-Gueux,1958-07-06,French Grand Prix,6,1958,https://en.wikipedia.org/wiki/1958_French_Grand_Prix
-UK,52.0786,Silverstone,-1.01694,silverstone,Silverstone Circuit,https://en.wikipedia.org/wiki/Silverstone_Circuit,1958-07-19,British Grand Prix,7,1958,https://en.wikipedia.org/wiki/1958_British_Grand_Prix
-Germany,50.3356,Nürburg,6.9475,nurburgring,Nürburgring,https://en.wikipedia.org/wiki/N%C3%BCrburgring,1958-08-03,German Grand Prix,8,1958,https://en.wikipedia.org/wiki/1958_German_Grand_Prix
-Portugal,41.1705,Oporto,-8.67325,boavista,Circuito da Boavista,https://en.wikipedia.org/wiki/Circuito_da_Boavista,1958-08-24,Portuguese Grand Prix,9,1958,https://en.wikipedia.org/wiki/1958_Portuguese_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1958-09-07,Italian Grand Prix,10,1958,https://en.wikipedia.org/wiki/1958_Italian_Grand_Prix
-Morocco,33.5786,Casablanca,-7.6875,ain-diab,Ain Diab,https://en.wikipedia.org/wiki/Ain-Diab_Circuit,1958-10-19,Moroccan Grand Prix,11,1958,https://en.wikipedia.org/wiki/1958_Moroccan_Grand_Prix
-Monaco,43.7347,Monte Carlo,7.42056,monaco,Circuit de Monaco,https://en.wikipedia.org/wiki/Circuit_de_Monaco,1959-05-10,Monaco Grand Prix,1,1959,https://en.wikipedia.org/wiki/1959_Monaco_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1959-05-30,Indianapolis 500,2,1959,https://en.wikipedia.org/wiki/1959_Indianapolis_500
-Netherlands,52.3888,Zandvoort,4.54092,zandvoort,Circuit Park Zandvoort,https://en.wikipedia.org/wiki/Circuit_Zandvoort,1959-05-31,Dutch Grand Prix,3,1959,https://en.wikipedia.org/wiki/1959_Dutch_Grand_Prix
-France,49.2542,Reims,3.93083,reims,Reims-Gueux,https://en.wikipedia.org/wiki/Reims-Gueux,1959-07-05,French Grand Prix,4,1959,https://en.wikipedia.org/wiki/1959_French_Grand_Prix
-UK,53.4769,Liverpool,-2.94056,aintree,Aintree,https://en.wikipedia.org/wiki/Aintree_Motor_Racing_Circuit,1959-07-18,British Grand Prix,5,1959,https://en.wikipedia.org/wiki/1959_British_Grand_Prix
-Germany,52.4806,Berlin,13.2514,avus,AVUS,https://en.wikipedia.org/wiki/AVUS,1959-08-02,German Grand Prix,6,1959,https://en.wikipedia.org/wiki/1959_German_Grand_Prix
-Portugal,38.7197,Lisbon,-9.20306,monsanto,Monsanto Park Circuit,https://en.wikipedia.org/wiki/Circuito_de_Monsanto,1959-08-23,Portuguese Grand Prix,7,1959,https://en.wikipedia.org/wiki/1959_Portuguese_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1959-09-13,Italian Grand Prix,8,1959,https://en.wikipedia.org/wiki/1959_Italian_Grand_Prix
-USA,27.4547,Florida,-81.3483,sebring,Sebring International Raceway,https://en.wikipedia.org/wiki/Sebring_International_Raceway,1959-12-12,United States Grand Prix,9,1959,https://en.wikipedia.org/wiki/1959_United_States_Grand_Prix
-Argentina,-34.6943,Buenos Aires,-58.4593,galvez,Autódromo Juan y Oscar Gálvez,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez,1960-02-07,Argentine Grand Prix,1,1960,https://en.wikipedia.org/wiki/1960_Argentine_Grand_Prix
-Monaco,43.7347,Monte Carlo,7.42056,monaco,Circuit de Monaco,https://en.wikipedia.org/wiki/Circuit_de_Monaco,1960-05-29,Monaco Grand Prix,2,1960,https://en.wikipedia.org/wiki/1960_Monaco_Grand_Prix
-USA,39.795,Indianapolis,-86.2347,indianapolis,Indianapolis Motor Speedway,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway,1960-05-30,Indianapolis 500,3,1960,https://en.wikipedia.org/wiki/1960_Indianapolis_500
-Netherlands,52.3888,Zandvoort,4.54092,zandvoort,Circuit Park Zandvoort,https://en.wikipedia.org/wiki/Circuit_Zandvoort,1960-06-06,Dutch Grand Prix,4,1960,https://en.wikipedia.org/wiki/1960_Dutch_Grand_Prix
-Belgium,50.4372,Spa,5.97139,spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps,1960-06-19,Belgian Grand Prix,5,1960,https://en.wikipedia.org/wiki/1960_Belgian_Grand_Prix
-France,49.2542,Reims,3.93083,reims,Reims-Gueux,https://en.wikipedia.org/wiki/Reims-Gueux,1960-07-03,French Grand Prix,6,1960,https://en.wikipedia.org/wiki/1960_French_Grand_Prix
-UK,52.0786,Silverstone,-1.01694,silverstone,Silverstone Circuit,https://en.wikipedia.org/wiki/Silverstone_Circuit,1960-07-16,British Grand Prix,7,1960,https://en.wikipedia.org/wiki/1960_British_Grand_Prix
-Portugal,41.1705,Oporto,-8.67325,boavista,Circuito da Boavista,https://en.wikipedia.org/wiki/Circuito_da_Boavista,1960-08-14,Portuguese Grand Prix,8,1960,https://en.wikipedia.org/wiki/1960_Portuguese_Grand_Prix
-Italy,45.6156,Monza,9.28111,monza,Autodromo Nazionale di Monza,https://en.wikipedia.org/wiki/Monza_Circuit,1960-09-04,Italian Grand Prix,9,1960,https://en.wikipedia.org/wiki/1960_Italian_Grand_Prix
-USA,33.937,California,-117.273,riverside,Riverside International Raceway,https://en.wikipedia.org/wiki/Riverside_International_Raceway,1960-11-20,United States Grand Prix,10,1960,https://en.wikipedia.org/wiki/1960_United_States_Grand_Prix
-Monaco,43.7347,Monte Carlo,7.42056,monaco,Circuit de Monaco,https://en.wikipedia.org/wiki/Circuit_de_Monaco,1961-05-14,Monaco Grand Prix,1,1961,https://en.wikipedia.org/wiki/1961_Monaco_Grand_Prix
-Netherlands,52.3888,Zandvoort,4.54092,zandvoort,Circuit Park Zandvoort,https://en.wikipedia.org/wiki/Circuit_Zandvoort,1961-05-22,Dutch Grand Prix,2,1961,https://en.wikipedia.org/wiki/1961_Dutch_Grand_Prix
-Belgium,50.4372,Spa,5.97139,spa,Circuit de Spa-Francorchamps,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps,1961-06-18,Belgian Grand Prix,3,1961,https://en.wikipedia.org/wiki/1961_Belgian_Grand_Prix
-France,49.2542,Reims,3.93083,reims,Reims-Gueux,https://en.wikipedia.org/wiki/Reims-Gueux,1961-07-02,French Grand Prix,4,1961,https://en.wikipedia.org/wiki/1961_French_Grand_Prix
-UK,53.4769,Liverpool,-2.94056,aintree,Aintree,https://en.wikipedia.org/wiki/Aintree_Motor_Racing_Circuit,1961-07-15,British Grand Prix,5,1961,https://en.wikipedia.org/wiki/1961_British_Grand_Prix
-Germany,50.3356,Nürburg,6.9475,nurburgring,Nürburgring,https://en.wikipedia.org/wiki/N%C3%BCrburgring,1961-08-06,German Grand Prix,6,1961,https://en.wikipedia.org/wiki/1961_German_Grand_Prix
+circuitId,circuitName,country,date,lat,locality,long,raceName,round,season,url
+silverstone,Silverstone Circuit,UK,1950-05-13,52.0786,Silverstone,-1.01694,British Grand Prix,1,1950,https://en.wikipedia.org/wiki/Silverstone_Circuit
+monaco,Circuit de Monaco,Monaco,1950-05-21,43.7347,Monte Carlo,7.42056,Monaco Grand Prix,2,1950,https://en.wikipedia.org/wiki/Circuit_de_Monaco
+indianapolis,Indianapolis Motor Speedway,USA,1950-05-30,39.795,Indianapolis,-86.2347,Indianapolis 500,3,1950,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+bremgarten,Circuit Bremgarten,Switzerland,1950-06-04,46.9589,Bern,7.40194,Swiss Grand Prix,4,1950,https://en.wikipedia.org/wiki/Circuit_Bremgarten
+spa,Circuit de Spa-Francorchamps,Belgium,1950-06-18,50.4372,Spa,5.97139,Belgian Grand Prix,5,1950,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+reims,Reims-Gueux,France,1950-07-02,49.2542,Reims,3.93083,French Grand Prix,6,1950,https://en.wikipedia.org/wiki/Reims-Gueux
+monza,Autodromo Nazionale di Monza,Italy,1950-09-03,45.6156,Monza,9.28111,Italian Grand Prix,7,1950,https://en.wikipedia.org/wiki/Monza_Circuit
+bremgarten,Circuit Bremgarten,Switzerland,1951-05-27,46.9589,Bern,7.40194,Swiss Grand Prix,1,1951,https://en.wikipedia.org/wiki/Circuit_Bremgarten
+indianapolis,Indianapolis Motor Speedway,USA,1951-05-30,39.795,Indianapolis,-86.2347,Indianapolis 500,2,1951,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+spa,Circuit de Spa-Francorchamps,Belgium,1951-06-17,50.4372,Spa,5.97139,Belgian Grand Prix,3,1951,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+reims,Reims-Gueux,France,1951-07-01,49.2542,Reims,3.93083,French Grand Prix,4,1951,https://en.wikipedia.org/wiki/Reims-Gueux
+silverstone,Silverstone Circuit,UK,1951-07-14,52.0786,Silverstone,-1.01694,British Grand Prix,5,1951,https://en.wikipedia.org/wiki/Silverstone_Circuit
+nurburgring,Nürburgring,Germany,1951-07-29,50.3356,Nürburg,6.9475,German Grand Prix,6,1951,https://en.wikipedia.org/wiki/N%C3%BCrburgring
+monza,Autodromo Nazionale di Monza,Italy,1951-09-16,45.6156,Monza,9.28111,Italian Grand Prix,7,1951,https://en.wikipedia.org/wiki/Monza_Circuit
+pedralbes,Circuit de Pedralbes,Spain,1951-10-28,41.3903,Barcelona,2.11667,Spanish Grand Prix,8,1951,https://en.wikipedia.org/wiki/Pedralbes_Circuit
+bremgarten,Circuit Bremgarten,Switzerland,1952-05-18,46.9589,Bern,7.40194,Swiss Grand Prix,1,1952,https://en.wikipedia.org/wiki/Circuit_Bremgarten
+indianapolis,Indianapolis Motor Speedway,USA,1952-05-30,39.795,Indianapolis,-86.2347,Indianapolis 500,2,1952,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+spa,Circuit de Spa-Francorchamps,Belgium,1952-06-22,50.4372,Spa,5.97139,Belgian Grand Prix,3,1952,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+essarts,Rouen-Les-Essarts,France,1952-07-06,49.3306,Rouen,1.00458,French Grand Prix,4,1952,https://en.wikipedia.org/wiki/Rouen-Les-Essarts
+silverstone,Silverstone Circuit,UK,1952-07-19,52.0786,Silverstone,-1.01694,British Grand Prix,5,1952,https://en.wikipedia.org/wiki/Silverstone_Circuit
+nurburgring,Nürburgring,Germany,1952-08-03,50.3356,Nürburg,6.9475,German Grand Prix,6,1952,https://en.wikipedia.org/wiki/N%C3%BCrburgring
+zandvoort,Circuit Park Zandvoort,Netherlands,1952-08-17,52.3888,Zandvoort,4.54092,Dutch Grand Prix,7,1952,https://en.wikipedia.org/wiki/Circuit_Zandvoort
+monza,Autodromo Nazionale di Monza,Italy,1952-09-07,45.6156,Monza,9.28111,Italian Grand Prix,8,1952,https://en.wikipedia.org/wiki/Monza_Circuit
+galvez,Autódromo Juan y Oscar Gálvez,Argentina,1953-01-18,-34.6943,Buenos Aires,-58.4593,Argentine Grand Prix,1,1953,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez
+indianapolis,Indianapolis Motor Speedway,USA,1953-05-30,39.795,Indianapolis,-86.2347,Indianapolis 500,2,1953,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+zandvoort,Circuit Park Zandvoort,Netherlands,1953-06-07,52.3888,Zandvoort,4.54092,Dutch Grand Prix,3,1953,https://en.wikipedia.org/wiki/Circuit_Zandvoort
+spa,Circuit de Spa-Francorchamps,Belgium,1953-06-21,50.4372,Spa,5.97139,Belgian Grand Prix,4,1953,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+reims,Reims-Gueux,France,1953-07-05,49.2542,Reims,3.93083,French Grand Prix,5,1953,https://en.wikipedia.org/wiki/Reims-Gueux
+silverstone,Silverstone Circuit,UK,1953-07-18,52.0786,Silverstone,-1.01694,British Grand Prix,6,1953,https://en.wikipedia.org/wiki/Silverstone_Circuit
+nurburgring,Nürburgring,Germany,1953-08-02,50.3356,Nürburg,6.9475,German Grand Prix,7,1953,https://en.wikipedia.org/wiki/N%C3%BCrburgring
+bremgarten,Circuit Bremgarten,Switzerland,1953-08-23,46.9589,Bern,7.40194,Swiss Grand Prix,8,1953,https://en.wikipedia.org/wiki/Circuit_Bremgarten
+monza,Autodromo Nazionale di Monza,Italy,1953-09-13,45.6156,Monza,9.28111,Italian Grand Prix,9,1953,https://en.wikipedia.org/wiki/Monza_Circuit
+galvez,Autódromo Juan y Oscar Gálvez,Argentina,1954-01-17,-34.6943,Buenos Aires,-58.4593,Argentine Grand Prix,1,1954,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez
+indianapolis,Indianapolis Motor Speedway,USA,1954-05-31,39.795,Indianapolis,-86.2347,Indianapolis 500,2,1954,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+spa,Circuit de Spa-Francorchamps,Belgium,1954-06-20,50.4372,Spa,5.97139,Belgian Grand Prix,3,1954,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+reims,Reims-Gueux,France,1954-07-04,49.2542,Reims,3.93083,French Grand Prix,4,1954,https://en.wikipedia.org/wiki/Reims-Gueux
+silverstone,Silverstone Circuit,UK,1954-07-17,52.0786,Silverstone,-1.01694,British Grand Prix,5,1954,https://en.wikipedia.org/wiki/Silverstone_Circuit
+nurburgring,Nürburgring,Germany,1954-08-01,50.3356,Nürburg,6.9475,German Grand Prix,6,1954,https://en.wikipedia.org/wiki/N%C3%BCrburgring
+bremgarten,Circuit Bremgarten,Switzerland,1954-08-22,46.9589,Bern,7.40194,Swiss Grand Prix,7,1954,https://en.wikipedia.org/wiki/Circuit_Bremgarten
+monza,Autodromo Nazionale di Monza,Italy,1954-09-05,45.6156,Monza,9.28111,Italian Grand Prix,8,1954,https://en.wikipedia.org/wiki/Monza_Circuit
+pedralbes,Circuit de Pedralbes,Spain,1954-10-24,41.3903,Barcelona,2.11667,Spanish Grand Prix,9,1954,https://en.wikipedia.org/wiki/Pedralbes_Circuit
+galvez,Autódromo Juan y Oscar Gálvez,Argentina,1955-01-16,-34.6943,Buenos Aires,-58.4593,Argentine Grand Prix,1,1955,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez
+monaco,Circuit de Monaco,Monaco,1955-05-22,43.7347,Monte Carlo,7.42056,Monaco Grand Prix,2,1955,https://en.wikipedia.org/wiki/Circuit_de_Monaco
+indianapolis,Indianapolis Motor Speedway,USA,1955-05-30,39.795,Indianapolis,-86.2347,Indianapolis 500,3,1955,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+spa,Circuit de Spa-Francorchamps,Belgium,1955-06-05,50.4372,Spa,5.97139,Belgian Grand Prix,4,1955,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+zandvoort,Circuit Park Zandvoort,Netherlands,1955-06-19,52.3888,Zandvoort,4.54092,Dutch Grand Prix,5,1955,https://en.wikipedia.org/wiki/Circuit_Zandvoort
+aintree,Aintree,UK,1955-07-16,53.4769,Liverpool,-2.94056,British Grand Prix,6,1955,https://en.wikipedia.org/wiki/Aintree_Motor_Racing_Circuit
+monza,Autodromo Nazionale di Monza,Italy,1955-09-11,45.6156,Monza,9.28111,Italian Grand Prix,7,1955,https://en.wikipedia.org/wiki/Monza_Circuit
+galvez,Autódromo Juan y Oscar Gálvez,Argentina,1956-01-22,-34.6943,Buenos Aires,-58.4593,Argentine Grand Prix,1,1956,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez
+monaco,Circuit de Monaco,Monaco,1956-05-13,43.7347,Monte Carlo,7.42056,Monaco Grand Prix,2,1956,https://en.wikipedia.org/wiki/Circuit_de_Monaco
+indianapolis,Indianapolis Motor Speedway,USA,1956-05-30,39.795,Indianapolis,-86.2347,Indianapolis 500,3,1956,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+spa,Circuit de Spa-Francorchamps,Belgium,1956-06-03,50.4372,Spa,5.97139,Belgian Grand Prix,4,1956,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+reims,Reims-Gueux,France,1956-07-01,49.2542,Reims,3.93083,French Grand Prix,5,1956,https://en.wikipedia.org/wiki/Reims-Gueux
+silverstone,Silverstone Circuit,UK,1956-07-14,52.0786,Silverstone,-1.01694,British Grand Prix,6,1956,https://en.wikipedia.org/wiki/Silverstone_Circuit
+nurburgring,Nürburgring,Germany,1956-08-05,50.3356,Nürburg,6.9475,German Grand Prix,7,1956,https://en.wikipedia.org/wiki/N%C3%BCrburgring
+monza,Autodromo Nazionale di Monza,Italy,1956-09-02,45.6156,Monza,9.28111,Italian Grand Prix,8,1956,https://en.wikipedia.org/wiki/Monza_Circuit
+galvez,Autódromo Juan y Oscar Gálvez,Argentina,1957-01-13,-34.6943,Buenos Aires,-58.4593,Argentine Grand Prix,1,1957,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez
+monaco,Circuit de Monaco,Monaco,1957-05-19,43.7347,Monte Carlo,7.42056,Monaco Grand Prix,2,1957,https://en.wikipedia.org/wiki/Circuit_de_Monaco
+indianapolis,Indianapolis Motor Speedway,USA,1957-05-30,39.795,Indianapolis,-86.2347,Indianapolis 500,3,1957,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+essarts,Rouen-Les-Essarts,France,1957-07-07,49.3306,Rouen,1.00458,French Grand Prix,4,1957,https://en.wikipedia.org/wiki/Rouen-Les-Essarts
+aintree,Aintree,UK,1957-07-20,53.4769,Liverpool,-2.94056,British Grand Prix,5,1957,https://en.wikipedia.org/wiki/Aintree_Motor_Racing_Circuit
+nurburgring,Nürburgring,Germany,1957-08-04,50.3356,Nürburg,6.9475,German Grand Prix,6,1957,https://en.wikipedia.org/wiki/N%C3%BCrburgring
+pescara,Pescara Circuit,Italy,1957-08-18,42.475,Pescara,14.1508,Pescara Grand Prix,7,1957,https://en.wikipedia.org/wiki/Pescara_Circuit
+monza,Autodromo Nazionale di Monza,Italy,1957-09-08,45.6156,Monza,9.28111,Italian Grand Prix,8,1957,https://en.wikipedia.org/wiki/Monza_Circuit
+galvez,Autódromo Juan y Oscar Gálvez,Argentina,1958-01-19,-34.6943,Buenos Aires,-58.4593,Argentine Grand Prix,1,1958,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez
+monaco,Circuit de Monaco,Monaco,1958-05-18,43.7347,Monte Carlo,7.42056,Monaco Grand Prix,2,1958,https://en.wikipedia.org/wiki/Circuit_de_Monaco
+zandvoort,Circuit Park Zandvoort,Netherlands,1958-05-26,52.3888,Zandvoort,4.54092,Dutch Grand Prix,3,1958,https://en.wikipedia.org/wiki/Circuit_Zandvoort
+indianapolis,Indianapolis Motor Speedway,USA,1958-05-30,39.795,Indianapolis,-86.2347,Indianapolis 500,4,1958,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+spa,Circuit de Spa-Francorchamps,Belgium,1958-06-15,50.4372,Spa,5.97139,Belgian Grand Prix,5,1958,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+reims,Reims-Gueux,France,1958-07-06,49.2542,Reims,3.93083,French Grand Prix,6,1958,https://en.wikipedia.org/wiki/Reims-Gueux
+silverstone,Silverstone Circuit,UK,1958-07-19,52.0786,Silverstone,-1.01694,British Grand Prix,7,1958,https://en.wikipedia.org/wiki/Silverstone_Circuit
+nurburgring,Nürburgring,Germany,1958-08-03,50.3356,Nürburg,6.9475,German Grand Prix,8,1958,https://en.wikipedia.org/wiki/N%C3%BCrburgring
+boavista,Circuito da Boavista,Portugal,1958-08-24,41.1705,Oporto,-8.67325,Portuguese Grand Prix,9,1958,https://en.wikipedia.org/wiki/Circuito_da_Boavista
+monza,Autodromo Nazionale di Monza,Italy,1958-09-07,45.6156,Monza,9.28111,Italian Grand Prix,10,1958,https://en.wikipedia.org/wiki/Monza_Circuit
+ain-diab,Ain Diab,Morocco,1958-10-19,33.5786,Casablanca,-7.6875,Moroccan Grand Prix,11,1958,https://en.wikipedia.org/wiki/Ain-Diab_Circuit
+monaco,Circuit de Monaco,Monaco,1959-05-10,43.7347,Monte Carlo,7.42056,Monaco Grand Prix,1,1959,https://en.wikipedia.org/wiki/Circuit_de_Monaco
+indianapolis,Indianapolis Motor Speedway,USA,1959-05-30,39.795,Indianapolis,-86.2347,Indianapolis 500,2,1959,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+zandvoort,Circuit Park Zandvoort,Netherlands,1959-05-31,52.3888,Zandvoort,4.54092,Dutch Grand Prix,3,1959,https://en.wikipedia.org/wiki/Circuit_Zandvoort
+reims,Reims-Gueux,France,1959-07-05,49.2542,Reims,3.93083,French Grand Prix,4,1959,https://en.wikipedia.org/wiki/Reims-Gueux
+aintree,Aintree,UK,1959-07-18,53.4769,Liverpool,-2.94056,British Grand Prix,5,1959,https://en.wikipedia.org/wiki/Aintree_Motor_Racing_Circuit
+avus,AVUS,Germany,1959-08-02,52.4806,Berlin,13.2514,German Grand Prix,6,1959,https://en.wikipedia.org/wiki/AVUS
+monsanto,Monsanto Park Circuit,Portugal,1959-08-23,38.7197,Lisbon,-9.20306,Portuguese Grand Prix,7,1959,https://en.wikipedia.org/wiki/Circuito_de_Monsanto
+monza,Autodromo Nazionale di Monza,Italy,1959-09-13,45.6156,Monza,9.28111,Italian Grand Prix,8,1959,https://en.wikipedia.org/wiki/Monza_Circuit
+sebring,Sebring International Raceway,USA,1959-12-12,27.4547,Florida,-81.3483,United States Grand Prix,9,1959,https://en.wikipedia.org/wiki/Sebring_International_Raceway
+galvez,Autódromo Juan y Oscar Gálvez,Argentina,1960-02-07,-34.6943,Buenos Aires,-58.4593,Argentine Grand Prix,1,1960,https://en.wikipedia.org/wiki/Autódromo_Oscar_y_Juan_Gálvez
+monaco,Circuit de Monaco,Monaco,1960-05-29,43.7347,Monte Carlo,7.42056,Monaco Grand Prix,2,1960,https://en.wikipedia.org/wiki/Circuit_de_Monaco
+indianapolis,Indianapolis Motor Speedway,USA,1960-05-30,39.795,Indianapolis,-86.2347,Indianapolis 500,3,1960,https://en.wikipedia.org/wiki/Indianapolis_Motor_Speedway
+zandvoort,Circuit Park Zandvoort,Netherlands,1960-06-06,52.3888,Zandvoort,4.54092,Dutch Grand Prix,4,1960,https://en.wikipedia.org/wiki/Circuit_Zandvoort
+spa,Circuit de Spa-Francorchamps,Belgium,1960-06-19,50.4372,Spa,5.97139,Belgian Grand Prix,5,1960,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+reims,Reims-Gueux,France,1960-07-03,49.2542,Reims,3.93083,French Grand Prix,6,1960,https://en.wikipedia.org/wiki/Reims-Gueux
+silverstone,Silverstone Circuit,UK,1960-07-16,52.0786,Silverstone,-1.01694,British Grand Prix,7,1960,https://en.wikipedia.org/wiki/Silverstone_Circuit
+boavista,Circuito da Boavista,Portugal,1960-08-14,41.1705,Oporto,-8.67325,Portuguese Grand Prix,8,1960,https://en.wikipedia.org/wiki/Circuito_da_Boavista
+monza,Autodromo Nazionale di Monza,Italy,1960-09-04,45.6156,Monza,9.28111,Italian Grand Prix,9,1960,https://en.wikipedia.org/wiki/Monza_Circuit
+riverside,Riverside International Raceway,USA,1960-11-20,33.937,California,-117.273,United States Grand Prix,10,1960,https://en.wikipedia.org/wiki/Riverside_International_Raceway
+monaco,Circuit de Monaco,Monaco,1961-05-14,43.7347,Monte Carlo,7.42056,Monaco Grand Prix,1,1961,https://en.wikipedia.org/wiki/Circuit_de_Monaco
+zandvoort,Circuit Park Zandvoort,Netherlands,1961-05-22,52.3888,Zandvoort,4.54092,Dutch Grand Prix,2,1961,https://en.wikipedia.org/wiki/Circuit_Zandvoort
+spa,Circuit de Spa-Francorchamps,Belgium,1961-06-18,50.4372,Spa,5.97139,Belgian Grand Prix,3,1961,https://en.wikipedia.org/wiki/Circuit_de_Spa-Francorchamps
+reims,Reims-Gueux,France,1961-07-02,49.2542,Reims,3.93083,French Grand Prix,4,1961,https://en.wikipedia.org/wiki/Reims-Gueux
+aintree,Aintree,UK,1961-07-15,53.4769,Liverpool,-2.94056,British Grand Prix,5,1961,https://en.wikipedia.org/wiki/Aintree_Motor_Racing_Circuit
+nurburgring,Nürburgring,Germany,1961-08-06,50.3356,Nürburg,6.9475,German Grand Prix,6,1961,https://en.wikipedia.org/wiki/N%C3%BCrburgring
