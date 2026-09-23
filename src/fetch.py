@@ -25,6 +25,7 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
         print(f"Fetching metadata from {api_base}...")
         meta_response = requests.get(
             api_base,
+            params={"format": "json"},
             headers={"User-Agent": f"F1ETLScraper/{version}"},
             timeout=30,
         )
@@ -51,7 +52,7 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
         print(f"Fetching all {total} {record_type}(s)...")
         data_response = requests.get(
             api_base,
-            params={"limit": total},
+            params={"limit": total, "format": "json"},
             headers={"User-Agent": f"F1ETLScraper/{version}"},
             timeout=60,
         )
