@@ -22,7 +22,7 @@ jobs:
       - name: Install dependencies
         run: pip install pandas requests lxml beautifulsoup4
 
-      - name: Scrape Wikipedia for fresh data
+      - name: Fetch F1 data from JolpicaF1 API
         run: python src/scrape.py
         continue-on-error: true
       
