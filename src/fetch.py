@@ -1,4 +1,4 @@
-# src/scrape.py
+# src/fetch.py
 
 from pathlib import Path
 import pandas as pd
@@ -257,7 +257,7 @@ def fetch_all() -> bool:
     output_folder.mkdir(parents=True, exist_ok=True)
     
     # Define all tables to fetch from Ergast API
-    tables_to_scrape = {
+    tables_to_fetch = {
         "seasons": get_seasons,
         "drivers": get_drivers,
         "constructors": get_constructors,
@@ -270,33 +270,44 @@ def fetch_all() -> bool:
         "status": get_status,
     }
     
-    scrape_results = {}
+    fetch_results = {}
     
-    for table_name, scrape_func in tables_to_scrape.items():
+    for table_name, fetch_func in tables_to_fetch.items():
         try:
             print(f"Fetching {table_name}...")
-            df = scrape_func()
+            df = fetch_func()
+            
+            # Validate that the DataFrame is not empty - skip if empty, DO NOT FAIL SCRIPT
+            if df.empty:
+                raise ValueError(f"No data retrieved for {table_name} - skipping file save")
+            
             output_file = output_folder / f"{table_name}.csv"
             df.to_csv(output_file, index=False)
-            scrape_results[table_name] = "success"
+            fetch_results[table_name] = "success"
             
             size_kb = output_file.stat().st_size / 1024 if output_file.exists() else 0
             print(f"✓ Saved {table_name}.csv ({len(df)} rows, {size_kb:.1f} KB)")
             
         except Exception as e:
             print(f"✗ Failed to fetch {table_name}: {e}")
-            scrape_results[table_name] = "failed"
+            print(f"→ Continuing with remaining tables...")
+            fetch_results[table_name] = "failed"
         
         # Wait before next API call (respect rate limits)
         time.sleep(1)
     
     # Log summary
-    success_count = sum(1 for v in scrape_results.values() if v == "success")
-    total_count = len(scrape_results)
-    print(f"Scrape complete: {success_count}/{total_count} tables succeeded")
+    success_count = sum(1 for v in fetch_results.values() if v == "success")
+    failed_count = sum(1 for v in fetch_results.values() if v == "failed")
+    total_count = len(fetch_results)
+    print(f"\n{'='*50}")
+    print(f"Fetch complete: {success_count}/{total_count} tables succeeded, {failed_count} failed")
+    print(f"{'='*50}")
     
+    # Return False if any failed, but don't raise - script continues anyway
     return success_count == total_count
 
 if __name__ == "__main__":
     success = fetch_all()
-    exit(0)  # Always exit 0 to avoid blocking pipeline even on partial failure
+    # Always exit 0 to avoid blocking the pipeline on partial failures
+    exit(0)
