@@ -1,101 +1,101 @@
-_source,_fetched_at,_endpoint,constructorId,name,nationality,url
-ergast_api,2026-09-22T23:26:25.431178,https://api.jolpi.ca/ergast/f1/constructors,adams,Adams,American,https://en.wikipedia.org/wiki/Adams_(constructor)
-ergast_api,2026-09-22T23:26:25.431189,https://api.jolpi.ca/ergast/f1/constructors,afm,AFM,German,https://en.wikipedia.org/wiki/Alex_von_Falkenhausen_Motorenbau
-ergast_api,2026-09-22T23:26:25.431193,https://api.jolpi.ca/ergast/f1/constructors,ags,AGS,French,https://en.wikipedia.org/wiki/Automobiles_Gonfaronnaises_Sportives
-ergast_api,2026-09-22T23:26:25.431197,https://api.jolpi.ca/ergast/f1/constructors,alfa,Alfa Romeo,Swiss,https://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One
-ergast_api,2026-09-22T23:26:25.431200,https://api.jolpi.ca/ergast/f1/constructors,alphatauri,AlphaTauri,Italian,https://en.wikipedia.org/wiki/Scuderia_AlphaTauri
-ergast_api,2026-09-22T23:26:25.431203,https://api.jolpi.ca/ergast/f1/constructors,alpine,Alpine F1 Team,French,https://en.wikipedia.org/wiki/Alpine_F1_Team
-ergast_api,2026-09-22T23:26:25.431206,https://api.jolpi.ca/ergast/f1/constructors,alta,Alta,British,https://en.wikipedia.org/wiki/Alta_Car_and_Engineering_Company
-ergast_api,2026-09-22T23:26:25.431209,https://api.jolpi.ca/ergast/f1/constructors,amon,Amon,New Zealander,https://en.wikipedia.org/wiki/Chris_Amon_Racing
-ergast_api,2026-09-22T23:26:25.431211,https://api.jolpi.ca/ergast/f1/constructors,apollon,Apollon,Swiss,https://en.wikipedia.org/wiki/Apollon_(Formula_One)
-ergast_api,2026-09-22T23:26:25.431214,https://api.jolpi.ca/ergast/f1/constructors,arrows,Arrows,British,https://en.wikipedia.org/wiki/Arrows_Grand_Prix_International
-ergast_api,2026-09-22T23:26:25.431217,https://api.jolpi.ca/ergast/f1/constructors,arzani-volpini,Arzani-Volpini,Italian,https://en.wikipedia.org/wiki/Arzani-Volpini
-ergast_api,2026-09-22T23:26:25.431220,https://api.jolpi.ca/ergast/f1/constructors,aston_martin,Aston Martin,British,https://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One
-ergast_api,2026-09-22T23:26:25.431222,https://api.jolpi.ca/ergast/f1/constructors,ats,ATS,Italian,https://en.wikipedia.org/wiki/ATS_Wheels
-ergast_api,2026-09-22T23:26:25.431225,https://api.jolpi.ca/ergast/f1/constructors,audi,Audi,German,https://en.wikipedia.org/wiki/Audi_in_Formula_One
-ergast_api,2026-09-22T23:26:25.431228,https://api.jolpi.ca/ergast/f1/constructors,bar,BAR,British,https://en.wikipedia.org/wiki/British_American_Racing
-ergast_api,2026-09-22T23:26:25.431232,https://api.jolpi.ca/ergast/f1/constructors,behra-porsche,Behra-Porsche,Italian,https://en.wikipedia.org/wiki/Behra-Porsche
-ergast_api,2026-09-22T23:26:25.431243,https://api.jolpi.ca/ergast/f1/constructors,bellasi,Bellasi,Swiss,https://en.wikipedia.org/wiki/Bellasi
-ergast_api,2026-09-22T23:26:25.431248,https://api.jolpi.ca/ergast/f1/constructors,benetton,Benetton,Italian,https://en.wikipedia.org/wiki/Benetton_Formula
-ergast_api,2026-09-22T23:26:25.431254,https://api.jolpi.ca/ergast/f1/constructors,bmw,BMW,German,https://en.wikipedia.org/wiki/BMW
-ergast_api,2026-09-22T23:26:25.431260,https://api.jolpi.ca/ergast/f1/constructors,bmw_sauber,BMW Sauber,German,https://en.wikipedia.org/wiki/BMW_in_Formula_One
-ergast_api,2026-09-22T23:26:25.431265,https://api.jolpi.ca/ergast/f1/constructors,boro,Boro,Dutch,https://en.wikipedia.org/wiki/Boro_(Formula_One)
-ergast_api,2026-09-22T23:26:25.431271,https://api.jolpi.ca/ergast/f1/constructors,brabham,Brabham,British,https://en.wikipedia.org/wiki/Brabham
-ergast_api,2026-09-22T23:26:25.431276,https://api.jolpi.ca/ergast/f1/constructors,brabham-alfa_romeo,Brabham-Alfa Romeo,British,https://en.wikipedia.org/wiki/Brabham
-ergast_api,2026-09-22T23:26:25.431281,https://api.jolpi.ca/ergast/f1/constructors,brabham-brm,Brabham-BRM,British,https://en.wikipedia.org/wiki/Brabham
-ergast_api,2026-09-22T23:26:25.431287,https://api.jolpi.ca/ergast/f1/constructors,brabham-climax,Brabham-Climax,British,https://en.wikipedia.org/wiki/Brabham
-ergast_api,2026-09-22T23:26:25.431293,https://api.jolpi.ca/ergast/f1/constructors,brabham-ford,Brabham-Ford,British,https://en.wikipedia.org/wiki/Brabham
-ergast_api,2026-09-22T23:26:25.431325,https://api.jolpi.ca/ergast/f1/constructors,brabham-repco,Brabham-Repco,British,https://en.wikipedia.org/wiki/Brabham
-ergast_api,2026-09-22T23:26:25.431335,https://api.jolpi.ca/ergast/f1/constructors,brawn,Brawn,British,https://en.wikipedia.org/wiki/Brawn_GP
-ergast_api,2026-09-22T23:26:25.431341,https://api.jolpi.ca/ergast/f1/constructors,brm,BRM,British,https://en.wikipedia.org/wiki/British_Racing_Motors
-ergast_api,2026-09-22T23:26:25.431346,https://api.jolpi.ca/ergast/f1/constructors,brm-ford,BRM-Ford,British,https://en.wikipedia.org/wiki/British_Racing_Motors
-ergast_api,2026-09-22T23:26:25.431351,https://api.jolpi.ca/ergast/f1/constructors,bromme,Bromme,American,https://en.wikipedia.org/wiki/Bromme
-ergast_api,2026-09-22T23:26:25.431357,https://api.jolpi.ca/ergast/f1/constructors,brp,BRP,British,https://en.wikipedia.org/wiki/British_Racing_Partnership
-ergast_api,2026-09-22T23:26:25.431363,https://api.jolpi.ca/ergast/f1/constructors,bugatti,Bugatti,French,https://en.wikipedia.org/wiki/Bugatti
-ergast_api,2026-09-22T23:26:25.431369,https://api.jolpi.ca/ergast/f1/constructors,butterworth,Aston Butterworth,British,https://en.wikipedia.org/wiki/Aston_Butterworth
-ergast_api,2026-09-22T23:26:25.431374,https://api.jolpi.ca/ergast/f1/constructors,cadillac,Cadillac F1 Team,American,https://en.wikipedia.org/wiki/Cadillac_in_Formula_One
-ergast_api,2026-09-22T23:26:25.431380,https://api.jolpi.ca/ergast/f1/constructors,caterham,Caterham,Malaysian,https://en.wikipedia.org/wiki/Caterham_F1
-ergast_api,2026-09-22T23:26:25.431386,https://api.jolpi.ca/ergast/f1/constructors,cisitalia,Cisitalia,Italian,https://en.wikipedia.org/wiki/Cisitalia
-ergast_api,2026-09-22T23:26:25.431391,https://api.jolpi.ca/ergast/f1/constructors,coloni,Coloni,Italian,https://en.wikipedia.org/wiki/Scuderia_Coloni
-ergast_api,2026-09-22T23:26:25.431397,https://api.jolpi.ca/ergast/f1/constructors,connaught,Connaught,British,https://en.wikipedia.org/wiki/Connaught_Engineering
-ergast_api,2026-09-22T23:26:25.431404,https://api.jolpi.ca/ergast/f1/constructors,connew,Connew,British,https://en.wikipedia.org/wiki/Connew
-ergast_api,2026-09-22T23:26:25.431409,https://api.jolpi.ca/ergast/f1/constructors,cooper,Cooper,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431415,https://api.jolpi.ca/ergast/f1/constructors,cooper-alfa_romeo,Cooper-Alfa Romeo,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431420,https://api.jolpi.ca/ergast/f1/constructors,cooper-ats,Cooper-ATS,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431426,https://api.jolpi.ca/ergast/f1/constructors,cooper-borgward,Cooper-Borgward,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431432,https://api.jolpi.ca/ergast/f1/constructors,cooper-brm,Cooper-BRM,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431437,https://api.jolpi.ca/ergast/f1/constructors,cooper-castellotti,Cooper-Castellotti,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431444,https://api.jolpi.ca/ergast/f1/constructors,cooper-climax,Cooper-Climax,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431449,https://api.jolpi.ca/ergast/f1/constructors,cooper-ferrari,Cooper-Ferrari,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431455,https://api.jolpi.ca/ergast/f1/constructors,cooper-ford,Cooper-Ford,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431461,https://api.jolpi.ca/ergast/f1/constructors,cooper-maserati,Cooper-Maserati,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431466,https://api.jolpi.ca/ergast/f1/constructors,cooper-osca,Cooper-OSCA,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
-ergast_api,2026-09-22T23:26:25.431472,https://api.jolpi.ca/ergast/f1/constructors,dallara,Dallara,Italian,https://en.wikipedia.org/wiki/Dallara
-ergast_api,2026-09-22T23:26:25.431478,https://api.jolpi.ca/ergast/f1/constructors,de_tomaso-alfa_romeo,De Tomaso-Alfa Romeo,Italian,https://en.wikipedia.org/wiki/De_Tomaso
-ergast_api,2026-09-22T23:26:25.431484,https://api.jolpi.ca/ergast/f1/constructors,de_tomaso-ferrari,De Tomaso-Ferrari,Italian,https://en.wikipedia.org/wiki/De_Tomaso
-ergast_api,2026-09-22T23:26:25.431490,https://api.jolpi.ca/ergast/f1/constructors,de_tomaso-osca,De Tomaso-Osca,Italian,https://en.wikipedia.org/wiki/De_Tomaso
-ergast_api,2026-09-22T23:26:25.431495,https://api.jolpi.ca/ergast/f1/constructors,deidt,Deidt,American,https://en.wikipedia.org/wiki/Emil_Diedt
-ergast_api,2026-09-22T23:26:25.431501,https://api.jolpi.ca/ergast/f1/constructors,del_roy,Del Roy,American,https://en.wikipedia.org/wiki/Frank_DelRoy
-ergast_api,2026-09-22T23:26:25.431507,https://api.jolpi.ca/ergast/f1/constructors,derrington,Derrington,British,https://en.wikipedia.org/wiki/Derrington-Francis
-ergast_api,2026-09-22T23:26:25.431513,https://api.jolpi.ca/ergast/f1/constructors,dunn,Dunn,American,https://en.wikipedia.org/wiki/Dunn_Engineering
-ergast_api,2026-09-22T23:26:25.431519,https://api.jolpi.ca/ergast/f1/constructors,eagle,Eagle,American,https://en.wikipedia.org/wiki/All_American_Racers
-ergast_api,2026-09-22T23:26:25.431525,https://api.jolpi.ca/ergast/f1/constructors,eagle-climax,Eagle-Climax,American,https://en.wikipedia.org/wiki/All_American_Racers
-ergast_api,2026-09-22T23:26:25.431530,https://api.jolpi.ca/ergast/f1/constructors,eagle-weslake,Eagle-Weslake,American,https://en.wikipedia.org/wiki/All_American_Racers
-ergast_api,2026-09-22T23:26:25.431535,https://api.jolpi.ca/ergast/f1/constructors,elder,Elder,American,https://en.wikipedia.org/wiki/Edgar_Elder
-ergast_api,2026-09-22T23:26:25.431541,https://api.jolpi.ca/ergast/f1/constructors,emeryson,Emeryson,British,https://en.wikipedia.org/wiki/Emeryson
-ergast_api,2026-09-22T23:26:25.431547,https://api.jolpi.ca/ergast/f1/constructors,emw,EMW,East German,https://en.wikipedia.org/wiki/Eisenacher_Motorenwerk
-ergast_api,2026-09-22T23:26:25.431553,https://api.jolpi.ca/ergast/f1/constructors,enb,ENB,Belgian,https://en.wikipedia.org/wiki/Écurie_Nationale_Belge
-ergast_api,2026-09-22T23:26:25.431559,https://api.jolpi.ca/ergast/f1/constructors,ensign,Ensign,British,https://en.wikipedia.org/wiki/Ensign_Racing
-ergast_api,2026-09-22T23:26:25.431565,https://api.jolpi.ca/ergast/f1/constructors,epperly,Epperly,American,https://en.wikipedia.org/wiki/Epperly
-ergast_api,2026-09-22T23:26:25.431571,https://api.jolpi.ca/ergast/f1/constructors,era,ERA,British,https://en.wikipedia.org/wiki/English_Racing_Automobiles
-ergast_api,2026-09-22T23:26:25.431577,https://api.jolpi.ca/ergast/f1/constructors,eurobrun,Euro Brun,Italian,https://en.wikipedia.org/wiki/EuroBrun
-ergast_api,2026-09-22T23:26:25.431583,https://api.jolpi.ca/ergast/f1/constructors,ewing,Ewing,American,https://en.wikipedia.org/wiki/Wayne_Ewing
-ergast_api,2026-09-22T23:26:25.431589,https://api.jolpi.ca/ergast/f1/constructors,ferguson,Ferguson,British,https://en.wikipedia.org/wiki/Ferguson_Research
-ergast_api,2026-09-22T23:26:25.431595,https://api.jolpi.ca/ergast/f1/constructors,ferrari,Ferrari,Italian,https://en.wikipedia.org/wiki/Scuderia_Ferrari
-ergast_api,2026-09-22T23:26:25.431600,https://api.jolpi.ca/ergast/f1/constructors,fittipaldi,Fittipaldi,Brazilian,https://en.wikipedia.org/wiki/Fittipaldi_Automotive
-ergast_api,2026-09-22T23:26:25.431606,https://api.jolpi.ca/ergast/f1/constructors,fondmetal,Fondmetal,Italian,https://en.wikipedia.org/wiki/Fondmetal
-ergast_api,2026-09-22T23:26:25.431612,https://api.jolpi.ca/ergast/f1/constructors,footwork,Footwork,British,https://en.wikipedia.org/wiki/Footwork_Arrows
-ergast_api,2026-09-22T23:26:25.431619,https://api.jolpi.ca/ergast/f1/constructors,force_india,Force India,Indian,https://en.wikipedia.org/wiki/Racing_Point_Force_India
-ergast_api,2026-09-22T23:26:25.431625,https://api.jolpi.ca/ergast/f1/constructors,forti,Forti,Italian,https://en.wikipedia.org/wiki/Forti
-ergast_api,2026-09-22T23:26:25.431630,https://api.jolpi.ca/ergast/f1/constructors,frazer_nash,Frazer Nash,British,https://en.wikipedia.org/wiki/Frazer_Nash
-ergast_api,2026-09-22T23:26:25.431636,https://api.jolpi.ca/ergast/f1/constructors,fry,Fry,British,https://en.wikipedia.org/wiki/Fry_(racing_team)
-ergast_api,2026-09-22T23:26:25.431642,https://api.jolpi.ca/ergast/f1/constructors,gilby,Gilby,British,https://en.wikipedia.org/wiki/Gilby
-ergast_api,2026-09-22T23:26:25.431647,https://api.jolpi.ca/ergast/f1/constructors,gordini,Gordini,French,https://en.wikipedia.org/wiki/Gordini
-ergast_api,2026-09-22T23:26:25.431653,https://api.jolpi.ca/ergast/f1/constructors,haas,Haas F1 Team,American,https://en.wikipedia.org/wiki/Haas_F1_Team
-ergast_api,2026-09-22T23:26:25.431658,https://api.jolpi.ca/ergast/f1/constructors,hall,Hall,American,https://en.wikipedia.org/wiki/Hall_(constructor)
-ergast_api,2026-09-22T23:26:25.431663,https://api.jolpi.ca/ergast/f1/constructors,hesketh,Hesketh,British,https://en.wikipedia.org/wiki/Hesketh_Racing
-ergast_api,2026-09-22T23:26:25.431668,https://api.jolpi.ca/ergast/f1/constructors,hill,Embassy Hill,British,https://en.wikipedia.org/wiki/Embassy_Hill
-ergast_api,2026-09-22T23:26:25.431673,https://api.jolpi.ca/ergast/f1/constructors,honda,Honda,Japanese,https://en.wikipedia.org/wiki/Honda_in_Formula_One
-ergast_api,2026-09-22T23:26:25.431678,https://api.jolpi.ca/ergast/f1/constructors,hrt,HRT,Spanish,https://en.wikipedia.org/wiki/HRT_Formula_1_Team
-ergast_api,2026-09-22T23:26:25.431684,https://api.jolpi.ca/ergast/f1/constructors,hwm,HWM,British,https://en.wikipedia.org/wiki/Hersham_and_Walton_Motors
-ergast_api,2026-09-22T23:26:25.431689,https://api.jolpi.ca/ergast/f1/constructors,iso_marlboro,Iso Marlboro,British,https://en.wikipedia.org/wiki/Frank_Williams_Racing_Cars
-ergast_api,2026-09-22T23:26:25.431695,https://api.jolpi.ca/ergast/f1/constructors,jaguar,Jaguar,British,https://en.wikipedia.org/wiki/Jaguar_Racing
-ergast_api,2026-09-22T23:26:25.431700,https://api.jolpi.ca/ergast/f1/constructors,jbw,JBW,British,https://en.wikipedia.org/wiki/JBW
-ergast_api,2026-09-22T23:26:25.431706,https://api.jolpi.ca/ergast/f1/constructors,jordan,Jordan,Irish,https://en.wikipedia.org/wiki/Jordan_Grand_Prix
-ergast_api,2026-09-22T23:26:25.431717,https://api.jolpi.ca/ergast/f1/constructors,kauhsen,Kauhsen,German,https://en.wikipedia.org/wiki/Kauhsen
-ergast_api,2026-09-22T23:26:25.431722,https://api.jolpi.ca/ergast/f1/constructors,klenk,Klenk,German,https://en.wikipedia.org/wiki/Klenk
-ergast_api,2026-09-22T23:26:25.431727,https://api.jolpi.ca/ergast/f1/constructors,kojima,Kojima,Japanese,https://en.wikipedia.org/wiki/Kojima_Engineering
-ergast_api,2026-09-22T23:26:25.431732,https://api.jolpi.ca/ergast/f1/constructors,kurtis_kraft,Kurtis Kraft,American,https://en.wikipedia.org/wiki/Kurtis_Kraft
-ergast_api,2026-09-22T23:26:25.431737,https://api.jolpi.ca/ergast/f1/constructors,kuzma,Kuzma,American,https://en.wikipedia.org/wiki/Eddie_Kuzma
-ergast_api,2026-09-22T23:26:25.431742,https://api.jolpi.ca/ergast/f1/constructors,lago,Talbot-Lago,French,https://en.wikipedia.org/wiki/Talbot-Lago
-ergast_api,2026-09-22T23:26:25.431747,https://api.jolpi.ca/ergast/f1/constructors,lambo,Lambo,Italian,https://en.wikipedia.org/wiki/Modena_(racing_team)
+constructorId,name,nationality,url
+adams,Adams,American,https://en.wikipedia.org/wiki/Adams_(constructor)
+afm,AFM,German,https://en.wikipedia.org/wiki/Alex_von_Falkenhausen_Motorenbau
+ags,AGS,French,https://en.wikipedia.org/wiki/Automobiles_Gonfaronnaises_Sportives
+alfa,Alfa Romeo,Swiss,https://en.wikipedia.org/wiki/Alfa_Romeo_in_Formula_One
+alphatauri,AlphaTauri,Italian,https://en.wikipedia.org/wiki/Scuderia_AlphaTauri
+alpine,Alpine F1 Team,French,https://en.wikipedia.org/wiki/Alpine_F1_Team
+alta,Alta,British,https://en.wikipedia.org/wiki/Alta_Car_and_Engineering_Company
+amon,Amon,New Zealander,https://en.wikipedia.org/wiki/Chris_Amon_Racing
+apollon,Apollon,Swiss,https://en.wikipedia.org/wiki/Apollon_(Formula_One)
+arrows,Arrows,British,https://en.wikipedia.org/wiki/Arrows_Grand_Prix_International
+arzani-volpini,Arzani-Volpini,Italian,https://en.wikipedia.org/wiki/Arzani-Volpini
+aston_martin,Aston Martin,British,https://en.wikipedia.org/wiki/Aston_Martin_in_Formula_One
+ats,ATS,Italian,https://en.wikipedia.org/wiki/ATS_Wheels
+audi,Audi,German,https://en.wikipedia.org/wiki/Audi_in_Formula_One
+bar,BAR,British,https://en.wikipedia.org/wiki/British_American_Racing
+behra-porsche,Behra-Porsche,Italian,https://en.wikipedia.org/wiki/Behra-Porsche
+bellasi,Bellasi,Swiss,https://en.wikipedia.org/wiki/Bellasi
+benetton,Benetton,Italian,https://en.wikipedia.org/wiki/Benetton_Formula
+bmw,BMW,German,https://en.wikipedia.org/wiki/BMW
+bmw_sauber,BMW Sauber,German,https://en.wikipedia.org/wiki/BMW_in_Formula_One
+boro,Boro,Dutch,https://en.wikipedia.org/wiki/Boro_(Formula_One)
+brabham,Brabham,British,https://en.wikipedia.org/wiki/Brabham
+brabham-alfa_romeo,Brabham-Alfa Romeo,British,https://en.wikipedia.org/wiki/Brabham
+brabham-brm,Brabham-BRM,British,https://en.wikipedia.org/wiki/Brabham
+brabham-climax,Brabham-Climax,British,https://en.wikipedia.org/wiki/Brabham
+brabham-ford,Brabham-Ford,British,https://en.wikipedia.org/wiki/Brabham
+brabham-repco,Brabham-Repco,British,https://en.wikipedia.org/wiki/Brabham
+brawn,Brawn,British,https://en.wikipedia.org/wiki/Brawn_GP
+brm,BRM,British,https://en.wikipedia.org/wiki/British_Racing_Motors
+brm-ford,BRM-Ford,British,https://en.wikipedia.org/wiki/British_Racing_Motors
+bromme,Bromme,American,https://en.wikipedia.org/wiki/Bromme
+brp,BRP,British,https://en.wikipedia.org/wiki/British_Racing_Partnership
+bugatti,Bugatti,French,https://en.wikipedia.org/wiki/Bugatti
+butterworth,Aston Butterworth,British,https://en.wikipedia.org/wiki/Aston_Butterworth
+cadillac,Cadillac F1 Team,American,https://en.wikipedia.org/wiki/Cadillac_in_Formula_One
+caterham,Caterham,Malaysian,https://en.wikipedia.org/wiki/Caterham_F1
+cisitalia,Cisitalia,Italian,https://en.wikipedia.org/wiki/Cisitalia
+coloni,Coloni,Italian,https://en.wikipedia.org/wiki/Scuderia_Coloni
+connaught,Connaught,British,https://en.wikipedia.org/wiki/Connaught_Engineering
+connew,Connew,British,https://en.wikipedia.org/wiki/Connew
+cooper,Cooper,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+cooper-alfa_romeo,Cooper-Alfa Romeo,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+cooper-ats,Cooper-ATS,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+cooper-borgward,Cooper-Borgward,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+cooper-brm,Cooper-BRM,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+cooper-castellotti,Cooper-Castellotti,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+cooper-climax,Cooper-Climax,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+cooper-ferrari,Cooper-Ferrari,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+cooper-ford,Cooper-Ford,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+cooper-maserati,Cooper-Maserati,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+cooper-osca,Cooper-OSCA,British,https://en.wikipedia.org/wiki/Cooper_Car_Company
+dallara,Dallara,Italian,https://en.wikipedia.org/wiki/Dallara
+de_tomaso-alfa_romeo,De Tomaso-Alfa Romeo,Italian,https://en.wikipedia.org/wiki/De_Tomaso
+de_tomaso-ferrari,De Tomaso-Ferrari,Italian,https://en.wikipedia.org/wiki/De_Tomaso
+de_tomaso-osca,De Tomaso-Osca,Italian,https://en.wikipedia.org/wiki/De_Tomaso
+deidt,Deidt,American,https://en.wikipedia.org/wiki/Emil_Diedt
+del_roy,Del Roy,American,https://en.wikipedia.org/wiki/Frank_DelRoy
+derrington,Derrington,British,https://en.wikipedia.org/wiki/Derrington-Francis
+dunn,Dunn,American,https://en.wikipedia.org/wiki/Dunn_Engineering
+eagle,Eagle,American,https://en.wikipedia.org/wiki/All_American_Racers
+eagle-climax,Eagle-Climax,American,https://en.wikipedia.org/wiki/All_American_Racers
+eagle-weslake,Eagle-Weslake,American,https://en.wikipedia.org/wiki/All_American_Racers
+elder,Elder,American,https://en.wikipedia.org/wiki/Edgar_Elder
+emeryson,Emeryson,British,https://en.wikipedia.org/wiki/Emeryson
+emw,EMW,East German,https://en.wikipedia.org/wiki/Eisenacher_Motorenwerk
+enb,ENB,Belgian,https://en.wikipedia.org/wiki/Écurie_Nationale_Belge
+ensign,Ensign,British,https://en.wikipedia.org/wiki/Ensign_Racing
+epperly,Epperly,American,https://en.wikipedia.org/wiki/Epperly
+era,ERA,British,https://en.wikipedia.org/wiki/English_Racing_Automobiles
+eurobrun,Euro Brun,Italian,https://en.wikipedia.org/wiki/EuroBrun
+ewing,Ewing,American,https://en.wikipedia.org/wiki/Wayne_Ewing
+ferguson,Ferguson,British,https://en.wikipedia.org/wiki/Ferguson_Research
+ferrari,Ferrari,Italian,https://en.wikipedia.org/wiki/Scuderia_Ferrari
+fittipaldi,Fittipaldi,Brazilian,https://en.wikipedia.org/wiki/Fittipaldi_Automotive
+fondmetal,Fondmetal,Italian,https://en.wikipedia.org/wiki/Fondmetal
+footwork,Footwork,British,https://en.wikipedia.org/wiki/Footwork_Arrows
+force_india,Force India,Indian,https://en.wikipedia.org/wiki/Racing_Point_Force_India
+forti,Forti,Italian,https://en.wikipedia.org/wiki/Forti
+frazer_nash,Frazer Nash,British,https://en.wikipedia.org/wiki/Frazer_Nash
+fry,Fry,British,https://en.wikipedia.org/wiki/Fry_(racing_team)
+gilby,Gilby,British,https://en.wikipedia.org/wiki/Gilby
+gordini,Gordini,French,https://en.wikipedia.org/wiki/Gordini
+haas,Haas F1 Team,American,https://en.wikipedia.org/wiki/Haas_F1_Team
+hall,Hall,American,https://en.wikipedia.org/wiki/Hall_(constructor)
+hesketh,Hesketh,British,https://en.wikipedia.org/wiki/Hesketh_Racing
+hill,Embassy Hill,British,https://en.wikipedia.org/wiki/Embassy_Hill
+honda,Honda,Japanese,https://en.wikipedia.org/wiki/Honda_in_Formula_One
+hrt,HRT,Spanish,https://en.wikipedia.org/wiki/HRT_Formula_1_Team
+hwm,HWM,British,https://en.wikipedia.org/wiki/Hersham_and_Walton_Motors
+iso_marlboro,Iso Marlboro,British,https://en.wikipedia.org/wiki/Frank_Williams_Racing_Cars
+jaguar,Jaguar,British,https://en.wikipedia.org/wiki/Jaguar_Racing
+jbw,JBW,British,https://en.wikipedia.org/wiki/JBW
+jordan,Jordan,Irish,https://en.wikipedia.org/wiki/Jordan_Grand_Prix
+kauhsen,Kauhsen,German,https://en.wikipedia.org/wiki/Kauhsen
+klenk,Klenk,German,https://en.wikipedia.org/wiki/Klenk
+kojima,Kojima,Japanese,https://en.wikipedia.org/wiki/Kojima_Engineering
+kurtis_kraft,Kurtis Kraft,American,https://en.wikipedia.org/wiki/Kurtis_Kraft
+kuzma,Kuzma,American,https://en.wikipedia.org/wiki/Eddie_Kuzma
+lago,Talbot-Lago,French,https://en.wikipedia.org/wiki/Talbot-Lago
+lambo,Lambo,Italian,https://en.wikipedia.org/wiki/Modena_(racing_team)
