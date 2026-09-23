@@ -6,13 +6,14 @@ import requests
 import time
 from datetime import datetime
 
-def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
+def fetch_ergast_data(endpoint_url: str, record_type: str, max_per_request: int = 100) -> pd.DataFrame:
     """
-    Generic function to fetch and flatten all records from Ergast API endpoint.
+    Generic function to fetch and flatten all records from Ergast API endpoint with pagination.
     
     Args:
         endpoint_url: The base API URL
         record_type: The type name used in the JSON response
+        max_per_request: Max records per API call (default 100 for Jolpica/Ergast)
     
     Returns:
         pd.DataFrame with flattened records (objects → IDs, arrays exploded)
@@ -45,36 +46,47 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
     except ValueError as e:
         raise RuntimeError(f"Failed to parse JSON metadata: {e}")
     
-    time.sleep(1)
+    # Step 2: Fetch all records with pagination
+    all_records = []
     
-    # Step 2: Fetch all records with limit=total
     try:
-        print(f"Fetching all {total} {record_type}(s)...")
-        data_response = requests.get(
-            api_base,
-            params={"limit": total, "format": "json"},
-            headers={"User-Agent": f"F1ETLScraper/{version}"},
-            timeout=60,
-        )
-        data_response.raise_for_status()
+        print(f"Fetching all {total} {record_type}(s) in batches of {max_per_request}...")
         
-        data = data_response.json()
-        
-        mrdata = data.get("MRData", {})
-        table_key = None
-        table_data = None
-        
-        for key in mrdata.keys():
-            if key.endswith("Table"):
-                table_key = key
-                table_data = mrdata[key].get(record_type + "s", [])
+        offset = 0
+        while offset < total:
+            batch_limit = min(max_per_request, total - offset)
+            
+            data_response = requests.get(
+                api_base,
+                params={"limit": batch_limit, "offset": offset, "format": "json"},
+                headers={"User-Agent": f"F1ETLScraper/{version}"},
+                timeout=60,
+            )
+            data_response.raise_for_status()
+            
+            data = data_response.json()
+            
+            mrdata = data.get("MRData", {})
+            table_data = None
+            
+            for key in mrdata.keys():
+                if key.endswith("Table"):
+                    table_data = mrdata[key].get(record_type + "s", [])
+                    break
+            
+            if table_data is None or not table_data:
+                print(f"WARNING: No batch data found for {record_type} at offset {offset}")
                 break
+            
+            print(f"  Batch {offset+1}-{offset+len(table_data)} of {total} {record_type}(s)...")
+            all_records.extend(table_data)
+            
+            offset += len(table_data)
+            
+            # Respect rate limits between batches
+            time.sleep(1)
         
-        if table_data is None or not table_data:
-            print(f"WARNING: No table data found for {record_type}")
-            return pd.DataFrame()
-        
-        print(f"API returned {len(table_data)} of {total} {record_type}(s)")
+        print(f"API returned {len(all_records)} of {total} {record_type}(s)")
         
     except requests.exceptions.RequestException as e:
         raise RuntimeError(f"Failed to fetch {record_type} data from Ergast API: {e}")
@@ -158,7 +170,7 @@ def fetch_ergast_data(endpoint_url: str, record_type: str) -> pd.DataFrame:
     # Process all top-level records
     all_rows = []
     
-    for record in table_data:
+    for record in all_records:
         # First flatten the record (extract IDs from objects)
         flattened = flatten_record(record)
         
