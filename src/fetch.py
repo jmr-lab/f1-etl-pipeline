@@ -51,11 +51,27 @@ def fetch_ergast_data(endpoint_url: str, record_type: str, max_per_request: int 
                     return pd.DataFrame()
                 print(f"Total {record_type}(s) available: {total}")
             
+            # Find the table data - look for any key ending with "Table"
             table_data = None
             for key in mrdata.keys():
                 if key.endswith("Table"):
-                    table_data = mrdata[key].get(record_type + "s", [])
-                    break
+                    table_content = mrdata[key]
+                    
+                    # Try different variations of the record type key
+                    possible_keys = [
+                        record_type + "s",      # plural (e.g., "Drivers")
+                        record_type,             # singular (e.g., "Status")
+                        record_type.capitalize() + "s",  # Capitalized plural (e.g., "Drivers")
+                        record_type.capitalize(),       # Capitalized singular (e.g., "Status")
+                    ]
+                    
+                    for possible_key in possible_keys:
+                        if possible_key in table_content:
+                            table_data = table_content[possible_key]
+                            break
+                    
+                    if table_data is not None:
+                        break
             
             if table_data is None or not table_data:
                 print(f"WARNING: No batch data found for {record_type} at offset {offset}")
