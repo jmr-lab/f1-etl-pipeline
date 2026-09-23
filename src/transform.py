@@ -122,7 +122,7 @@ def transform_data(dataframes: dict) -> pd.DataFrame:
 
     # Race columns
     races_df = races[
-        ["raceId", "year", "round", "circuitId", "name", "date"]
+        ["raceId", "year", "round", "circuitId", "raceName", "date"]
     ]
 
     # Results columns
