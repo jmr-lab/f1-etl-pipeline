@@ -202,7 +202,8 @@ def transform_data(dataframes: dict) -> pd.DataFrame:
         'team_country_code'
     ]]
 
-    final_df = final_df.rename(columns={'position': 'positionOrder',
+    final_df = final_df.rename(columns={'id': 'resultId',
+                                        'position': 'positionOrder',
                                         'cumul_points': 'cumulPoints',
                                         'round_name': 'circuit',
                                         'laps_completed': 'laps',
