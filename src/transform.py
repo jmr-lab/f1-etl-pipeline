@@ -68,261 +68,219 @@ def transform_data(dataframes: dict) -> pd.DataFrame:
         Transformed Formula 1 dataset.
     """
 
-    # Make local copies so the original extracted data is not modified
-    circuits = dataframes["circuits"].copy()
-    constructor_results = dataframes["constructor_results"].copy()
-    constructor_standings = dataframes["constructor_standings"].copy()
-    constructors = dataframes["constructors"].copy()
-    driver_standings = dataframes["driver_standings"].copy()
-    drivers = dataframes["drivers"].copy()
-    races = dataframes["races"].copy()
-    results = dataframes["results"].copy()
-    status = dataframes["status"].copy()
+#    for name, df in dataframes.items():
+#        print(f"DataFrame '{name}':")
+#        print("Columns:", list(df.columns))
+#        print()
 
+    import pandas as pd
+    
+    # Make local copies
+    sessionentry = dataframes["sessionentry"].copy()
+    roundentry = dataframes["roundentry"].copy().rename(columns={'id': 'round_entry_id'})
+    session = dataframes["session"].copy().rename(columns={'id': 'session_id'})
+    teamdriver = dataframes["teamdriver"].copy().rename(columns={'id': 'team_driver_id'})
+    driver = dataframes["driver"].copy().rename(columns={'id': 'driver_id', 'country_code': 'driver_country_code'})
+    team = dataframes["team"].copy().rename(columns={'id': 'team_id', 'country_code': 'team_country_code', 'name': 'team_name'})
+    season = dataframes["season"].copy().rename(columns={'id': 'season_id'})
+    round = dataframes["round"].copy().rename(columns={'id': 'round_id', 'name': 'round_name'})
+    circuit = dataframes["circuit"].copy().rename(columns={'id': 'circuit_id', 'name': 'circuit_name'})
+    driverchampionship = dataframes["driverchampionship"].copy().rename(columns={'points': 'cumul_points'})
+    
+    # Simple merge: sessionentry LEFT JOIN roundentry
+    # All rows from sessionentry, matching rows from roundentry
+    final_df = sessionentry.merge(
+        roundentry[['round_entry_id', 'team_driver_id', 'round_id']],
+        left_on='round_entry_id',
+        right_on='round_entry_id',
+        how='left'
+    )
+    
+    final_df = final_df.merge(
+        session[['session_id', 'type']],
+        left_on='session_id',
+        right_on='session_id',
+        how='left'
+    )
+
+    final_df = final_df.query("type == 'R'")
+
+    final_df = final_df.merge(
+        teamdriver[['team_driver_id', 'driver_id', 'season_id', 'team_id']],
+        left_on='team_driver_id',
+        right_on='team_driver_id',
+        how='left'
+    )
+
+    final_df = final_df.merge(
+        driver[['driver_id', 'driver_country_code', 'date_of_birth', 'forename', 'surname']],
+        left_on='driver_id',
+        right_on='driver_id',
+        how='left'
+    )
+
+    final_df = final_df.merge(
+        team[['team_id', 'team_country_code', 'team_name']],
+        left_on='team_id',
+        right_on='team_id',
+        how='left'
+    )
+
+    final_df = final_df.merge(
+        season[['season_id', 'year']],
+        left_on='season_id',
+        right_on='season_id',
+        how='left'
+    )
+
+    final_df = final_df.merge(
+        round[['round_id', 'circuit_id', 'round_name', 'number']],
+        left_on='round_id',
+        right_on='round_id',
+        how='left'
+    )
+
+    final_df = final_df.merge(
+        circuit[['circuit_id', 'circuit_name']],
+        left_on='circuit_id',
+        right_on='circuit_id',
+        how='left'
+    )
+
+    final_df = final_df.merge(
+        driverchampionship[['driver_id', 'session_id', 'cumul_points']],
+        left_on=['driver_id', 'session_id'],
+        right_on=['driver_id', 'session_id'],
+        how='left'
+    )
+
+    # 1. Select and create the transformed columns
+    final_df = final_df[['id', 'grid', 'position', 'cumul_points', 'points',
+                         'laps_completed', 'fastest_lap_rank', 'detail',
+                         'year', 'number', 'round_name', 'forename', 
+                         'surname', 'date_of_birth', 'team_name', 
+                         'driver_country_code', 'team_country_code']].copy()
+    
+    # 2. Concatenate forename + surname into driver_name
+    final_df['driver_name'] = final_df['forename'].fillna('') + ' ' + final_df['surname'].fillna('')
+    
+    # 3. Calculate driver_age from date_of_birth and year
+    def calc_age(date_of_birth, year):
+        if pd.isna(date_of_birth) or pd.isna(year):
+            return None
+        try:
+            birth_year = pd.to_datetime(date_of_birth).year
+            return int(year) - birth_year
+        except:
+            return None
+    
+    final_df['driver_age'] = final_df.apply(
+        lambda row: calc_age(row['date_of_birth'], row['year']),
+        axis=1
+    )
+    
+    # 4. Drop the original columns used for transformation
+    final_df = final_df.drop(columns=['forename', 'surname', 'date_of_birth'])
+    
+    # 5. Reorder columns in the desired order
+    final_df = final_df[[
+        'id',
+        'grid',
+        'position',
+        'points',
+        'laps_completed',
+        'fastest_lap_rank',
+        'year',
+        'number',
+        'round_name',
+        'team_name',
+        'detail',
+        'cumul_points',
+        'driver_age',
+        'driver_name',
+        'driver_country_code',
+        'team_country_code'
+    ]]
+
+    final_df = final_df.rename(columns={'position': 'positionOrder',
+                                        'cumul_points': 'cumulPoints',
+                                        'round_name': 'circuit',
+                                        'laps_completed': 'laps',
+                                        'fastest_lap_rank': 'rank',
+                                        'detail': 'status',
+                                        'driver_name': 'driverName',
+                                        'driver_age': 'driverAge',
+                                        'team_name': 'constructorName'})
+
+    # Load the countries lookup table
     countries_path = Path(__file__).resolve().parent / "resources" / "countries_lookup.csv"
     countries = pd.read_csv(countries_path)
 
-    # Remove unnecessary columns
-    circuits_df = circuits.drop(
-        columns=["lat", "lng", "url"],
-        errors="ignore"
-    )
+    # Create mapping dictionary from countries DataFrame
+    country_map = dict(zip(countries['country_code'], countries['country']))
+    
+    # Map codes to country names
+    final_df['driverCountry'] = final_df['driver_country_code'].map(country_map)
+    final_df['constructorCountry'] = final_df['team_country_code'].map(country_map)
 
-    constructor_results_df = constructor_results.drop(
-        columns=["status"],
-        errors="ignore"
-    )
+    # Drop the two country code columns
+    final_df = final_df.drop(columns=['driver_country_code', 'team_country_code'])
 
-    constructor_standings_df = constructor_standings.drop(
-        columns=["positionText"],
-        errors="ignore"
-    )
+    # Build country image paths
+    final_df = build_country_image_paths(final_df)
 
-    constructors_df = constructors.drop(
-        columns=["url"],
-        errors="ignore"
-    )
-
-    # Make Alfa Romeo an Italian constructor
-    constructors_df.loc[
-        constructors_df["name"] == "Alfa Romeo",
-        "nationality"
-    ] = "Italian"
-
-    # Driver standings columns
-    driver_standings_df = driver_standings[
-        ["driverStandingsId", "raceId", "driverId", "points"]
-    ].rename(columns={"points": "cumulPoints"})
-
-    # Driver columns
-    drivers_df = drivers.drop(
-        columns=["number", "url"],
-        errors="ignore"
-    )
-
-    # Race columns
-    races_df = races[
-        ["raceId", "year", "round", "circuitId", "raceName", "date"]
-    ]
-
-    # Results columns
-    result_columns_to_remove = [
-        "number",
-        "time",
-        "milliseconds",
-        "fastestLap",
-        "fastestLapTime",
-        "fastestLapSpeed",
-        "position",
-        "positionText",
-    ]
-
-    results_df = results.drop(
-        columns=result_columns_to_remove,
-        errors="ignore"
-    )
-
-    # Convert status values
-    status_df = status.copy()
-
+    # Update the status column
     finished_statuses = [
         "Finished",
         "Disqualified",
         "Not classified",
+        "Lapsed"
     ]
-
+    
     not_qualified_statuses = [
         "107% Rule",
         "Did not qualify",
         "Did not prequalify",
     ]
-
-    status_df["status"] = status_df["status"].where(
-        status_df["status"].isin(finished_statuses),
-        "Abandoned"
-    )
-
-    # Statuses such as "+1 Lap" or "+3 Laps" become "Lapsed"
-    lapsed_mask = status["status"].str.match(
+    
+    # FIRST: Catch lapsed statuses (+1 Lap, +3 Laps, etc.)
+    lapsed_mask = final_df["status"].str.match(
         r"^\+\d+ Laps?$",
         na=False
     )
-
-    status_df.loc[lapsed_mask, "status"] = "Lapsed"
-
-    # Not-qualified statuses become "Not Qualified"
-    not_qualified_mask = status["status"].isin(
-        not_qualified_statuses
+    final_df.loc[lapsed_mask, "status"] = "Lapsed"
+    
+    # THEN: Handle not-qualified statuses
+    not_qualified_mask = final_df["status"].isin(not_qualified_statuses)
+    final_df.loc[not_qualified_mask, "status"] = "Not Qualified"
+    
+    # LAST: Everything else becomes "Abandoned" (except finished_statuses)
+    final_df["status"] = final_df["status"].where(
+        final_df["status"].isin(finished_statuses),
+        "Abandoned"
     )
 
-    status_df.loc[not_qualified_mask, "status"] = "Not Qualified"
+    # Make Alfa Romeo an Italian constructor
+#    constructors_df.loc[
+#        constructors_df["name"] == "Alfa Romeo",
+#        "nationality"
+#    ] = "Italian"
 
-    # Join results with races, drivers, constructors, and status
-    formula1 = (
-        results_df
-        .merge(races_df, on="raceId", how="left")
-        .merge(drivers_df, on="driverId", how="left")
-        .merge(constructors_df, on="constructorId", how="left")
-        .merge(status_df, on="statusId", how="left")
-        .merge(
-            driver_standings_df,
-            on=["raceId", "driverId"],
-            how="left"
-        )
-    )
+    # ==========================================
+    # SAVE the formula1 data set as a CSV file
+    # ==========================================
 
-    # Replace missing cumulative points with zero
-    formula1["cumulPoints"] = (
-        formula1["cumulPoints"]
-        .fillna(0)
-    )
+    """Return the data/processed folder and create it if necessary."""
+    src_folder = Path(__file__).resolve().parent
+    processed_folder = src_folder.parent / "data" / "processed"
+    processed_folder.mkdir(parents=True, exist_ok=True)
 
-    # Remove unneeded columns
-    columns_to_remove = [
-        "raceId",
-        "driverId",
-        "constructorId",
-        "circuitId",
-        "statusId",
-        "driverRef",
-        "code",
-        "constructorRef",
-    ]
-
-    formula1 = formula1.drop(
-        columns=columns_to_remove,
-        errors="ignore"
-    )
-
-    # Rename columns created by joins
-    formula1 = formula1.rename(
-        columns={
-            "name_x": "circuit",
-            "name_y": "constructorName",
-            "nationality_x": "driverNationality",
-            "nationality_y": "constructorNationality",
-        }
-    )
-
-    # Calculate driver age
-    formula1["date"] = pd.to_datetime(
-        formula1["date"],
-        errors="coerce"
-    )
-
-    formula1["dob"] = pd.to_datetime(
-        formula1["dob"],
-        errors="coerce"
-    )
-
-    formula1["driverAge"] = (
-        (formula1["date"] - formula1["dob"]).dt.days / 365.25
-    ).floordiv(1)
-
-    # Remove date columns
-    formula1 = formula1.drop(
-        columns=["date", "dob"],
-        errors="ignore"
-    )
-
-    # Merge first and last name into driverName
-    formula1["driverName"] = (
-        formula1["forename"].fillna("").str.strip()
-        + " "
-        + formula1["surname"].fillna("").str.strip()
-    ).str.strip()
-
-    formula1 = formula1.drop(
-        columns=["forename", "surname"],
-        errors="ignore"
-    )
-
-    # Clean nationality values
-    formula1["driverNationality"] = (
-        formula1["driverNationality"]
-        .fillna("")
-        .str.strip()
-    )
-
-    formula1["constructorNationality"] = (
-        formula1["constructorNationality"]
-        .fillna("")
-        .str.strip()
-    )
-
-    # Rename country lookup column for driver nationality
-    driver_countries = countries.rename(
-        columns={
-            "Adjective": "driverNationality",
-            "Country": "driverCountry",
-        }
-    )
-
-    formula1 = formula1.merge(
-        driver_countries[
-            ["driverNationality", "driverCountry"]
-        ],
-        on="driverNationality",
-        how="left"
-    )
-
-    formula1 = formula1.drop(
-        columns=["driverNationality"],
-        errors="ignore"
-    )
-
-    # Rename country lookup column for constructor nationality
-    constructor_countries = countries.rename(
-        columns={
-            "Adjective": "constructorNationality",
-            "Country": "constructorCountry",
-        }
-    )
-
-    formula1 = formula1.merge(
-        constructor_countries[
-            ["constructorNationality", "constructorCountry"]
-        ],
-        on="constructorNationality",
-        how="left"
-    )
-
-    formula1 = formula1.drop(
-        columns=["constructorNationality"],
-        errors="ignore"
-    )
-
-    # Build country image paths
-    formula1 = build_country_image_paths(formula1)
-
-    # Keep only previous years
-    current_year = date.today().year
-
-    formula1 = formula1[
-        formula1["year"] < current_year
-    ].copy()
-
-    return formula1
+    output_file = processed_folder / "formula1.csv"
+    
+    final_df.to_csv(output_file, index=False)
+    print(f"Saved CSV: {output_file} ({len(final_df):,} rows)")
+    
+    return final_df
 
 
 if __name__ == "__main__":
