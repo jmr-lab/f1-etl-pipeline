@@ -147,15 +147,18 @@ The `formula1.csv` file contains the following columns:
 | `resultId`             | INT             | Unique result identifier                   |
 | `grid`                 | INT             | Starting grid position                     |
 | `positionOrder`        | INT             | Finishing position order                   |
-| `cumulPoints`          | DOUBLE          | Cumulative driver points at race           |
+| `laps`                 | INT             | Number of laps completed in the race       |
+| `rank`                 | INT             | Overall ranking classification             |
+| `status`               | VARCHAR(100)    | Race finish status                         |
 | `points`               | DOUBLE          | Points awarded for the race                |
+| `cumulPoints`          | DOUBLE          | Cumulative driver points at race           |
 | `year`                 | INT             | Season year                                |
 | `round`                | INT             | Round number within season                 |
 | `circuit`              | VARCHAR(255)    | Circuit name                               |
 | `driverName`           | VARCHAR(255)    | Full driver name                           |
+| `driverCountry`        | VARCHAR(100)    | Driver's country of origin                 |
 | `driverAge`            | INT             | Driver age in years at race date           |
 | `constructorName`      | VARCHAR(255)    | Team name                                  |
-| `driverCountry`        | VARCHAR(100)    | Driver's country of origin                 |
 | `constructorCountry`   | VARCHAR(100)    | Constructor's country of origin            |
 | `driverImage`          | VARCHAR(255)    | Path to flag icon                          |
 | `constructorImage`     | VARCHAR(255)    | Path to flag icon                          |
