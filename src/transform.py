@@ -207,6 +207,7 @@ def transform_data(dataframes: dict) -> pd.DataFrame:
                                         'round_name': 'circuit',
                                         'laps_completed': 'laps',
                                         'fastest_lap_rank': 'rank',
+                                        'number': 'round',
                                         'detail': 'status',
                                         'driver_name': 'driverName',
                                         'driver_age': 'driverAge',
