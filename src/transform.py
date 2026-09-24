@@ -260,6 +260,11 @@ def transform_data(dataframes: dict) -> pd.DataFrame:
         "Abandoned"
     )
 
+    # Get the current year
+    current_year = date.today().year
+    # Filter to keep only years before current year (i.e., <= 2025)
+    final_df = final_df[final_df["year"] < current_year]
+
     # Make Alfa Romeo an Italian constructor
 #    constructors_df.loc[
 #        constructors_df["name"] == "Alfa Romeo",
