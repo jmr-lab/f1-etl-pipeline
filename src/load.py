@@ -21,7 +21,7 @@ def get_sql_folder() -> Path:
 def save_formula1_csv(formula1: pd.DataFrame) -> None:
     """Save the Formula 1 DataFrame as a CSV file."""
     processed_folder = get_processed_folder()
-    output_file = processed_folder / "formula1.csv"
+    output_file = processed_folder / "f1summary.csv"
     
     formula1.to_csv(output_file, index=False)
     print(f"Saved CSV: {output_file} ({len(formula1):,} rows)")
@@ -44,7 +44,7 @@ def save_formula1_sql(formula1: pd.DataFrame) -> None:
     """Save the Formula 1 DataFrame as a MariaDB-compatible SQL file."""
 
     sql_folder = get_sql_folder()
-    output_file = sql_folder / "formula1.sql"
+    output_file = sql_folder / "f1summary.sql"
 
     column_definitions = {
         "resultId": "INT",
@@ -67,7 +67,7 @@ def save_formula1_sql(formula1: pd.DataFrame) -> None:
     columns = list(column_definitions.keys())
 
     with output_file.open("w", encoding="utf-8") as file:
-        file.write("DROP TABLE IF EXISTS formula1;\n\n")
+        file.write("DROP TABLE IF EXISTS f1summary;\n\n")
 
         definitions = ",\n".join(
             f"    {column} {data_type}"
@@ -75,7 +75,7 @@ def save_formula1_sql(formula1: pd.DataFrame) -> None:
         )
 
         file.write(
-            "CREATE TABLE formula1 (\n"
+            "CREATE TABLE f1summary (\n"
             f"{definitions}\n"
             ");\n\n"
         )
@@ -101,7 +101,7 @@ def save_formula1_sql(formula1: pd.DataFrame) -> None:
             # FIXED: Join values outside f-string
             values_section = ",\n".join(values_blocks)
 
-            file.write("INSERT INTO formula1 (" + column_names + ") VALUES\n")
+            file.write("INSERT INTO f1summary (" + column_names + ") VALUES\n")
             file.write(values_section + ";\n\n")
 
     print(f"Saved SQL file: {output_file}")
@@ -111,11 +111,11 @@ def save_formula1_db(formula1: pd.DataFrame) -> None:
     """Save the Formula 1 DataFrame as a SQLite database file."""
 
     sql_folder = get_sql_folder()
-    output_file = sql_folder / "formula1.db"
+    output_file = sql_folder / "f1summary.db"
 
     with sqlite3.connect(output_file) as connection:
         formula1.to_sql(
-            "formula1",
+            "f1summary",
             connection,
             if_exists="replace",
             index=False,
@@ -125,14 +125,14 @@ def save_formula1_db(formula1: pd.DataFrame) -> None:
         connection.execute(
             """
             CREATE INDEX IF NOT EXISTS idx_formula1_race
-            ON formula1 (year, round)
+            ON f1summary (year, round)
             """
         )
 
         connection.execute(
             """
             CREATE INDEX IF NOT EXISTS idx_formula1_driver
-            ON formula1 (driverName)
+            ON f1summary (driverName)
             """
         )
 
