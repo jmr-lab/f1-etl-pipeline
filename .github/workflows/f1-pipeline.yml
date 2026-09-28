@@ -239,3 +239,12 @@ jobs:
           commit_message: 'Update F1 outputs via ETL pipeline (${{ github.sha }})'
           file_pattern: 'sql/f1summary.db sql/formula1.db sql/f1summary.sql data/processed/f1summary.csv'
           branch: ${{ github.ref_name }}
+
+      - name: Create Release with Data
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "data-${{ github.run_number }}"
+          artifacts: "sql/f1summary.db,sql/formula1.db,data/processed/f1summary.csv"
+          generateReleaseNotes: false
+          allowUpdates: true
+          makeLatest: true
