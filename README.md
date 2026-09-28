@@ -18,6 +18,40 @@ This pipeline downloads a compressed CSV archive from the Jolpica F1 database, e
  Jolpica DB         Raw CSVs         Unified schema       Quality checks      CSV + SQL + DB
 ```
 
+```
+                ┌─────────┐
+                │  Fetch  │   JolpicaF1 API
+                └────┬────┘
+                     ▼
+                ┌─────────┐
+                │ Extract │   Raw CSVs → unified pickle
+                └────┬────┘
+              ┌──────┴──────┐
+              ▼             ▼
+       ┌───────────┐  ┌──────────┐
+       │ Transform │  │ Build DB │   runs in parallel
+       └─────┬─────┘  └────┬─────┘
+             ▼             │
+       ┌───────────┐       │
+       │ Validate  │       │
+       └─────┬─────┘       │
+             │     ┌───────┘
+             ▼     ▼
+           ┌─────────┐
+           │  Load   │   CSV + SQL + SQLite DB
+           └─────────┘
+```
+
+```mermaid
+flowchart TD
+    A[Fetch<br/>JolpicaF1 API] --> B[Extract<br/>Raw CSVs]
+    B --> C[Transform<br/>Unified schema]
+    B --> E[Build DB<br/>Star schema]
+    C --> D[Validate<br/>Quality checks]
+    D --> F[Load<br/>CSV + SQL + DB]
+    E --> F
+```
+
 ## Workflow Execution
    
 Here's an example of the pipeline running successfully:
