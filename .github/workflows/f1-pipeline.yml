@@ -248,4 +248,5 @@ jobs:
           allowUpdates: true
           makeLatest: true
           generateReleaseNotes: false
+          commit: "HEAD"
           body: "Automated data update from F1 ETL pipeline"
