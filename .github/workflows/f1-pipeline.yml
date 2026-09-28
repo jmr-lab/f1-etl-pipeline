@@ -173,7 +173,7 @@ jobs:
 
   load:
     runs-on: ubuntu-latest
-    needs: [validate, build_db]
+    needs: validate
     
     steps:
       - name: Checkout repository
