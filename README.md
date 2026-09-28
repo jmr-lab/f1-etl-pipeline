@@ -10,38 +10,6 @@ This pipeline downloads a compressed CSV archive from the Jolpica F1 database, e
 
 ## Pipeline Architecture
 
-```
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│  Fetch DB   │ →  │   Extract   │ →  │  Transform  │ →  │   Validate  │ →  │    Load     │
-└─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘    └─────────────┘
-       ↓                  ↓                   ↓                   ↓                  ↓
- Jolpica DB         Raw CSVs         Unified schema       Quality checks      CSV + SQL + DB
-```
-
-```
-                ┌─────────┐
-                │  Fetch  │   JolpicaF1 API
-                └────┬────┘
-                     ▼
-                ┌─────────┐
-                │ Extract │   Raw CSVs → unified pickle
-                └────┬────┘
-              ┌──────┴──────┐
-              ▼             ▼
-       ┌───────────┐  ┌──────────┐
-       │ Transform │  │ Build DB │   runs in parallel
-       └─────┬─────┘  └────┬─────┘
-             ▼             │
-       ┌───────────┐       │
-       │ Validate  │       │
-       └─────┬─────┘       │
-             │     ┌───────┘
-             ▼     ▼
-           ┌─────────┐
-           │  Load   │   CSV + SQL + SQLite DB
-           └─────────┘
-```
-
 ```mermaid
 flowchart TD
     A[Fetch<br/>JolpicaF1 API] --> B[Extract<br/>Raw CSVs]
