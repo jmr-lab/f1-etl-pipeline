@@ -122,61 +122,6 @@ f1-etl-pipeline/
 └── README.md
 ```
 
-```mermaid
-flowchart LR
-    ROOT["f1-etl-pipeline/"]
-    
-    %% src directory and files
-    SRC["src/"]
-    FETCH["fetch.py<br/>↓ JolpicaF1 API"]
-    EXTRACT["extract.py"]
-    TRANSFORM["transform.py"]
-    VALIDATE["validate.py"]
-    LOAD["load.py"]
-    BUILDDB["build_db.py<br/>↓ Star schema"]
-    RESOURCES["resources/<br/>Lookup tables"]
-    
-    %% data directory and files
-    DATA["data/"]
-    RAW["raw/<br/>Raw CSVs"]
-    PROCESSED["processed/<br/>f1summary.csv"]
-    
-    %% sql directory
-    SQL["sql/<br/>f1summary.db | formula1.db"]
-    
-    %% root files
-    RUNPIPELINE["run_pipeline.py"]
-    README["README.md"]
-    
-    %% Hierarchy
-    ROOT --> SRC
-    ROOT --> DATA
-    ROOT --> SQL
-    ROOT --> RUNPIPELINE
-    ROOT --> README
-    
-    SRC --> FETCH
-    SRC --> EXTRACT
-    SRC --> TRANSFORM
-    SRC --> VALIDATE
-    SRC --> LOAD
-    SRC --> BUILDDB
-    SRC --> RESOURCES
-    
-    DATA --> RAW
-    DATA --> PROCESSED
-    
-    %% Styling
-    style ROOT fill:#6d4aff,color:#fff,stroke:#fff
-    style SRC fill:#9ca7b8,stroke:#333
-    style DATA fill:#9ca7b8,stroke:#333
-    style SQL fill:#9ca7b8,stroke:#333
-    style FETCH fill:#a8d5ba,stroke:#333
-    style BUILDDB fill:#ffcc80,stroke:#333
-    style RAW fill:#ffe0b2,stroke:#333
-    style PROCESSED fill:#bbdefb,stroke:#333
-```
-
 ## Outputs
 
 | File                     | Description                      |
