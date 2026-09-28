@@ -108,7 +108,7 @@ f1-etl-pipeline/
 │   ├── transform.py
 │   ├── validate.py
 │   ├── load.py
-│   ├── build_db.py             ← Creates star schema database
+│   ├── build_db.py          ← Creates star schema database
 │   └── resources/           ← Custom lookup tables
 ├── data/
 │   ├── raw/                 ← Place Ergast CSV files here
