@@ -12,11 +12,11 @@ This pipeline downloads a compressed CSV archive from the Jolpica F1 database, e
 
 ```mermaid
 flowchart TD
-    A[Fetch<br/>JolpicaF1 API] --> B[Extract<br/>Raw CSVs]
-    B --> C[Transform<br/>Unified schema]
-    B --> E[Build DB<br/>Star schema]
-    C --> D[Validate<br/>Quality checks]
-    D --> F[Load<br/>CSV + SQL + DB]
+    A[Fetch<br/>(JolpicaF1 API)] --> B[Extract<br/>(Raw CSVs)]
+    B --> C[Transform<br/>(Unified schema)]
+    B --> E[Build DB<br/>(Star schema)]
+    C --> D[Validate<br/>(Quality checks)]
+    D --> F[Load<br/>(CSV + SQL + DB)]
     E --> F
 ```
 
