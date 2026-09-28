@@ -240,11 +240,12 @@ jobs:
           file_pattern: 'sql/f1summary.db sql/formula1.db sql/f1summary.sql data/processed/f1summary.csv'
           branch: ${{ github.ref_name }}
 
-      - name: Create Release with Data
+      - name: Update Single Release
         uses: ncipollo/release-action@v1
         with:
-          tag: "data-${{ github.run_number }}"
+          tag: "data-latest"
           artifacts: "sql/f1summary.db,sql/formula1.db,data/processed/f1summary.csv"
-          generateReleaseNotes: false
           allowUpdates: true
           makeLatest: true
+          generateReleaseNotes: false
+          body: "Automated data update from F1 ETL pipeline"
