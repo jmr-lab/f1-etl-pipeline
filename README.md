@@ -20,36 +20,6 @@ flowchart TD
     E --> F
 ```
 
-```mermaid
-flowchart TD
-    Fetch --> Extract
-    Extract --> Transform
-    Extract --> BuildDB
-    Transform --> Validate
-    Validate --> Load
-    BuildDB --> Load
-```
-
-```mermaid
-flowchart TD
-    Fetch[JolpicaF1] --> Extract[Raw CSVs]
-    Extract --> Transform[Schema]
-    Extract --> BuildDB[Star schema]
-    Transform --> Validate
-    Validate --> Load[CSV · SQL · DB]
-    BuildDB --> Load
-```
-
-```mermaid
-flowchart TD
-    Fetch --> Extract --> Transform --> Validate --> Load
-    Extract --> BuildDB --> Load
-```
-
-```
-*(Fetch pulls from the JolpicaF1 API; Build DB creates the star schema in parallel with transform→validate; Load commits the CSV, SQL, and database outputs.)*
-```
-
 ## Workflow Execution
    
 Here's an example of the pipeline running successfully:
