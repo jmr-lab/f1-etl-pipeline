@@ -218,7 +218,7 @@ jobs:
           echo "=== Adding exact output files ==="
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add sql/f1summary.db sql/formula1.db data/processed/f1summary.csv data/processed/f1summary.sql
+          git add sql/f1summary.db sql/formula1.db sql/f1summary.sql data/processed/f1summary.csv
           
           echo ""
           echo "=== Git status ==="
@@ -237,5 +237,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'Update F1 outputs via ETL pipeline (${{ github.sha }})'
-          file_pattern: 'sql/f1summary.db sql/formula1.db data/processed/f1summary.csv data/processed/f1summary.sql'
+          file_pattern: 'sql/f1summary.db sql/formula1.db sql/f1summary.sql data/processed/f1summary.csv'
           branch: ${{ github.ref_name }}
