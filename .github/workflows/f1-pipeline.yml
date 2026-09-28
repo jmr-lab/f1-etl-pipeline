@@ -63,7 +63,42 @@ jobs:
           name: extracted-data
           path: output/extracted_data.pkl
           if-no-files-found: error
-          retention-days: 1
+          retention-days: 7
+
+  f1_db:
+    runs-on: ubuntu-latest
+    needs: extract
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: pip install pandas
+      
+      - name: Download extracted data
+        uses: actions/download-artifact@v4
+        with:
+          name: extracted-data
+          path: output
+      
+      - name: Build star schema database
+        run: python src/f1_db.py
+      
+      - name: Upload star schema database
+        uses: actions/upload-artifact@v4
+        with:
+          name: star-schema-db
+          path: sql/formula1.db
+          if-no-files-found: error
+          retention-days: 7
 
   transform:
     runs-on: ubuntu-latest
@@ -99,7 +134,7 @@ jobs:
           name: transformed-data
           path: output/transformed_data.pkl
           if-no-files-found: error
-          retention-days: 1
+          retention-days: 7
 
   validate:
     runs-on: ubuntu-latest
@@ -134,7 +169,7 @@ jobs:
         with:
           name: validated-data
           path: output/transformed_data.pkl
-          retention-days: 1
+          retention-days: 7
 
   load:
     runs-on: ubuntu-latest
@@ -161,19 +196,29 @@ jobs:
           name: validated-data
           path: output
       
-      - name: Load data
+      - name: Load data (flat table exports)
         run: python src/load.py
       
-      - name: Verify and manually stage output files
+      - name: Download star schema database
+        uses: actions/download-artifact@v4
+        with:
+          name: star-schema-db
+          path: sql
+      
+      - name: Verify and stage output files
         run: |
-          echo "=== Verifying files exist ==="
-          ls -la output/
+          echo "=== Verifying SQL folder (exactly 2 files) ==="
+          ls -la sql/
           
           echo ""
-          echo "=== Manually adding output files ==="
+          echo "=== Verifying data/processed folder (exactly 2 files) ==="
+          ls -la data/processed/
+          
+          echo ""
+          echo "=== Adding exact output files ==="
           git config user.name 'github-actions[bot]'
           git config user.email 'github-actions[bot]@users.noreply.github.com'
-          git add data/processed/formula1.csv sql/formula1.sql sql/formula1.db
+          git add sql/f1summary.db sql/formula1.db data/processed/f1summary.csv data/processed/f1summary.sql
           
           echo ""
           echo "=== Git status ==="
@@ -191,6 +236,6 @@ jobs:
       - name: Commit outputs
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'Update formula1 outputs via ETL pipeline (${{ github.sha }})'
-          file_pattern: 'data/processed/formula1.csv sql/formula1.sql sql/formula1.db'
+          commit_message: 'Update F1 outputs via ETL pipeline (${{ github.sha }})'
+          file_pattern: 'sql/f1summary.db sql/formula1.db data/processed/f1summary.csv data/processed/f1summary.sql'
           branch: ${{ github.ref_name }}
