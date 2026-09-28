@@ -33,6 +33,7 @@ Here's an example of the pipeline running successfully:
 - **Transform**: Normalises schemas, merges relationships, calculates derived fields (driver age, cumulative points, image paths)
 - **Validate**: 3 automated quality checks (year range, race winners, status-points consistency)
 - **Load**: Exports CSV, MariaDB-compatible SQL, and SQLite database formats
+- **Build DB**: Creates normalised star schema with f1summary VIEW for complex queries
 
 ## Automation
 
@@ -47,7 +48,8 @@ The pipeline runs automatically via [GitHub Actions](https://github.com/features
 | 3 | `transform` | Builds the unified `formula1` dataset and passes it to the next stage |
 | 4 | `validate` | Runs the data quality checks; the workflow fails if any check fails |
 | 5 | `load` | Generates `data/processed/formula1.csv`, `sql/formula1.sql` and `sql/formula1.db`, then commits them to the repository |
-
+| 6 | `build_db` | Builds normalised star schema database with f1summary VIEW (`sql/formula1.db`) |
+ 
 The `scrape` job uploads raw CSVs as artifacts; intermediate datasets (`.pkl` files) are passed between remaining jobs as GitHub Actions artifacts and are not stored in the repository.
 
 ### Triggers
@@ -106,11 +108,12 @@ f1-etl-pipeline/
 │   ├── transform.py
 │   ├── validate.py
 │   ├── load.py
+│   ├── build_db.py             ← Creates star schema database
 │   └── resources/           ← Custom lookup tables
 ├── data/
 │   ├── raw/                 ← Place Ergast CSV files here
-│   └── processed/           ← Generated formula1.csv
-├── sql/                     ← Generated formula1.sql and formula1.db
+│   └── processed/           ← Generated f1summary.csv
+├── sql/                     ← Generated f1summary.sql/db and formula1.db
 ├── run_pipeline.py
 └── README.md
 ```
@@ -119,9 +122,10 @@ f1-etl-pipeline/
 
 | File                     | Description                      |
 | ------------------------ | -------------------------------- |
-| `data/processed/formula1.csv`    | Analytics-ready dataset                          |
-| `sql/formula1.sql`               | MariaDB import script                            |
-| `sql/formula1.db`                | SQLite database with indexed formula1 table      |
+| `data/processed/f1summary.csv` | Analytics-ready flat table (CSV)          |
+| `sql/f1summary.sql`            | MariaDB flat table export                 |
+| `sql/f1summary.db`             | SQLite flat table with indexes            |
+| `sql/formula1.db`              | Full star schema + f1summary VIEW         |
 
 ## Sample Data
 
@@ -167,12 +171,39 @@ The SQLite database additionally includes two indexes optimised for common queri
 - idx_formula1_race on (year, round) — fast per-race lookups
 - idx_formula1_driver on (driverName) — fast per-driver lookups
 
+## Star Schema Database
+
+The `sql/formula1.db` file contains a fully normalized database with 17+ tables following the original Jolpica/Ergast schema, plus an embedded `f1summary` VIEW that replicates the flat table transformation in pure SQL.
+
+### Key Tables
+| Table | Records | Purpose |
+| ----- | ------- | ------- |
+| `driver`, `team`, `season` | 881, 214, 77 | Dimension tables |
+| `session_entry` | 51,278 | Main fact table (race results) |
+| `round`, `roundentry` | 1,173, 27,597 | Event relationships |
+| `lap`, `pit_stop` | 726,665, 12,842 | Granular event data |
+
+### Querying the View
+```sql
+-- Get Lewis Hamilton's career wins
+SELECT COUNT(*) FROM f1summary 
+WHERE driverName LIKE '%Hamilton%' AND positionOrder = 1;
+
+-- Explore normalized data with joins
+SELECT d.surname, COUNT(*) as races
+FROM session_entry se
+JOIN driver d ON se.driver_id = d.id
+WHERE se.position = 1
+GROUP BY d.id
+ORDER BY races DESC;
+```
+
 ## Technologies
 
 - Python 3.11+
 - pandas (>= 2.0)
 - SQLite (via the built-in sqlite3 module)
-- Bulk database download
+- External F1 database dumps (Jolpica/Ergast)
 
 ## Data Source
 
