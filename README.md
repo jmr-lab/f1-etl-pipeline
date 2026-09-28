@@ -123,7 +123,7 @@ f1-etl-pipeline/
 ```
 
 ```mermaid
-flowchart TD
+flowchart LR
     ROOT["f1-etl-pipeline/"]
     
     %% src directory and files
