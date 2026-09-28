@@ -65,7 +65,7 @@ jobs:
           if-no-files-found: error
           retention-days: 7
 
-  f1_db:
+  build_db:
     runs-on: ubuntu-latest
     needs: extract
     
@@ -90,7 +90,7 @@ jobs:
           path: output
       
       - name: Build star schema database
-        run: python src/f1_db.py
+        run: python src/build_db.py
       
       - name: Upload star schema database
         uses: actions/upload-artifact@v4
