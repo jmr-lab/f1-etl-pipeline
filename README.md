@@ -27,6 +27,8 @@ Here's an example of the pipeline running successfully:
 ![F1 ETL Pipeline workflow execution showing five stages: fetch (60s), extract (20s), transform (16s), validate (24s), load (22s)](assets/workflow-execution.png)
    
 *Execution times may vary depending on runner configuration and network speed.*
+
+**Note on the workflow graph:** GitHub Actions' rendered dependency graph may display `build_db` as a prerequisite of `validate`. This is a visualisation quirk in GitHub's UI, not the actual behaviour. Per `.github/workflows/f1-pipeline.yml`, `validate` depends only on `transform`, and `load` requires both `validate` and `build_db`.
    
 ## Features
 
