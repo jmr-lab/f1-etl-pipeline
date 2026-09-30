@@ -307,9 +307,9 @@ def insert_table_data(
     table_name: str,
     df: pd.DataFrame
 ) -> int:
-    """Insert data from DataFrame into table - no mapping needed since CSV uses 'id'."""
+    """Insert data from DataFrame into table - preserves schema with FK constraints."""
     
-    # Map from CSV table name to DB table name (some differ)
+    # Map from CSV table name to DB table name
     table_name_mapping = {
         'season': 'season',
         'circuit': 'circuit',
@@ -365,8 +365,8 @@ def insert_table_data(
         
         df = df[cols_to_keep]
     
-    # Insert data
-    df.to_sql(target_table, conn, if_exists='replace', index=False)
+    # CHANGE HERE: Use 'append' instead of 'replace' to preserve FK constraints!
+    df.to_sql(target_table, conn, if_exists='append', index=False)
     return len(df)
 
 def build_f1_db(
@@ -388,6 +388,11 @@ def build_f1_db(
             "Please run extract.py first."
         )
     
+    # DELETE EXISTING DATABASE TO START FRESH
+    if output_db_path.exists():
+        output_db_path.unlink()
+        print(f"Cleared existing database: {output_db_path}")
+    
     print(f"\n{'='*60}")
     print("Building F1 Star Schema Database from Extracted Data")
     print(f"{'='*60}\n")
@@ -399,6 +404,7 @@ def build_f1_db(
     print(f"Found {len(dataframes)} tables to process\n")
     
     conn = sqlite3.connect(str(output_db_path))
+    conn.execute("PRAGMA foreign_keys = ON;")  # Enable FK enforcement
     
     try:
         print("Creating database schema...")
@@ -420,6 +426,19 @@ def build_f1_db(
                 print(f"  ✗ {table_name}: ERROR - {e}")
         
         conn.commit()
+        
+        # Verify FK constraints AFTER data insertion
+        print("\n" + "-"*60)
+        print("Verifying foreign key constraints:")
+        print("-"*60)
+        fk_enabled = conn.execute("PRAGMA foreign_keys;").fetchone()[0]
+        print(f"FK enforcement: {'ENABLED' if fk_enabled else 'DISABLED'}")
+        
+        violations = conn.execute("PRAGMA foreign_key_check;").fetchall()
+        if violations:
+            print(f"⚠ FK violations: {violations}")
+        else:
+            print("✓ All FK constraints valid")
         
         # Print summary with row counts
         print("\n" + "-"*60)
