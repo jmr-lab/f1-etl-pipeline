@@ -27,10 +27,11 @@ def get_sql_folder() -> Path:
 def create_complete_schema(conn: sqlite3.Connection) -> None:
     """Create the normalized F1 database schema using id for all primary keys."""
     
-    schema_sql = """
-    PRAGMA foreign_keys = ON;
+    # Disable FK temporarily to allow schema creation
+    conn.execute("PRAGMA foreign_keys = OFF;")
     
-    -- Dimension tables
+    schema_sql = """
+    -- Dimension tables (must be created before fact tables with FKs to them)
     CREATE TABLE IF NOT EXISTS season (
         id INTEGER PRIMARY KEY,
         year INTEGER UNIQUE,
@@ -79,7 +80,34 @@ def create_complete_schema(conn: sqlite3.Connection) -> None:
         api_id INTEGER
     );
     
-    -- Fact tables
+    -- Fact tables with FK constraints (from R script: 14 total)
+    CREATE TABLE IF NOT EXISTS round (
+        id INTEGER PRIMARY KEY,
+        season_id INTEGER,
+        circuit_id INTEGER,
+        number INTEGER,
+        race_number INTEGER,
+        name TEXT,
+        date TEXT,
+        is_cancelled INTEGER,
+        wikipedia TEXT,
+        api_id INTEGER,
+        FOREIGN KEY (season_id) REFERENCES season(id),
+        FOREIGN KEY (circuit_id) REFERENCES circuit(id)
+    );
+    
+    CREATE TABLE IF NOT EXISTS team_driver (
+        id INTEGER PRIMARY KEY,
+        season_id INTEGER,
+        team_id INTEGER,
+        driver_id INTEGER,
+        role TEXT,
+        api_id INTEGER,
+        FOREIGN KEY (season_id) REFERENCES season(id),
+        FOREIGN KEY (team_id) REFERENCES team(id),
+        FOREIGN KEY (driver_id) REFERENCES driver(id)
+    );
+    
     CREATE TABLE IF NOT EXISTS roundentry (
         id INTEGER PRIMARY KEY,
         round_id INTEGER,
@@ -124,33 +152,6 @@ def create_complete_schema(conn: sqlite3.Connection) -> None:
         FOREIGN KEY (round_entry_id) REFERENCES roundentry(id)
     );
     
-    CREATE TABLE IF NOT EXISTS round (
-        id INTEGER PRIMARY KEY,
-        season_id INTEGER,
-        circuit_id INTEGER,
-        number INTEGER,
-        race_number INTEGER,
-        name TEXT,
-        date TEXT,
-        is_cancelled INTEGER,
-        wikipedia TEXT,
-        api_id INTEGER,
-        FOREIGN KEY (season_id) REFERENCES season(id),
-        FOREIGN KEY (circuit_id) REFERENCES circuit(id)
-    );
-    
-    CREATE TABLE IF NOT EXISTS team_driver (
-        id INTEGER PRIMARY KEY,
-        season_id INTEGER,
-        team_id INTEGER,
-        driver_id INTEGER,
-        role TEXT,
-        api_id INTEGER,
-        FOREIGN KEY (season_id) REFERENCES season(id),
-        FOREIGN KEY (team_id) REFERENCES team(id),
-        FOREIGN KEY (driver_id) REFERENCES driver(id)
-    );
-    
     CREATE TABLE IF NOT EXISTS driver_championship (
         id INTEGER PRIMARY KEY,
         season_id INTEGER,
@@ -168,7 +169,8 @@ def create_complete_schema(conn: sqlite3.Connection) -> None:
         round_number INTEGER,
         FOREIGN KEY (season_id) REFERENCES season(id),
         FOREIGN KEY (driver_id) REFERENCES driver(id),
-        FOREIGN KEY (round_id) REFERENCES round(id)
+        FOREIGN KEY (round_id) REFERENCES round(id),
+        FOREIGN KEY (session_id) REFERENCES session(id)
     );
     
     CREATE TABLE IF NOT EXISTS team_championship (
@@ -185,10 +187,7 @@ def create_complete_schema(conn: sqlite3.Connection) -> None:
         adjustment_type TEXT,
         session_id INTEGER,
         session_number INTEGER,
-        round_number INTEGER,
-        FOREIGN KEY (season_id) REFERENCES season(id),
-        FOREIGN KEY (team_id) REFERENCES team(id),
-        FOREIGN KEY (round_id) REFERENCES round(id)
+        round_number INTEGER
     );
     
     CREATE TABLE IF NOT EXISTS lap (
@@ -285,7 +284,23 @@ def create_complete_schema(conn: sqlite3.Connection) -> None:
     """
     
     conn.executescript(schema_sql)
-    print("✓ Schema created successfully")
+    
+    # Enable FK enforcement AFTER schema creation
+    conn.execute("PRAGMA foreign_keys = ON;")
+    
+    # Verify FK constraints are active
+    fk_enabled = conn.execute("PRAGMA foreign_keys;").fetchone()[0]
+    if fk_enabled:
+        print("✓ Foreign key enforcement is ACTIVE")
+    else:
+        print("✗ WARNING: Foreign key enforcement is DISABLED")
+    
+    # Check for any FK violations in existing data
+    violations = conn.execute("PRAGMA foreign_key_check;").fetchall()
+    if violations:
+        print(f"⚠ Foreign key violations found: {violations}")
+    else:
+        print("✓ All foreign key constraints validated successfully")
 
 def insert_table_data(
     conn: sqlite3.Connection,
