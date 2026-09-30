@@ -5,6 +5,7 @@ on:
   
   schedule:
     - cron: '0 0 * * 3'
+    - cron: '43 0 * * 4'
 
 permissions:
   contents: write
