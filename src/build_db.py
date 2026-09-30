@@ -199,8 +199,7 @@ def create_complete_schema(conn: sqlite3.Connection) -> None:
         average_speed TEXT,
         is_entry_fastest_lap INTEGER,
         is_deleted INTEGER,
-        api_id INTEGER,
-        FOREIGN KEY (session_entry_id) REFERENCES session_entry(id)
+        api_id INTEGER
     );
     
     CREATE TABLE IF NOT EXISTS pit_stop (
@@ -210,8 +209,7 @@ def create_complete_schema(conn: sqlite3.Connection) -> None:
         number INTEGER,
         duration TEXT,
         local_timestamp TEXT,
-        api_id INTEGER,
-        FOREIGN KEY (session_entry_id) REFERENCES session_entry(id)
+        api_id INTEGER
     );
     
     CREATE TABLE IF NOT EXISTS penalty (
