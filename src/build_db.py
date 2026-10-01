@@ -313,7 +313,7 @@ def insert_table_data(
         'circuit': 'circuit',
         'driver': 'driver',
         'team': 'team',
-        'base_team': 'base_team',
+        'baseteam': 'base_team',
         'round': 'round',
         'roundentry': 'roundentry',
         'session': 'session',
@@ -331,41 +331,17 @@ def insert_table_data(
     
     target_table = table_name_mapping.get(table_name, table_name)
     
-    # Valid columns for each table (matching the actual schema above)
-    valid_columns = {
-        'season': ['id', 'year', 'api_id', 'championship_system_id', 'wikipedia'],
-        'circuit': ['id', 'name', 'reference', 'locality', 'country', 'country_code', 'latitude', 'longitude', 'altitude', 'wikipedia', 'api_id'],
-        'driver': ['id', 'reference', 'abbreviation', 'forename', 'surname', 'nationality', 'country_code', 'date_of_birth', 'permanent_car_number', 'wikipedia', 'api_id'],
-        'team': ['id', 'name', 'reference', 'nationality', 'country_code', 'base_team_id', 'primary_color', 'wikipedia', 'api_id'],
-        'base_team': ['id', 'name', 'api_id'],
-        'round': ['id', 'season_id', 'circuit_id', 'number', 'race_number', 'name', 'date', 'is_cancelled', 'wikipedia', 'api_id'],
-        'roundentry': ['id', 'round_id', 'team_driver_id', 'car_number', 'api_id'],
-        'session': ['id', 'round_id', 'type', 'number', 'timestamp', 'timezone', 'scheduled_laps', 'point_system_id', 'is_cancelled', 'has_time_data', 'api_id'],
-        'session_entry': ['id', 'session_id', 'round_entry_id', 'grid', 'position', 'points', 'laps_completed', 'fastest_lap_rank', 'time', 'detail', 'status', 'is_classified', 'is_eligible_for_points', 'api_id'],
-        'team_driver': ['id', 'season_id', 'team_id', 'driver_id', 'role', 'api_id'],
-        'driver_championship': ['id', 'season_id', 'year', 'driver_id', 'round_id', 'position', 'points', 'win_count', 'highest_finish', 'is_eligible', 'adjustment_type', 'session_id', 'session_number', 'round_number'],
-        'team_championship': ['id', 'season_id', 'year', 'team_id', 'round_id', 'position', 'points', 'win_count', 'highest_finish', 'is_eligible', 'adjustment_type', 'session_id', 'session_number', 'round_number'],
-        'lap': ['id', 'session_entry_id', 'number', 'position', 'time', 'average_speed', 'is_entry_fastest_lap', 'is_deleted', 'api_id'],
-        'pit_stop': ['id', 'session_entry_id', 'lap_id', 'number', 'duration', 'local_timestamp', 'api_id'],
-        'penalty': ['id', 'earned_id', 'served_id', 'position', 'license_points', 'is_time_served_in_pit', 'time', 'api_id'],
-        'points_system': ['id', 'name', 'reference', 'partial', 'driver_position_points', 'driver_fastest_lap', 'team_position_points', 'team_fastest_lap', 'shared_drive', 'is_double_points', 'api_id'],
-        'championship_system': ['id', 'name', 'reference', 'driver_best_results', 'team_best_results', 'driver_season_split', 'team_season_split', 'team_points_per_session', 'eligibility', 'api_id'],
-        'championship_adjustment': ['id', 'adjustment', 'api_id', 'driver_id', 'points', 'season_id', 'team_id']
-    }
+    # Remove ALL valid_columns filtering - insert directly
+    # Just check for basic columns like 'id'
+    if 'id' not in df.columns:
+        print(f"  ✗ {table_name}: Missing 'id' column")
+        return 0
     
-    if target_table in valid_columns:
-        existing_cols = set(df.columns)
-        cols_to_keep = [col for col in valid_columns[target_table] if col in existing_cols]
-        
-        if len(cols_to_keep) < len(valid_columns[target_table]):
-            missing = set(valid_columns[target_table]) - existing_cols
-            print(f"  ⚠ Missing columns for {target_table}: {missing}")
-        
-        df = df[cols_to_keep]
-    
-    # CHANGE HERE: Use 'append' instead of 'replace' to preserve FK constraints!
+    # Insert data with append to preserve FK constraints
     df.to_sql(target_table, conn, if_exists='append', index=False)
-    return len(df)
+    row_count = len(df)
+    print(f"    Inserted {row_count:,} rows")
+    return row_count
 
 def build_f1_db(
     extracted_data_path: Path = None,
