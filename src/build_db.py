@@ -363,28 +363,16 @@ def get_table_processing_order(dataframes: Dict[str, pd.DataFrame]) -> list:
     # Define explicit dependency hierarchy
     table_order = [
         # Level 1: Independent tables (load first)
-        'season', 'circuit', 'driver', 'points_system', 'championship_system',
+        'season', 'circuit', 'driver', 'team', 'points_system', 'championship_system', 'lap', 'penalty', 'pit_stop', 'team_championship', 'base_team', 'championship_adjustment',
         
         # Level 2: Depends on Level 1
-        'base_team',
+        'round', 'team_driver',
         
         # Level 3: Depends on Levels 1-2
-        'team', 'round',
-        
-        # Level 4: Depends on Levels 1-3
-        'team_driver',
-        
-        # Level 5: Depends on Levels 1-4
         'roundentry', 'session',
         
-        # Level 6: Depends on Levels 1-5
-        'session_entry', 'driver_championship', 'team_championship',
-        
-        # Level 7: Lowest level detail tables
-        'lap', 'pit_stop', 'penalty',
-        
-        # Level 8: Special lookup tables
-        'championship_adjustment'
+        # Level 4: Depends on Levels 1-3
+        'session_entry', 'driver_championship'
     ]
     
     # Filter to only tables that exist in our data
