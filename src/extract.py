@@ -3,14 +3,31 @@ import pandas as pd
 
 # Define required input files
 REQUIRED_TABLES = {
+    # Core dimensions
+    "season",
     "circuit",
     "driver",
-    "driverchampionship",
-    "round",
-    "season",
-    "sessionentry",
     "team",
-    "teamchampionship"
+    "baseteam",
+    
+    # Championships
+    "driverchampionship",
+    "teamchampionship",
+    "championshipsystem",
+    "championshipadjustment",
+    
+    # Races & Entries
+    "round",
+    "roundentry",
+    "session",
+    "sessionentry",
+    "teamdriver",
+    
+    # Event details
+    "lap",
+    "pitstop",
+    "penalty",
+    "pointsystem"
 }
 
 def load_csv_files(required_tables: set = REQUIRED_TABLES) -> dict:
