@@ -148,13 +148,16 @@ def fetch_all() -> bool:
             shutil.rmtree(extract_temp_folder)
             print("  Removed temporary extraction folder")
         
-        # Verify expected tables exist
+        # Verify expected Jolpica tables exist
         expected_tables = [
-            "seasons.csv", "drivers.csv", "constructors.csv", "circuits.csv",
-            "races.csv", "results.csv", "driver_standings.csv",
-            "constructor_standings.csv", "qualifying.csv", "status.csv"
+            "season.csv", "driver.csv", "team.csv", "circuit.csv",
+            "round.csv", "roundentry.csv", "session.csv", "sessionentry.csv",
+            "teamdriver.csv", "driverchampionship.csv", "teamchampionship.csv",
+            "lap.csv", "pitstop.csv", "penalty.csv",
+            "pointsystem.csv", "championshipsystem.csv", "championshipadjustment.csv",
+            "baseteam.csv"
         ]
-        
+
         missing = [t for t in expected_tables if not (output_folder / t).exists()]
         
         if missing:
