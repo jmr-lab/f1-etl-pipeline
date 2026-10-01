@@ -287,7 +287,67 @@ def create_complete_schema(conn: sqlite3.Connection) -> None:
     if fk_enabled:
         print("✓ Foreign key enforcement is ACTIVE")
 
-# ... [keep insert_table_data unchanged] ...
+def insert_table_data( conn: sqlite3.Connection, table_name: str, df: pd.DataFrame ) -> int:
+    """Insert data from DataFrame into table - preserves schema with FK constraints."""
+    # Map CSV table name to DB table name
+    table_name_mapping = {
+        'season': 'season',
+        'circuit': 'circuit',
+        'driver': 'driver',
+        'team': 'team',
+        'baseteam': 'base_team',
+        'round': 'round',
+        'roundentry': 'roundentry',
+        'session': 'session',
+        'sessionentry': 'session_entry',
+        'teamdriver': 'team_driver',
+        'driverchampionship': 'driver_championship',
+        'teamchampionship': 'team_championship',
+        'lap': 'lap',
+        'pitstop': 'pit_stop',
+        'penalty': 'penalty',
+        'pointsystem': 'points_system',
+        'championshipsystem': 'championship_system',
+        'championshipadjustment': 'championship_adjustment'
+    }
+
+    target_table = table_name_mapping.get(table_name, table_name)
+
+    # Get DB schema columns
+    try:
+        cursor = conn.execute(f"PRAGMA table_info({target_table});")
+        db_columns = {row[1] for row in cursor.fetchall()}
+    except Exception as e:
+        print(f"  ✗ {table_name}: Failed to get DB schema: {e}")
+        return 0
+
+    csv_columns = set(df.columns)
+
+    # Filter to only columns that exist in both
+    cols_to_use = list(db_columns & csv_columns)
+
+    if not cols_to_use:
+        print(f"  ✗ {table_name}: NO matching columns between CSV and DB!")
+        print(f"    CSV columns: {sorted(csv_columns)}")
+        print(f"    DB columns:  {sorted(db_columns)}")
+        return 0
+
+    # Create filtered dataframe with matching columns
+    df_subset = df[cols_to_use]
+
+    # Attempt insertion
+    try:
+        df_subset.to_sql(target_table, conn, if_exists='append', index=False)
+        row_count = len(df_subset)
+        print(f"  ✓ {table_name}: {row_count:,} rows")
+        return row_count
+    except Exception as e:
+        # Only show diagnostics on failure
+        print(f"  ✗ {table_name}: Insertion failed: {type(e).__name__}: {e}")
+        print(f"    CSV columns ({len(csv_columns)}): {sorted(csv_columns)}")
+        print(f"    DB columns ({len(db_columns)}):  {sorted(db_columns)}")
+        print(f"    Matching columns: {cols_to_use}")
+        raise
 
 def get_table_processing_order(dataframes: Dict[str, pd.DataFrame]) -> list:
     """
