@@ -12,6 +12,27 @@ import pickle
 import sqlite3
 import sys
 
+TABLE_NAME_MAPPING = {
+    'season': 'season',
+    'circuit': 'circuit',
+    'driver': 'driver',
+    'team': 'team',
+    'baseteam': 'base_team',
+    'round': 'round',
+    'roundentry': 'roundentry',
+    'session': 'session',
+    'sessionentry': 'session_entry',
+    'teamdriver': 'team_driver',
+    'driverchampionship': 'driver_championship',
+    'teamchampionship': 'team_championship',
+    'lap': 'lap',
+    'pitstop': 'pit_stop',
+    'penalty': 'penalty',
+    'pointsystem': 'points_system',
+    'championshipsystem': 'championship_system',
+    'championshipadjustment': 'championship_adjustment'
+}
+
 def get_extracted_data_path() -> Path:
     """Locate the extracted_data.pkl file."""
     src_folder = Path(__file__).resolve().parent
@@ -282,37 +303,18 @@ def create_complete_schema(conn: sqlite3.Connection) -> None:
     
     conn.executescript(schema_sql)
     
-    conn.execute("PRAGMA foreign_keys = ON;")
-    fk_enabled = conn.execute("PRAGMA foreign_keys;").fetchone()[0]
-    if fk_enabled:
-        print("✓ Foreign key enforcement is ACTIVE")
+    # REMOVED: FK re-enabling here (now controlled solely by build_f1_db)
 
-def insert_table_data( conn: sqlite3.Connection, table_name: str, df: pd.DataFrame ) -> int:
+
+def insert_table_data(
+    conn: sqlite3.Connection,
+    table_name: str,
+    df: pd.DataFrame
+) -> int:
     """Insert data from DataFrame into table - preserves schema with FK constraints."""
-    # Map CSV table name to DB table name
-    table_name_mapping = {
-        'season': 'season',
-        'circuit': 'circuit',
-        'driver': 'driver',
-        'team': 'team',
-        'baseteam': 'base_team',
-        'round': 'round',
-        'roundentry': 'roundentry',
-        'session': 'session',
-        'sessionentry': 'session_entry',
-        'teamdriver': 'team_driver',
-        'driverchampionship': 'driver_championship',
-        'teamchampionship': 'team_championship',
-        'lap': 'lap',
-        'pitstop': 'pit_stop',
-        'penalty': 'penalty',
-        'pointsystem': 'points_system',
-        'championshipsystem': 'championship_system',
-        'championshipadjustment': 'championship_adjustment'
-    }
-
+    
     target_table = table_name_mapping.get(table_name, table_name)
-
+    
     # Get DB schema columns
     try:
         cursor = conn.execute(f"PRAGMA table_info({target_table});")
@@ -320,34 +322,33 @@ def insert_table_data( conn: sqlite3.Connection, table_name: str, df: pd.DataFra
     except Exception as e:
         print(f"  ✗ {table_name}: Failed to get DB schema: {e}")
         return 0
-
+    
     csv_columns = set(df.columns)
-
+    
     # Filter to only columns that exist in both
     cols_to_use = list(db_columns & csv_columns)
-
+    
     if not cols_to_use:
         print(f"  ✗ {table_name}: NO matching columns between CSV and DB!")
         print(f"    CSV columns: {sorted(csv_columns)}")
         print(f"    DB columns:  {sorted(db_columns)}")
         return 0
-
+    
     # Create filtered dataframe with matching columns
     df_subset = df[cols_to_use]
-
+    
     # Attempt insertion
     try:
         df_subset.to_sql(target_table, conn, if_exists='append', index=False)
-        row_count = len(df_subset)
-        print(f"  ✓ {table_name}: {row_count:,} rows")
-        return row_count
+        # REMOVED print here (only print once in caller loop)
+        return len(df_subset)
     except Exception as e:
-        # Only show diagnostics on failure
         print(f"  ✗ {table_name}: Insertion failed: {type(e).__name__}: {e}")
         print(f"    CSV columns ({len(csv_columns)}): {sorted(csv_columns)}")
         print(f"    DB columns ({len(db_columns)}):  {sorted(db_columns)}")
         print(f"    Matching columns: {cols_to_use}")
         raise
+
 
 def get_table_processing_order(dataframes: Dict[str, pd.DataFrame]) -> list:
     """
@@ -360,10 +361,11 @@ def get_table_processing_order(dataframes: Dict[str, pd.DataFrame]) -> list:
     4. Transactional tables (need all upstream tables loaded)
     """
     
-    # Define explicit dependency hierarchy
+    # Define explicit dependency hierarchy using CANONICAL names only
     table_order = [
         # Level 1: Independent tables (load first)
-        'season', 'circuit', 'driver', 'team', 'points_system', 'championship_system', 'lap', 'penalty', 'pit_stop', 'team_championship', 'base_team', 'championship_adjustment',
+        'season', 'circuit', 'driver', 'team', 'base_team',
+        'points_system', 'championship_system',
         
         # Level 2: Depends on Level 1
         'round', 'team_driver',
@@ -372,7 +374,13 @@ def get_table_processing_order(dataframes: Dict[str, pd.DataFrame]) -> list:
         'roundentry', 'session',
         
         # Level 4: Depends on Levels 1-3
-        'session_entry', 'driver_championship'
+        'session_entry', 'driver_championship', 'team_championship',
+        
+        # Level 5: Detail tables (depend on session_entry existing)
+        'lap', 'pit_stop', 'penalty',
+        
+        # Level 6: Special lookup tables
+        'championship_adjustment'
     ]
     
     # Filter to only tables that exist in our data
@@ -389,6 +397,7 @@ def get_table_processing_order(dataframes: Dict[str, pd.DataFrame]) -> list:
 def filter_empty_tables(dataframes: Dict[str, pd.DataFrame]) -> Dict[str, pd.DataFrame]:
     """Filter out empty DataFrames from processing."""
     return {name: df for name, df in dataframes.items() if not df.empty}
+
 
 def build_f1_db(
     extracted_data_path: Path = None,
@@ -422,16 +431,21 @@ def build_f1_db(
     with open(extracted_data_path, "rb") as f:
         dataframes = pickle.load(f)
     
+    # FILTER EMPTY FIRST
     dataframes = filter_empty_tables(dataframes)
+    
+    # CRITICAL: Normalize all table names to canonical form
+    dataframes = {TABLE_NAME_MAPPING.get(k, k): df for k, df in dataframes.items()}
+    
     print(f"Found {len(dataframes)} non-empty tables to process\n")
     
-    # Get correct table order
+    # Get correct table order (now using canonical names)
     ordered_tables = get_table_processing_order(dataframes)
     print(f"Processing order ({len(ordered_tables)} tables):\n  {' → '.join(ordered_tables)}\n")
     
     conn = sqlite3.connect(str(output_db_path))
     
-    # IMPORTANT: Disable FK during load, re-enable after commit
+    # Disable FK during load
     conn.execute("PRAGMA foreign_keys = OFF;")
     
     try:
