@@ -307,6 +307,7 @@ def insert_table_data(
 ) -> int:
     """Insert data from DataFrame into table - preserves schema with FK constraints."""
     
+    # Map CSV table name to DB table name
     table_name_mapping = {
         'season': 'season',
         'circuit': 'circuit',
@@ -330,33 +331,41 @@ def insert_table_data(
     
     target_table = table_name_mapping.get(table_name, table_name)
     
-    # DEBUG: Show column mismatch before insert
+    # Get DB schema columns
     try:
         cursor = conn.execute(f"PRAGMA table_info({target_table});")
         db_columns = {row[1] for row in cursor.fetchall()}
-        csv_columns = set(df.columns)
-        
-        missing_in_csv = db_columns - csv_columns
-        extra_in_csv = csv_columns - db_columns
-        
-        if missing_in_csv:
-            print(f"  ⚠ {table_name}: Missing columns: {missing_in_csv}")
-        if extra_in_csv:
-            print(f"  ⚠ {table_name}: Extra columns (ignored): {extra_in_csv}")
-        
-        # Select only columns that exist in DB
-        cols_to_use = list(db_columns & csv_columns)
-        if not cols_to_use:
-            raise ValueError(f"No matching columns between CSV and DB for {target_table}")
-        
-        df = df[cols_to_use]
-        
     except Exception as e:
-        print(f"  ✗ {table_name}: Column check failed: {e}")
-        raise
+        print(f"  ✗ {table_name}: Failed to get DB schema: {e}")
+        return 0
     
-    df.to_sql(target_table, conn, if_exists='append', index=False)
-    return len(df)
+    csv_columns = set(df.columns)
+    
+    # Filter to only columns that exist in both
+    cols_to_use = list(db_columns & csv_columns)
+    
+    if not cols_to_use:
+        print(f"  ✗ {table_name}: NO matching columns between CSV and DB!")
+        print(f"    CSV columns: {sorted(csv_columns)}")
+        print(f"    DB columns:  {sorted(db_columns)}")
+        return 0
+    
+    # Create filtered dataframe with matching columns
+    df_subset = df[cols_to_use]
+    
+    # Attempt insertion
+    try:
+        df_subset.to_sql(target_table, conn, if_exists='append', index=False)
+        row_count = len(df_subset)
+        print(f"  ✓ {table_name}: {row_count:,} rows")
+        return row_count
+    except Exception as e:
+        # Only show diagnostics on failure
+        print(f"  ✗ {table_name}: Insertion failed: {type(e).__name__}: {e}")
+        print(f"    CSV columns ({len(csv_columns)}): {sorted(csv_columns)}")
+        print(f"    DB columns ({len(db_columns)}):  {sorted(db_columns)}")
+        print(f"    Matching columns: {cols_to_use}")
+        raise
 
 def build_f1_db(
     extracted_data_path: Path = None,
