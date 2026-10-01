@@ -6,10 +6,11 @@ proper relationships matching the Jolpica schema.
 """
 
 from pathlib import Path
-import sqlite3
-import pickle
-import sys
+from typing import Dict, Tuple
 import pandas as pd
+import pickle
+import sqlite3
+import sys
 
 def get_extracted_data_path() -> Path:
     """Locate the extracted_data.pkl file."""
@@ -367,12 +368,107 @@ def insert_table_data(
         print(f"    Matching columns: {cols_to_use}")
         raise
 
+def get_topological_order(dataframes: Dict[str, pd.DataFrame]) -> list:
+    """
+    Order tables respecting foreign key dependencies using topological sort.
+    
+    Dependency levels:
+    Level 0: Base dimension tables (no FKs within this dataset)
+    Level 1: Primary dimension tables with minimal FKs
+    Level 2: Core fact tables
+    Level 3: Secondary fact tables with multiple FKs
+    Level 4: Detail/transactional tables
+    """
+    
+    # Define explicit dependency order based on your schema
+    # Each tuple is (table_name, [dependency_table_names])
+    table_dependencies = {
+        # Level 0: Independent dimension tables
+        'season': [],
+        'circuit': [],
+        'base_team': [],
+        'points_system': [],
+        'championship_system': [],
+        
+        # Level 1: Dimension tables with minimal FKs
+        'driver': [],  # No FKs to other tables in this dataset
+        'team': ['base_team'],  # FK: base_team_id
+        
+        # Level 2: Core fact tables
+        'round': ['season', 'circuit'],  # FK: season_id, circuit_id
+        
+        # Level 3: Secondary fact tables
+        'team_driver': ['season', 'team', 'driver'],  # FK: season_id, team_id, driver_id
+        
+        # Level 4: Transactional tables
+        'roundentry': ['round', 'team_driver'],  # FK: round_id, team_driver_id
+        'session': ['round', 'points_system'],  # FK: round_id, point_system_id
+        
+        # Level 5: Detailed transaction tables
+        'session_entry': ['session', 'roundentry'],  # FK: session_id, round_entry_id
+        'driver_championship': ['season', 'driver', 'round', 'session'],  # Multiple FKs
+        'team_championship': ['season', 'team', 'round', 'session'],  # Multiple FKs
+        
+        # Level 6: Lowest level detail tables
+        'lap': ['session_entry'],  # FK: session_entry_id
+        'pit_stop': ['session_entry', 'lap'],  # FK: session_entry_id, lap_id
+        
+        # Level 7: Special tables
+        'penalty': ['session_entry'],  # Assuming FK relationship
+        'championship_adjustment': ['season', 'driver', 'team']  # FK: season_id, driver_id, team_id
+    }
+    
+    # Filter to only tables that exist in our data
+    available_tables = set(table_dependencies.keys()) & set(dataframes.keys())
+    
+    # Perform topological sort using Kahn's algorithm
+    in_degree = {table: 0 for table in available_tables}
+    
+    # Calculate in-degree for each table
+    for table in available_tables:
+        deps = [dep for dep in table_dependencies.get(table, []) if dep in available_tables]
+        in_degree[table] = len(deps)
+    
+    # Build adjacency list (reverse: who depends on whom)
+    dependents = {table: [] for table in available_tables}
+    for table in available_tables:
+        for dep in table_dependencies.get(table, []):
+            if dep in available_tables:
+                dependents[dep].append(table)
+    
+    # Initialize queue with tables that have no dependencies
+    queue = [table for table in available_tables if in_degree[table] == 0]
+    ordered = []
+    
+    while queue:
+        current = queue.pop(0)
+        ordered.append(current)
+        
+        for dependent in dependents[current]:
+            in_degree[dependent] -= 1
+            if in_degree[dependent] == 0:
+                queue.append(dependent)
+    
+    # Check for circular dependencies
+    if len(ordered) != len(available_tables):
+        remaining = available_tables - set(ordered)
+        raise ValueError(f"Circular dependency detected among tables: {remaining}")
+    
+    return ordered
+
+
+def filter_empty_tables(dataframes: Dict[str, pd.DataFrame]) -> Dict[str, pd.DataFrame]:
+    """Filter out empty DataFrames from processing."""
+    return {name: df for name, df in dataframes.items() if not df.empty}
+
+
 def build_f1_db(
     extracted_data_path: Path = None,
     output_db_path: Path = None
 ) -> Path:
-    """Build the normalized F1 database."""
+    """Build the normalized F1 database with proper FK ordering."""
     
+    # Setup paths
     if extracted_data_path is None:
         extracted_data_path = get_extracted_data_path()
     
@@ -380,13 +476,14 @@ def build_f1_db(
         sql_folder = get_sql_folder()
         output_db_path = sql_folder / "formula1.db"
     
+    # Validate input exists
     if not extracted_data_path.exists():
         raise FileNotFoundError(
             f"Extracted data not found at {extracted_data_path}. "
             "Please run extract.py first."
         )
     
-    # DELETE EXISTING DATABASE TO START FRESH
+    # Delete existing database for fresh start
     if output_db_path.exists():
         output_db_path.unlink()
         print(f"Cleared existing database: {output_db_path}")
@@ -395,63 +492,97 @@ def build_f1_db(
     print("Building F1 Star Schema Database from Extracted Data")
     print(f"{'='*60}\n")
     
+    # Load and filter data
     print(f"Loading extracted data from: {extracted_data_path}")
     with open(extracted_data_path, "rb") as f:
         dataframes = pickle.load(f)
     
-    print(f"Found {len(dataframes)} tables to process\n")
+    dataframes = filter_empty_tables(dataframes)
+    print(f"Found {len(dataframes)} non-empty tables to process\n")
     
+    # Determine processing order
+    ordered_tables = get_topological_order(dataframes)
+    print(f"Processing order:\n  {' → '.join(ordered_tables)}\n")
+    
+    # Connect to database
     conn = sqlite3.connect(str(output_db_path))
-    conn.execute("PRAGMA foreign_keys = ON;")  # Enable FK enforcement
+    
+    # CRITICAL: Keep FK OFF during data load to prevent cascade failures
+    # We'll validate integrity after all data is loaded
+    conn.execute("PRAGMA foreign_keys = OFF;")
     
     try:
         print("Creating database schema...")
         create_complete_schema(conn)
         
-        print("\nInserting data into tables:\n")
+        print("\nInserting data into tables (FK disabled during load):\n")
         tables_processed = 0
+        errors = []
         
-        for table_name, df in sorted(dataframes.items()):
-            if df.empty:
-                print(f"  ⊘ {table_name}: Skipped (empty)")
-                continue
+        for table_name in ordered_tables:
+            df = dataframes[table_name]
             
             try:
                 row_count = insert_table_data(conn, table_name, df)
-                print(f"  ✓ {table_name}: {row_count:,} rows")
-                tables_processed += 1
+                
+                if row_count > 0:
+                    print(f"  ✓ {table_name}: {row_count:,} rows")
+                    tables_processed += 1
+                else:
+                    print(f"  ⊘ {table_name}: No matching columns or zero rows inserted")
+                    
             except Exception as e:
-                print(f"  ✗ {table_name}: ERROR - {e}")
+                error_msg = f"{table_name}: {type(e).__name__}: {str(e)[:200]}"
+                errors.append(error_msg)
+                print(f"  ✗ {error_msg}")
+                # Continue processing other tables instead of aborting
         
         conn.commit()
         
-        # Verify FK constraints AFTER data insertion
+        # NOW enable FK enforcement and validate ALL constraints
         print("\n" + "-"*60)
-        print("Verifying foreign key constraints:")
+        print("Post-load validation:")
         print("-"*60)
-        fk_enabled = conn.execute("PRAGMA foreign_keys;").fetchone()[0]
-        print(f"FK enforcement: {'ENABLED' if fk_enabled else 'DISABLED'}")
         
+        conn.execute("PRAGMA foreign_keys = ON;")
+        
+        # Check for FK violations across ALL tables
         violations = conn.execute("PRAGMA foreign_key_check;").fetchall()
-        if violations:
-            print(f"⚠ FK violations: {violations}")
-        else:
-            print("✓ All FK constraints valid")
         
-        # Print summary with row counts
+        if violations:
+            print(f"⚠ Found {len(violations)} FK violation(s):")
+            for v in violations[:10]:  # Show first 10
+                print(f"    - Table '{v[0]}': row={v[1]}, parent={v[2]}, key_index={v[3]}")
+            if len(violations) > 10:
+                print(f"    ... and {len(violations) - 10} more")
+        else:
+            print("✓ All foreign key constraints validated successfully")
+        
+        # Print summary
         print("\n" + "-"*60)
         print("Final table row counts:")
         print("-"*60)
+        
         cursor = conn.execute("SELECT name FROM sqlite_master WHERE type='table' ORDER BY name")
+        total_rows = 0
         for (table,) in cursor.fetchall():
             count = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
-            print(f"  {table}: {count:,} rows")
+            total_rows += count
+            status = "✓" if count > 0 else "⊘"
+            print(f"  {status} {table}: {count:,} rows")
         
         print(f"\n{'='*60}")
-        print(f"Database creation complete!")
+        if errors:
+            print(f"Database built with {len(errors)} table error(s)")
+        else:
+            print("Database creation complete!")
         print(f"{'='*60}")
+        
         print(f"\nOutput: {output_db_path.absolute()}")
-        print(f"Tables loaded: {tables_processed}/{len(dataframes)}")
+        print(f"Total rows: {total_rows:,}")
+        print(f"Tables processed: {tables_processed}/{len(dataframes)}")
+        if errors:
+            print(f"Errors: {', '.join(errors[:3])}")
         
         return output_db_path
         
