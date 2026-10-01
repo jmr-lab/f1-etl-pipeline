@@ -307,7 +307,6 @@ def insert_table_data(
 ) -> int:
     """Insert data from DataFrame into table - preserves schema with FK constraints."""
     
-    # Map from CSV table name to DB table name
     table_name_mapping = {
         'season': 'season',
         'circuit': 'circuit',
@@ -331,17 +330,33 @@ def insert_table_data(
     
     target_table = table_name_mapping.get(table_name, table_name)
     
-    # Remove ALL valid_columns filtering - insert directly
-    # Just check for basic columns like 'id'
-    if 'id' not in df.columns:
-        print(f"  ✗ {table_name}: Missing 'id' column")
-        return 0
+    # DEBUG: Show column mismatch before insert
+    try:
+        cursor = conn.execute(f"PRAGMA table_info({target_table});")
+        db_columns = {row[1] for row in cursor.fetchall()}
+        csv_columns = set(df.columns)
+        
+        missing_in_csv = db_columns - csv_columns
+        extra_in_csv = csv_columns - db_columns
+        
+        if missing_in_csv:
+            print(f"  ⚠ {table_name}: Missing columns: {missing_in_csv}")
+        if extra_in_csv:
+            print(f"  ⚠ {table_name}: Extra columns (ignored): {extra_in_csv}")
+        
+        # Select only columns that exist in DB
+        cols_to_use = list(db_columns & csv_columns)
+        if not cols_to_use:
+            raise ValueError(f"No matching columns between CSV and DB for {target_table}")
+        
+        df = df[cols_to_use]
+        
+    except Exception as e:
+        print(f"  ✗ {table_name}: Column check failed: {e}")
+        raise
     
-    # Insert data with append to preserve FK constraints
     df.to_sql(target_table, conn, if_exists='append', index=False)
-    row_count = len(df)
-    print(f"    Inserted {row_count:,} rows")
-    return row_count
+    return len(df)
 
 def build_f1_db(
     extracted_data_path: Path = None,
