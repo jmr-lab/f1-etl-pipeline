@@ -313,7 +313,7 @@ def insert_table_data(
 ) -> int:
     """Insert data from DataFrame into table - preserves schema with FK constraints."""
     
-    target_table = table_name_mapping.get(table_name, table_name)
+    target_table = TABLE_NAME_MAPPING.get(table_name, table_name)
     
     # Get DB schema columns
     try:
