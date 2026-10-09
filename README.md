@@ -12,11 +12,11 @@ This ETL pipeline processes raw data from the Jolpica F1 database. Currently, th
 
 > [!NOTE]
 > I am currently refactoring this pipeline to improve data architecture and modularity. The goal is to move toward a more sophisticated schema consisting of:
-
+> 
 > *   **`jolpica_raw.db`**: A source-of-truth database mirror.
 > *   **`f1_transformed.db`**: A modeled, analytics-ready database.
 > *   **`formula1.csv`**: A curated flat file for downstream portability.
-
+> 
 > These modifications are driven by ongoing findings from the companion [Formula-1 Analytics](https://github.com/jmr-lab/Formula-1) R project, which informs the necessary data modelling and transformation logic required for advanced EDA and GOAT (Greatest of All Time) modelling.
 
 
