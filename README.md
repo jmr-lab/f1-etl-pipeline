@@ -8,7 +8,17 @@ An ETL pipeline that downloads the official F1 database dump from [Jolpica](http
 
 ## Overview
 
-This pipeline downloads a compressed CSV archive from the Jolpica F1 database, extracts all tables, validates data quality, applies transformations, and outputs a unified `formula1.csv` file. The cleaned dataset feeds the companion [Formula-1 Analytics](https://github.com/jmr-lab/Formula-1) R project for exploratory analysis and GOAT modelling.
+This ETL pipeline processes raw data from the Jolpica F1 database. Currently, the pipeline performs extraction, data quality validation, and transformation to generate a set of structured outputs: a master `formula1.csv` flat file, along with two supporting database files.
+
+### Work-in-Progress & Roadmap
+
+I am currently refactoring this pipeline to improve data architecture and modularity. The goal is to move toward a more sophisticated schema consisting of:
+
+*   **`jolpica_raw.db`**: A source-of-truth database mirror.
+*   **`f1_transformed.db`**: A modeled, analytics-ready database.
+*   **`formula1.csv`**: A curated flat file for downstream portability.
+
+These modifications are driven by ongoing findings from the companion [Formula-1 Analytics](https://github.com/jmr-lab/Formula-1) R project, which informs the necessary data modelling and transformation logic required for advanced EDA and GOAT (Greatest of All Time) modelling.
 
 ## Pipeline Architecture
 
