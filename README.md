@@ -10,7 +10,7 @@ An ETL pipeline that downloads the official F1 database dump from [Jolpica](http
 
 This ETL pipeline processes raw data from the Jolpica F1 database. Currently, the pipeline performs extraction, data quality validation, and transformation to generate a set of structured outputs: a master `formula1.csv` flat file, along with two supporting database files.
 
-> [!Work-in-Progress & Roadmap]
+> [!NOTE]
 > I am currently refactoring this pipeline to improve data architecture and modularity. The goal is to move toward a more sophisticated schema consisting of:
 
 > *   **`jolpica_raw.db`**: A source-of-truth database mirror.
